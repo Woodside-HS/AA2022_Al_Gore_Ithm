@@ -8,7 +8,7 @@ function LevelIcon(ctx,x,y,clr,rad,label){
 
 LevelIcon.prototype.display = function(){
   this.ctx.beginPath();
-  this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
+  this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2); //draws circle icon to represent level
   this.ctx.fillStyle = this.clr.toString();
   this.ctx.fill();
 }

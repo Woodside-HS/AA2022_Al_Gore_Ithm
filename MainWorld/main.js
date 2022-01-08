@@ -12,7 +12,12 @@ function init(){
   for(var i = 0;i<n;i++){
     let rad = 25;
     let dist = rad*4;
-    let x = cnv.width/2 + (Math.random()-0.5)*(cnv.width*0.75-2*rad);
+
+    let distFromCenter = 0.2;
+    let delta = Math.random()*cnv.width*distFromCenter/2+cnv.width*distFromCenter/2-rad;
+    let sign = Math.random()>0.5?1:-1;
+
+    let x = cnv.width/2 + delta*sign;
     let y = cnv.height/2 + dist*(n-1)/2.0 - i*dist;
     let val = 150 - i/n*100;
     let clr = new Color(val,val,val,1);
@@ -40,7 +45,7 @@ function update(){
 
 function display(){
   let acc = 5;
-  let vel = new JSVector(0,-acc*2);
+  let vel = new JSVector(0,-acc*2.5);
   for(var i = 0;i<levels.length-1;i++){
     let level = levels[i];
 

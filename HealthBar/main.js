@@ -1,5 +1,5 @@
 window.addEventListener("load", init);// wait for the page to finish loading with init as the callback
-document.addEventListener('keydown', event => { // when arrow keys are released, the screen will stop moving
+document.addEventListener('keydown', event => { 
     if (event.code === 'ArrowRight') healthbar.incrementApproval(0.01);
     else if (event.code === 'ArrowLeft') healthbar.incrementApproval(-0.01);
   })

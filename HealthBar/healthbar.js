@@ -16,15 +16,19 @@ Healthbar.prototype.value_limit = function(val, min, max) {
   return val < min ? min : (val > max ? max : val);
 }
 Healthbar.prototype.gradFill = function(approval){
-  var width = (this.cnv.width-2*this.pos.x);
+  var width = approval*(this.cnv.width-2*this.pos.x);
   var height = 20
   var grd=this.ctx.createLinearGradient(0,0,width,0);
-  grd.addColorStop(1,'#008000');
-  grd.addColorStop(0.5,'#FFFF00');
-  grd.addColorStop(0,'#FF0000');
+  grd.addColorStop(0, new Color(255, 0, 0, 1));
+  if(approval<=0.5){
+    grd.addColorStop(1,new Color(255, 255-255*(1-2*approval), 0, 1));
+  }
+  else{
+    grd.addColorStop(1,new Color(255-255*(2*approval-1), 255-105*(2*approval-1), 0, 1));
+    grd.addColorStop(0.5/approval,new Color(255, 255, 0, 1));
+  }
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(this.pos.x,this.pos.y,width,height);
-  this.ctx.clearRect(this.pos.x+approval*width, this.pos.y, width*(1-approval), height);
 }
 Healthbar.prototype.dispText = function(approval){
   this.ctx.font = "16px Times New Roman";

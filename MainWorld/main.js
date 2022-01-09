@@ -7,7 +7,7 @@ function init(){
   cnv = document.getElementById("cnv");
   ctx = cnv.getContext("2d");
 
-  generateLevels(6); //generates (parameter)# of new levels
+  generateLevels(5); //generates (parameter)# of new levels
 
   animate();
 }
@@ -26,10 +26,10 @@ function update(){
 
 function generateLevels(n){
   var levels = [];
-  for(var i = 0;i<n;i++){
-    let rad = 25;
-    let dist = rad*4;
+  let rad = 25;
+  let dist = (cnv.height-rad*4)/(n-1);
 
+  for(var i = 0;i<n;i++){
     //determines random distance away from the y axis
     let distFromCenter = 0.2;
     let delta = Math.random()*cnv.width*distFromCenter/2+cnv.width*distFromCenter/2-rad;
@@ -40,7 +40,7 @@ function generateLevels(n){
 
     //create color gradient where as i increases, the icon color becomes darker
     let val = 150 - i/n*100;
-    let clr = new Color(val,val,val,1);
+    let clr = new Color((1-i/n)*225,i/n*225,0,1);
     let label = "Level " + (i+1);
 
     if(i==0||i==n-1) x = cnv.width/2; //centers first and last icons

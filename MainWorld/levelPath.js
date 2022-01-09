@@ -4,7 +4,7 @@ function LevelPath(levelIcons){
 
 LevelPath.prototype.display = function(){
   //displays each icon and generates a smooth path between the icons by using a path follower
-  let acc = 5;
+  let acc = 4;
   let vel = new JSVector(0,-acc*2.5);//creates velocity for path follower
   for(var i = 0;i<this.levelIcons.length-1;i++){
     let level = this.levelIcons[i];

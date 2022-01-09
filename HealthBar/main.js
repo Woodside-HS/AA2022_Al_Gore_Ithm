@@ -1,4 +1,8 @@
 window.addEventListener("load", init);// wait for the page to finish loading with init as the callback
+document.addEventListener('keydown', event => { // when arrow keys are released, the screen will stop moving
+    if (event.code === 'ArrowRight') healthbar.incrementApproval(0.01);
+    else if (event.code === 'ArrowLeft') healthbar.incrementApproval(-0.01);
+  })
 var healthbar;// global variables
 
 function init(){
@@ -10,6 +14,7 @@ function init(){
 
 
 function animate() {
+    healthbar.ctx.clearRect(0, 0, healthbar.cnv.width, healthbar.cnv.height);
     healthbar.run();
     requestAnimationFrame(animate); // next cycle
 }

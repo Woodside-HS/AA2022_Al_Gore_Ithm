@@ -1,13 +1,12 @@
 window.addEventListener("load", init);
 
 var cnv,ctx;
-var levels;
+var levelPath;
 
 function init(){
   cnv = document.getElementById("cnv");
   ctx = cnv.getContext("2d");
 
-  levels = [];
   generateLevels(6); //generates (parameter)# of new levels
 
   animate();
@@ -22,10 +21,11 @@ function animate(){
 }
 
 function update(){
-  display();
+  levelPath.display();
 }
 
 function generateLevels(n){
+  var levels = [];
   for(var i = 0;i<n;i++){
     let rad = 25;
     let dist = rad*4;
@@ -48,37 +48,5 @@ function generateLevels(n){
     let level = new LevelIcon(ctx,x,y,clr,rad,label)
     levels.push(level);
   }
-}
-
-function display(){
-  //displays each icon and generates a smooth path between the icons by using a path follower
-  let acc = 5;
-  let vel = new JSVector(0,-acc*2.5);//creates velocity for path follower
-  for(var i = 0;i<levels.length-1;i++){
-    let level = levels[i];
-
-    let pos = new JSVector(level.pos.x,level.pos.y);//path follower initial position set to current level
-    while(pos.distance(levels[i+1].pos)>vel.getMagnitude()){
-      let prevPos = new JSVector(pos.x,pos.y);
-
-      if(pos.distance(levels[i].pos)>levels[i].rad){ //path follower attracted to next level icon when not intersecting the icon
-        let velDelta = JSVector.subGetNew(levels[i+1].pos,pos);
-        velDelta.setMagnitude(acc);
-        let mag = vel.getMagnitude();
-        vel.add(velDelta);
-        vel.setMagnitude(mag);
-      }
-      pos.add(vel);
-
-      //draws path between previous and last position of path follower
-      ctx.beginPath();
-      ctx.moveTo(prevPos.x,prevPos.y);
-      ctx.lineTo(pos.x,pos.y);
-      ctx.strokestyle = "black";
-      ctx.stroke();
-    }
-
-    level.display();
-  }
-  if(levels.length>0) levels[levels.length-1].display();
+  levelPath = new LevelPath(levels);
 }

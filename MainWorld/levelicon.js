@@ -12,5 +12,6 @@ LevelIcon.prototype.display = function(){
   this.ctx.fillStyle = this.clr.toString();
   this.ctx.fill();
   this.ctx.fillStyle = "black";
-  this.ctx.fillText(this.label,this.pos.x + this.rad*1.1,this.pos.y);
+  this.ctx.font = "20px serif";
+  this.ctx.fillText(this.label,this.pos.x + this.rad + 10,this.pos.y);
 }

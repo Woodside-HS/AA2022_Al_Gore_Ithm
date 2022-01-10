@@ -1,7 +1,15 @@
 window.addEventListener("load", init);
 
 var cnv,ctx;
-var levelPath;
+var levelPath,levelIndicator;
+
+document.addEventListener('keypress', keyListener);
+
+function keyListener(e) {
+  if(e.code=="Space"&&!e.repeat){
+    levelIndicator.nextLevel();
+  }
+}
 
 function init(){
   cnv = document.getElementById("cnv");
@@ -22,6 +30,7 @@ function animate(){
 
 function update(){
   levelPath.display();
+  levelIndicator.update();
 }
 
 function generateLevels(n){
@@ -49,4 +58,6 @@ function generateLevels(n){
     levels.push(level);
   }
   levelPath = new LevelPath(levels);
+
+  levelIndicator = new LevelIndicator(levels,rad*1.1,new Color(25,25,230,1),ctx);
 }

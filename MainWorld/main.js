@@ -26,7 +26,7 @@ function update(){
 
 function generateLevels(n){
   var levels = [];
-  let rad = 25;
+  let rad = 150/n;
   let dist = (cnv.height-rad*4)/(n-1);
 
   for(var i = 0;i<n;i++){

@@ -27,7 +27,9 @@ function init(){
 }
 
 function animate(){
-  ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
+  //ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,cnv.width,cnv.height);
 
   update();
 

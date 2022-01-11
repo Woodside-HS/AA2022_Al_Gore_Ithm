@@ -21,7 +21,7 @@ function init(){
   ctx = cnv.getContext("2d");
   keys = [];
 
-  levelPath = LevelPath.generateNewPath(10,ctx); //generates # of new levels and creates visual path
+  levelPath = LevelPath.generateNewPath(5,ctx); //generates # of new levels and creates visual path
 
   animate();
 }

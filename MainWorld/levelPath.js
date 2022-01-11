@@ -2,6 +2,7 @@ function LevelPath(levelIcons,rad,indicatorClr,ctx){
   this.ctx = ctx;
   this.levelIcons = levelIcons;
   this.pathSegments = [];
+  this.currentLevel = levelIcons[0];
   this.path = -1;
   this.segment = 0;
   this.followPath = false;
@@ -11,6 +12,7 @@ function LevelPath(levelIcons,rad,indicatorClr,ctx){
   this.generatePath(10/this.levelIcons.length);//generates path where path generator acceleration dependent on amount of levels to ensure consistent curvature
   this.levelIndicator = new LevelIndicator(this.levelIcons[0].pos,rad,indicatorClr,this.ctx); //creates indicator that points to the current level
 }
+
 LevelPath.prototype.generatePath = function(acc){ //simulates an object attracted to each level icon to create a curve path that the level indicator follows
   let vel = new JSVector(0,-acc*4);//creates velocity for pathSegments follower
   for(var i = 0;i<this.levelIcons.length-1;i++){
@@ -33,6 +35,11 @@ LevelPath.prototype.generatePath = function(acc){ //simulates an object attracte
       pos.add(vel);
     }
   }
+}
+
+LevelPath.prototype.setNextLevel = function(){
+  this.currentLevel = this.levelIcons[this.path+1];
+  this.levelIndicator.assignTargetPos(this.currentLevel.pos.x,this.currentLevel.pos.y); //interpolates to the level icon position if the current path is complete
 }
 
 LevelPath.prototype.display = function(){
@@ -60,12 +67,12 @@ LevelPath.prototype.display = function(){
       this.followPath = true;
     }
     else{
-      this.levelIndicator.assignTargetPos(this.levelIcons[this.path+1].pos.x,this.levelIcons[this.path+1].pos.y); //interpolates to the level icon position if the current path is complete
+      this.setNextLevel();
       this.followPath = false; //stops following path since path complete
     }
   }
   else{
-    this.levelIndicator.assignTargetPos(this.levelIcons[this.path+1].pos.x,this.levelIcons[this.path+1].pos.y);//if there is no path to follow, interpolates automatically to current level icon
+    this.setNextLevel();
   }
   if(this.frame*this.speedScale>=1&&this.followPath){
     this.frame = 0;
@@ -73,6 +80,7 @@ LevelPath.prototype.display = function(){
   }
   this.levelIndicator.update();
 }
+
 LevelPath.prototype.nextLevel = function(){
   this.path = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
   this.segment = 0;

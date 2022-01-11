@@ -13,7 +13,7 @@ function keyDown(e) { //testing next level function
   }
 }
 function keyUp(e){
-  delete keys[keycode];
+  delete keys[e.code];
 }
 
 function init(){

@@ -4,8 +4,8 @@ var cnv,ctx;
 var levelPath;
 var keys;
 
-document.addEventListener('keypress', keyDown);
-document.addEventListener('keyup',keyUp);
+window.addEventListener('keypress', keyDown);
+window.addEventListener('keyup',keyUp);
 
 function keyDown(e) { //testing next level function
   if(keys[e.code]==undefined){

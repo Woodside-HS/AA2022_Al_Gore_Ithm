@@ -5,6 +5,8 @@ function LevelPath(levelIcons,rad,indicatorClr,ctx){
   this.path = -1;
   this.segment = 0;
   this.followPath = false;
+  this.speedScale = 0.5;//scale 0 to 1 for speed of path following
+  this.frame = 0;
 
   this.generatePath(10/this.levelIcons.length);//generates path where path generator acceleration dependent on amount of levels to ensure consistent curvature
   this.levelIndicator = new LevelIndicator(this.levelIcons[0].pos,rad,indicatorClr,this.ctx); //creates indicator that points to the current level
@@ -34,6 +36,7 @@ LevelPath.prototype.generatePath = function(acc){ //simulates an object attracte
 }
 
 LevelPath.prototype.display = function(){
+  this.frame++;
   //displays each icon and generates a smooth pathSegments between the icons by using a pathSegments follower
   for(var i = 0;i<this.pathSegments.length;i++){
     for(var j = 0;j<this.pathSegments[i].length-1;j++){
@@ -64,8 +67,10 @@ LevelPath.prototype.display = function(){
   else{
     this.levelIndicator.assignTargetPos(this.levelIcons[this.path+1].pos.x,this.levelIcons[this.path+1].pos.y);//if there is no path to follow, interpolates automatically to current level icon
   }
-
-  if(this.followPath) this.segment++;
+  if(this.frame*this.speedScale>=1&&this.followPath){
+    this.frame = 0;
+    this.segment++;
+  }
   this.levelIndicator.update();
 }
 LevelPath.prototype.nextLevel = function(){
@@ -97,5 +102,5 @@ LevelPath.generateNewPath = function(n,ctx){
     let level = new LevelIcon(ctx,x,y,clr,rad,label)
     levels.push(level);
   }
-  return new LevelPath(levels,rad*1.1,new Color(25,25,220,1),ctx);
+  return new LevelPath(levels,rad/1.75,new Color(25,25,220,1),ctx);
 }

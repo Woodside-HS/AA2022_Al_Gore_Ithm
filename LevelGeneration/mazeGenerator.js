@@ -10,51 +10,54 @@ function MazeGenerator(pos,cellSize,rows,cols,ctx){
   this.generateMaze(0);
 }
 
-MazeGenerator.prototype.generateMaze = function(i){
-  this.cells[i].visited = true;
-  let n = i-this.rows;
-  let s = i+this.rows;
-  let e = i+1;
-  let w = i-1;
-  let neighborArr = [
-    n,s,e,w
-  ];
+MazeGenerator.prototype.generateMaze = function(cell){
+  this.cells[cell].visited = true;
 
-  var neighbor;
+  let n = cell-this.rows;
+  let s = cell+this.rows;
+  let e = cell+1;
+  let w = cell-1;
+  let neighborArr = [];
+  if(cell>=this.rows) neighborArr.push(n);
+  if(cell<this.cells.length-this.rows) neighborArr.push(s);
+  if((cell+1)%this.rows!=0) neighborArr.push(e);
+  if(cell%this.rows!=0) neighborArr.push(w);
+
+  var neighbor = -1;
   for(i = 0;i<neighborArr.length;i++){//selects random defined neighbor
     let randIndex = Math.floor(Math.random()*(neighborArr.length-i));
     neighbor = neighborArr[randIndex];
 
-    if(this.cells[neighbor]!=null&&!this.cells[neighbor ].visited) break; //check if currently randomly selected neighbor is defined
+    if(!this.cells[neighbor].visited) break; //check if currently randomly selected neighbor is defined
 
     let temp = neighborArr[randIndex];
     neighborArr[randIndex] = neighborArr[neighborArr.length-i-1];
     neighborArr[neighborArr.length-i-1] = temp;
   }
-  if(this.cells[neighbor]==null||this.cells[neighbor].visited){
-    if(this.cells[i].connectedTo>=0){
-      this.generateMaze(this.cells[i].connectedTo);
+  if(neighbor<0||this.cells[neighbor].visited){
+    console.log(this.cells[cell].connectedTo);
+    if(this.cells[cell].connectedTo>=0){
+      this.generateMaze(this.cells[cell].connectedTo);
     }
     return;
   }
   if(neighbor == n){
-    this.cells[i].walls.n = false;
+    this.cells[cell].walls.n = false;
     this.cells[neighbor].walls.s = false;
   }
   if(neighbor == s){
-    this.cells[i].walls.s = false;
+    this.cells[cell].walls.s = false;
     this.cells[neighbor].walls.n = false;
   }
   if(neighbor == w){
-    this.cells[i].walls.w = false;
+    this.cells[cell].walls.w = false;
     this.cells[neighbor].walls.e = false;
   }
   if(neighbor == e){
-    this.cells[i].walls.e = false;
+    this.cells[cell].walls.e = false;
     this.cells[neighbor].walls.w = false;
   }
-  this.cells[neighbor].connectedTo = i;
-
+  this.cells[neighbor].connectedTo = cell;
   this.generateMaze(neighbor);
 }
 

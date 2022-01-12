@@ -1,10 +1,10 @@
-function Cell(x,y,scale,color,ctx){
+function Cell(x,y,scale,ctx){
   this.pos = new JSVector(x,y);
   this.scale = scale;
-  this.color = color;
   this.ctx = ctx;
   this.connectedTo = -1;
   this.visited = false;
+  this.style = "black";
   this.walls = {
     n:true,
     s:true,
@@ -15,7 +15,7 @@ function Cell(x,y,scale,color,ctx){
 
 Cell.prototype.draw = function(){
 
-  this.ctx.strokeStyle = "black";
+  this.ctx.strokeStyle = this.style;
   this.ctx.lineWidth = 2;
   this.ctx.beginPath();
   if(this.walls.n){

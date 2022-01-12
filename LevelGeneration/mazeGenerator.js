@@ -87,7 +87,7 @@ MazeGenerator.prototype.update= function(){
 }
 
 MazeGenerator.prototype.removeDoubleWalls = function(){
-  for(var i = 0;i<this.cells;i++){
+  for(var i = 0;i<this.cells.length;i++){
     if(this.cells[i].walls.n){
       let n = i-this.rows;
       if(n>=0) this.cells[n].walls.s = false;
@@ -104,5 +104,14 @@ MazeGenerator.prototype.removeDoubleWalls = function(){
       let w = i-1;
       if((w+1)%this.rows!=0) this.cells[w].walls.e = false;
     }
+  }
+}
+MazeGenerator.prototype.countWalls = function(){
+  let walls = 0;
+  for(var i = 0;i<this.cells.length;i++){
+    if(this.cells[i].walls.n) walls++;
+    if(this.cells[i].walls.s) walls++;
+    if(this.cells[i].walls.e) walls++;
+    if(this.cells[i].walls.w) walls++;
   }
 }

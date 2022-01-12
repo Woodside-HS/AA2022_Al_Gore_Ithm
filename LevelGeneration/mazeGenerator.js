@@ -70,10 +70,10 @@ MazeGenerator.prototype.generateMaze = function(cell){
 
 MazeGenerator.prototype.resetGrid = function(){
   this.cells = [];
-  for(var i = 0;i<this.cols;i++){
-    for(var j = 0;j<this.rows;j++){
-      let x = this.pos.x+j*this.cellSize;
-      let y = this.pos.y+i*this.cellSize;
+  for(var j = 0;j<this.rows;j++){
+    for(var i = 0;i<this.cols;i++){
+      let x = this.pos.x+i*this.cellSize;
+      let y = this.pos.y+j*this.cellSize;
       let cell = new Cell(x,y,this.cellSize,ctx);
       this.cells.push(cell);
     }
@@ -104,14 +104,5 @@ MazeGenerator.prototype.removeDoubleWalls = function(){
       let w = i-1;
       if((w+1)%this.rows!=0) this.cells[w].walls.e = false;
     }
-  }
-}
-MazeGenerator.prototype.countWalls = function(){
-  let walls = 0;
-  for(var i = 0;i<this.cells.length;i++){
-    if(this.cells[i].walls.n) walls++;
-    if(this.cells[i].walls.s) walls++;
-    if(this.cells[i].walls.e) walls++;
-    if(this.cells[i].walls.w) walls++;
   }
 }

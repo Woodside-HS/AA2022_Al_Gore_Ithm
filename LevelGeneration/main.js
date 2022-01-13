@@ -58,5 +58,5 @@ function processInput(){
   else if(keys["KeyA"]){
     dx = -1;
   }
-  player.changeTarget(dx,dy);
+  player.changeTarget(dx,dy,mazeGenerator.cells);
 }

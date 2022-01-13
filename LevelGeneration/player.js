@@ -25,8 +25,35 @@ Player.prototype.draw = function(){
   this.ctx.fill();
 }
 
-Player.prototype.changeTarget = function(dx,dy){
+Player.prototype.changeTarget = function(dx,dy,cells){
+
+  this.color = new Color(255,0,0,1);
+
+  for(var i = 0;i<cells.length;i++){
+    for(var k = 0;k<cells[i].walls.length;k++){
+      if(cells[i].walls[k].isColliding(this.pos,this.rad)){
+        this.color = new Color(0,255,0,1);
+        i = cells.length;
+        break;
+      }
+    }
+  }
+
+  if(dx==0&&dy==0) return;
+  /*if(dx<0){
+
+  }
+  else if(dx>0){
+
+  }
+  if(dy<0){
+
+  }
+  else if(dy>0){
+
+  }*/
+
   let delta = new JSVector(dx,dy);
-  if(delta.getMagnitude()>0) delta.setMagnitude(this.speed);
+  delta.setMagnitude(this.speed);
   this.targetPos.add(delta);
 }

@@ -28,12 +28,13 @@ class Bubble{
     this.message = this.originalMessage;
     this.ctx.beginPath();
     this.lineWidth = 3;
+    console.log(this.lineWidth);
     this.ctx.fillStyle = "rgba(0,0,0,"+this.life/10+")"; //fades out on the last 10 frames
     this.ctx.strokeStyle = "rgba(0,0,0,"+this.life/10+")";
     //this.ctx.strokeStyle = "rgba(0,0,0,"+this.life/this.initialLife+")";
-    this.ctx.rect(this.mouseX, this.mouseY, this.length*this.fontSize*1.05, this.width*this.fontSize*1.15 + 20);
-    this.ctx.moveTo(this.mouseX + this.fontSize + 20 * this.length*3/5, this.mouseY + this.width*this.fontSize*1.15 + 20);
-    this.ctx.lineTo(this.mouseX + this.fontSize + 20 * this.length*11/20, this.mouseY + this.width*this.fontSize + 20 + this.fontSize *4); //rectangle and box creation that is scalable on paramaters passed
+    this.ctx.rect(this.mouseX, this.mouseY, this.length*this.fontSize*1.05, this.width*this.fontSize*1.3);
+    this.ctx.moveTo(this.mouseX + this.fontSize * this.length*4/5, this.mouseY + this.width*this.fontSize*1.3);
+    this.ctx.lineTo(this.mouseX + this.fontSize * this.length*3/4, this.mouseY + this.width*this.fontSize*2.6); //rectangle and box creation that is scalable on paramaters passed
       for (let i = 0; i<this.width; i++){
         /*
         if(this.message.length<= this.length*2.4 !true){

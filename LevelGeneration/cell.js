@@ -5,9 +5,7 @@ function Cell(x,y,scale,ctx){
   this.connectedTo = -1;
   this.visited = false;
   this.wallStatus = {
-    //n:true,
     s:true,
-    //w:true,
     e:true
   }
   this.walls = [];

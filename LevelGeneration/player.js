@@ -1,0 +1,32 @@
+function Player(x,y,rad,color,speed,ctx){
+  this.pos = new JSVector(x,y);
+  this.targetPos = new JSVector(x,y);
+  this.rad = rad;
+  this.color = color;
+  this.speed = speed;
+  this.ctx = ctx;
+}
+
+Player.prototype.update = function(){
+  this.move(0.2);
+  this.draw();
+}
+
+Player.prototype.move = function(t){
+  let dir = JSVector.subGetNew(this.targetPos,this.pos);
+  dir.setMagnitude(dir.getMagnitude()*t);
+  this.pos.add(dir);
+}
+
+Player.prototype.draw = function(){
+  this.ctx.beginPath();
+  this.ctx.fillStyle = this.color.toString();
+  this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
+  this.ctx.fill();
+}
+
+Player.prototype.changeTarget = function(dx,dy){
+  let delta = new JSVector(dx,dy);
+  if(delta.getMagnitude()>0) delta.setMagnitude(this.speed);
+  this.targetPos.add(delta);
+}

@@ -34,7 +34,7 @@ class Bubble{
     //this.ctx.strokeStyle = "rgba(0,0,0,"+this.life/this.initialLife+")";
     this.ctx.rect(this.mouseX, this.mouseY, this.length*this.fontSize*1.05, this.width*this.fontSize*1.3);
     this.ctx.moveTo(this.mouseX + this.fontSize * this.length*4/5, this.mouseY + this.width*this.fontSize*1.3);
-    this.ctx.lineTo(this.mouseX + this.fontSize * this.length*3/4, this.mouseY + this.width*this.fontSize*2.6); //rectangle and box creation that is scalable on paramaters passed
+    this.ctx.lineTo(this.mouseX + this.fontSize * this.length*7/10, this.mouseY + this.width*this.fontSize*2.2); //rectangle and box creation that is scalable on paramaters passed
       for (let i = 0; i<this.width; i++){
         /*
         if(this.message.length<= this.length*2.4 !true){
@@ -42,6 +42,11 @@ class Bubble{
         }
         */
           this.charactersBack = 0
+          if(this.message.length <= this.length*2.5){
+            this.charactersBack = 0;
+            this.ctx.fillText(this.message.substring(0, this.length*2.4 - this.charactersBack), this.mouseX+10, this.mouseY +this.fontSize*1.15*(i+1));
+            break;
+          }
           while (this.message.substring(this.length*2.4 - 1 - this.charactersBack, this.length*2.4 - this.charactersBack) != ' '){
               this.charactersBack++;
               console.log(this.message.substring(this.length*2.4 - 1 - this.charactersBack, this.length*2.4 - this.charactersBack)); //debug

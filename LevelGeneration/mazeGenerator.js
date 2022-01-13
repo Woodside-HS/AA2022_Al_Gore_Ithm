@@ -8,7 +8,6 @@ function MazeGenerator(pos,cellSize,rows,cols,ctx){
 
   this.resetGrid();
   this.generateMaze(0);
-  this.removeDoubleWalls();
 }
 
 MazeGenerator.prototype.generateMaze = function(cell){
@@ -45,23 +44,28 @@ MazeGenerator.prototype.generateMaze = function(cell){
     if(this.cells[cell].connectedTo>=0){
       this.generateMaze(this.cells[cell].connectedTo);
     }
+
+    this.removeDoubleWalls();
+    for(var i = 0;i<this.cells.length;i++){
+      this.cells[i].generateWalls();
+    }
     return;
   }
   if(neighbor == n){
-    this.cells[cell].walls.n = false;
-    this.cells[neighbor].walls.s = false;
+    this.cells[cell].wallStatus.n = false;
+    this.cells[neighbor].wallStatus.s = false;
   }
   if(neighbor == s){
-    this.cells[cell].walls.s = false;
-    this.cells[neighbor].walls.n = false;
+    this.cells[cell].wallStatus.s = false;
+    this.cells[neighbor].wallStatus.n = false;
   }
   if(neighbor == w){
-    this.cells[cell].walls.w = false;
-    this.cells[neighbor].walls.e = false;
+    this.cells[cell].wallStatus.w = false;
+    this.cells[neighbor].wallStatus.e = false;
   }
   if(neighbor == e){
-    this.cells[cell].walls.e = false;
-    this.cells[neighbor].walls.w = false;
+    this.cells[cell].wallStatus.e = false;
+    this.cells[neighbor].wallStatus.w = false;
   }
   this.cells[neighbor].connectedTo = cell;
 
@@ -72,8 +76,8 @@ MazeGenerator.prototype.resetGrid = function(){
   this.cells = [];
   for(var j = 0;j<this.rows;j++){
     for(var i = 0;i<this.cols;i++){
-      let x = this.pos.x+i*this.cellSize;
-      let y = this.pos.y+j*this.cellSize;
+      let x = i*this.cellSize;
+      let y = j*this.cellSize;
       let cell = new Cell(x,y,this.cellSize,ctx);
       this.cells.push(cell);
     }
@@ -81,28 +85,31 @@ MazeGenerator.prototype.resetGrid = function(){
 }
 
 MazeGenerator.prototype.update= function(){
+  this.ctx.save();
+  this.ctx.translate(this.pos.x,this.pos.y);
   for(var i = 0;i<this.cells.length;i++){
     this.cells[i].draw();
   }
+  this.ctx.restore();
 }
 
 MazeGenerator.prototype.removeDoubleWalls = function(){
   for(var i = 0;i<this.cells.length;i++){
-    if(this.cells[i].walls.n){
+    if(this.cells[i].wallStatus.n){
       let n = i-this.rows;
-      if(n>=0) this.cells[n].walls.s = false;
+      if(n>=0) this.cells[n].wallStatus.s = false;
     }
-    if(this.cells[i].walls.s){
+    if(this.cells[i].wallStatus.s){
       let s = i+this.rows;
-      if(s<this.cells.length) this.cells[s].walls.n = false;
+      if(s<this.cells.length) this.cells[s].wallStatus.n = false;
     }
-    if(this.cells[i].walls.e){
+    if(this.cells[i].wallStatus.e){
       let e = i+1;
-      if(e%this.rows!=0) this.cells[e].walls.w = false;
+      if(e%this.rows!=0) this.cells[e].wallStatus.w = false;
     }
-    if(this.cells[i].walls.w){
+    if(this.cells[i].wallStatus.w){
       let w = i-1;
-      if((w+1)%this.rows!=0) this.cells[w].walls.e = false;
+      if((w+1)%this.rows!=0) this.cells[w].wallStatus.e = false;
     }
   }
 }

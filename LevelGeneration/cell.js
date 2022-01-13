@@ -4,34 +4,38 @@ function Cell(x,y,scale,ctx){
   this.ctx = ctx;
   this.connectedTo = -1;
   this.visited = false;
-  this.style = "black";
-  this.walls = {
+  this.wallStatus = {
     n:true,
     s:true,
     w:true,
     e:true
   }
+  this.walls = [];
 }
 
 Cell.prototype.draw = function(){
+  for(var i = 0;i<this.walls.length;i++){
+    this.walls[i].run();
+  }
+}
 
-  this.ctx.strokeStyle = this.style;
-  this.ctx.lineWidth = 2;
-  this.ctx.beginPath();
-  if(this.walls.n){
-    this.ctx.lineTo(this.pos.x+this.scale,this.pos.y);
+Cell.prototype.generateWalls = function(){
+  this.walls = [];
+  if(this.wallStatus.n){
+    this.addWall(this.pos.x,this.pos.y,0,this.scale);
   }
-  if(this.walls.s){
-    this.ctx.moveTo(this.pos.x,this.pos.y+this.scale);
-    this.ctx.lineTo(this.pos.x+this.scale,this.pos.y+this.scale);
+  if(this.wallStatus.s){
+    this.addWall(this.pos.x,this.pos.y+this.scale,0,this.scale);
   }
-  if(this.walls.w){
-    this.ctx.moveTo(this.pos.x,this.pos.y);
-    this.ctx.lineTo(this.pos.x,this.pos.y+this.scale);
+  if(this.wallStatus.e){
+    this.addWall(this.pos.x+this.scale,this.pos.y,90,this.scale);
   }
-  if(this.walls.e){
-    this.ctx.moveTo(this.pos.x+this.scale,this.pos.y);
-    this.ctx.lineTo(this.pos.x+this.scale,this.pos.y+this.scale);
+  if(this.wallStatus.w){
+    this.addWall(this.pos.x,this.pos.y,90,this.scale);
   }
-  this.ctx.stroke();
+}
+
+Cell.prototype.addWall = function(x,y,angle,length){
+  let wall = new Wall(this.ctx,x,y,angle,length);
+  this.walls.push(wall);
 }

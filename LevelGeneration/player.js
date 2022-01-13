@@ -8,8 +8,8 @@ function Player(x,y,rad,color,speed,ctx){
   this.prevMove = new JSVector(0,0);
 }
 
-Player.prototype.update = function(dx,dy,cells){
-  this.changeTarget(dx,dy,cells);
+Player.prototype.update = function(dx,dy,mazeGenerator){
+  this.changeTarget(dx,dy,mazeGenerator);
   this.draw();
 }
 
@@ -27,13 +27,32 @@ Player.prototype.draw = function(){
   this.ctx.fill();
 }
 
-Player.prototype.changeTarget = function(dx,dy,cells){
+Player.prototype.changeTarget = function(dx,dy,mazeGenerator){
 
   this.color = new Color(255,0,0,1);
+  let shiftedPos = new JSVector(this.pos.x-mazeGenerator.cellSize/2,this.pos.y-mazeGenerator.cellSize/2)
 
-  for(var i = 0;i<cells.length;i++){
-    for(var k = 0;k<cells[i].walls.length;k++){
-      let wall = cells[i].walls[k];
+  let closeCells = [];
+
+  let r = Math.floor(shiftedPos.y/mazeGenerator.cellSize);
+  let c = Math.floor(shiftedPos.x/mazeGenerator.cellSize);
+  let i_center = Math.round(c + r*mazeGenerator.cols);
+  let i_n = i_center-mazeGenerator.cols;
+  let i_w = i_center-1;
+
+  console.log(i_center);
+
+  let center = mazeGenerator.cells[i_center]; //current cell
+  let n = mazeGenerator.cells[i_n]; //top cell
+  let w = mazeGenerator.cells[i_w]; //left cell
+
+  if(center!=undefined)closeCells.push(center);
+  if(n!=undefined)closeCells.push(n);
+  if(i_center%mazeGenerator.cols!=0&&w!=undefined)closeCells.push(w);
+
+  for(var i = 0;i<closeCells.length;i++){
+    for(var k = 0;k<closeCells[i].walls.length;k++){
+      let wall = closeCells[i].walls[k];
       if(wall.isColliding(this.pos,this.rad)){
 
         dx*=Math.cos(wall.angle);

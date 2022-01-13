@@ -8,7 +8,7 @@ function MazeGenerator(pos,cellSize,rows,cols,ctx){
 
   this.resetGrid();
   this.generateMaze(0);
-  
+
   for(var i = 0;i<this.cells.length;i++){
     this.cells[i].generateWalls();
   }

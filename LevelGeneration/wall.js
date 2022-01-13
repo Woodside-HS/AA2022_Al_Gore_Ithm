@@ -3,12 +3,13 @@ function Wall(ctx,x,y,angle,length){
   this.pos = new JSVector(x,y);
   this.angle = angle*Math.PI/180;
   this.length = length;
+  this.width = 2;
 }
 Wall.prototype.run = function(){
   this.ctx.beginPath();
   this.ctx.moveTo(this.pos.x, this.pos.y);
   this.ctx.lineTo(this.pos.x+this.length*Math.cos(this.angle), this.pos.y+this.length*Math.sin(this.angle));
-  this.ctx.lineWidth = 2;
+  this.ctx.lineWidth = this.width;
   this.ctx.strokeStyle = "black";
   this.ctx.stroke();
   this.ctx.closePath();

@@ -40,7 +40,6 @@ function animate() {
 function update(){
   mazeGenerator.update();
   processInput();
-  player.update();
 }
 
 function processInput(){
@@ -58,5 +57,5 @@ function processInput(){
   else if(keys["KeyA"]){
     dx = -1;
   }
-  player.changeTarget(dx,dy,mazeGenerator.cells);
+  player.update(dx,dy,mazeGenerator.cells);
 }

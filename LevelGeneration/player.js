@@ -35,21 +35,11 @@ Player.prototype.changeTarget = function(dx,dy,cells){
     for(var k = 0;k<cells[i].walls.length;k++){
       let wall = cells[i].walls[k];
       if(wall.isColliding(this.pos,this.rad)){
-        this.color = new Color(0,255,0,1);
 
-        let x = this.pos.x;
-        let y = this.pos.y;
-
-        if(dx*(this.pos.x+this.rad+wall.width/2-wall.pos.x)>=0){
-          x-=dx*wall.width+this.prevMove.x;
-          dx*=Math.cos(wall.angle);
-        }
-        if(dy*(this.pos.y+this.rad+wall.width/2-wall.pos.y)>=0){
-          y-=dy*wall.width+this.prevMove.y;
-          dy*=Math.sin(wall.angle);
-        }
-
-        this.targetPos = new JSVector(x,y);
+        dx*=Math.cos(wall.angle);
+        dy*=Math.sin(wall.angle);
+        this.pos.sub(this.prevMove);
+        this.targetPos = new JSVector(this.pos.x,this.pos.y);
       }
     }
   }

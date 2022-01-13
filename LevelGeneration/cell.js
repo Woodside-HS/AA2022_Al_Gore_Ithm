@@ -5,9 +5,9 @@ function Cell(x,y,scale,ctx){
   this.connectedTo = -1;
   this.visited = false;
   this.wallStatus = {
-    n:true,
+    //n:true,
     s:true,
-    w:true,
+    //w:true,
     e:true
   }
   this.walls = [];
@@ -21,17 +21,11 @@ Cell.prototype.draw = function(){
 
 Cell.prototype.generateWalls = function(){
   this.walls = [];
-  if(this.wallStatus.n){
-    this.addWall(this.pos.x,this.pos.y,0,this.scale);
-  }
   if(this.wallStatus.s){
     this.addWall(this.pos.x,this.pos.y+this.scale,0,this.scale);
   }
   if(this.wallStatus.e){
     this.addWall(this.pos.x+this.scale,this.pos.y,90,this.scale);
-  }
-  if(this.wallStatus.w){
-    this.addWall(this.pos.x,this.pos.y,90,this.scale);
   }
 }
 

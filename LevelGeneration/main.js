@@ -22,9 +22,9 @@ function init(){
     keys = [];
 
     let cellSize = 100;
-    mazeGenerator = new MazeGenerator(new JSVector(0,0),cellSize,cnv.height/cellSize,cnv.width/cellSize,ctx);
+    mazeGenerator = new MazeGenerator(new JSVector(0,0),cellSize,cnv.height/cellSize,cnv.width/cellSize,ctx,new JSVector(0,0,0,1));
 
-    player = new Player(cellSize/2,cellSize/2,cellSize/10,new Color(255,0,0,1),5,ctx);
+    player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),7,ctx);
 
     animate();
 }

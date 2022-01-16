@@ -1,4 +1,4 @@
-function Cell(x,y,scale,ctx){
+function Cell(x,y,scale,ctx,wallClr){
   this.pos = new JSVector(x,y);
   this.scale = scale;
   this.ctx = ctx;
@@ -9,6 +9,7 @@ function Cell(x,y,scale,ctx){
     e:true
   }
   this.walls = [];
+  this.wallClr = wallClr;
 }
 
 Cell.prototype.draw = function(){
@@ -28,6 +29,6 @@ Cell.prototype.generateWalls = function(){
 }
 
 Cell.prototype.addWall = function(x,y,angle,length){
-  let wall = new Wall(this.ctx,x,y,angle,length);
+  let wall = new Wall(this.ctx,x,y,angle,length,this.wallClr);
   this.walls.push(wall);
 }

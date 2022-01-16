@@ -1,18 +1,18 @@
-function Wall(ctx,x,y,angle,length){
+function Wall(ctx,x,y,angle,length,clr){
   this.ctx = ctx;
   this.pos = new JSVector(x,y);
   this.angle = angle*Math.PI/180;
   this.length = length;
   this.width = 2;
+  this.clr = clr;
 }
 Wall.prototype.run = function(){
   this.ctx.beginPath();
   this.ctx.moveTo(this.pos.x, this.pos.y);
   this.ctx.lineTo(this.pos.x+this.length*Math.cos(this.angle), this.pos.y+this.length*Math.sin(this.angle));
   this.ctx.lineWidth = this.width;
-  this.ctx.strokeStyle = "black";
+  this.ctx.strokeStyle = this.clr.toString();
   this.ctx.stroke();
-  this.ctx.closePath();
 }
 Wall.prototype.isColliding = function(pos, rad){
   let centerpos = new JSVector(Math.cos(this.angle), Math.sin(this.angle)); // represent the angle as a vector with magnitude 1

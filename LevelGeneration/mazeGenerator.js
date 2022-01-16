@@ -1,10 +1,12 @@
-function MazeGenerator(pos,cellSize,rows,cols,ctx){
+function MazeGenerator(pos,cellSize,rows,cols,ctx,wallClr){
   this.ctx = ctx;
   this.rows = rows;
   this.cols = cols;
   this.cellSize = cellSize;
   this.pos = pos;
   this.cells = [];
+  this.borderWalls = [];
+  this.wallClr = wallClr
 
   this.resetGrid();
   this.generateMaze(0);
@@ -73,17 +75,72 @@ MazeGenerator.prototype.resetGrid = function(){
     for(var i = 0;i<this.cols;i++){
       let x = i*this.cellSize;
       let y = j*this.cellSize;
-      let cell = new Cell(x,y,this.cellSize,ctx);
+      let cell = new Cell(x,y,this.cellSize,ctx,this.wallClr);
       this.cells.push(cell);
     }
   }
+
+  let width = this.cols*this.cellSize;
+  let height = this.rows*this.cellSize;
+
+  let n = new Wall(this.ctx,0,0,0,width,this.wallClr);
+  let w = new Wall(this.ctx,0,0,90,height,this.wallClr);
+
+  this.borderWalls = [n,w];
 }
 
-MazeGenerator.prototype.update= function(){
+MazeGenerator.prototype.update = function(){
   this.ctx.save();
   this.ctx.translate(this.pos.x,this.pos.y);
   for(var i = 0;i<this.cells.length;i++){
     this.cells[i].draw();
   }
+  for(var i = 0;i<this.borderWalls.length;i++){
+    this.borderWalls[i].run();
+  }
   this.ctx.restore();
+}
+
+MazeGenerator.prototype.detectCharacterCollision = function(dx,dy,character,prevMove){
+  let shiftedPos = new JSVector(character.pos.x-this.cellSize/2,character.pos.y-this.cellSize/2)
+
+  let closeCells = [];
+
+  let r = Math.floor((shiftedPos.y+this.cellSize/2)/this.cellSize);
+  let c = Math.floor((shiftedPos.x+this.cellSize/2)/this.cellSize);
+  let i_center = Math.round(c + r*this.cols);
+  let i_n = i_center-this.cols;
+  let i_w = i_center-1;
+
+  let center = this.cells[i_center]; //current cell
+  let n = this.cells[i_n]; //top cell
+  let w = this.cells[i_w]; //left cell
+
+  if(center!=undefined)closeCells.push(center);
+  if(n!=undefined)closeCells.push(n);
+  if(i_center%this.cols!=0&&w!=undefined)closeCells.push(w);
+
+  let walls = [];
+
+  for(var i = 0;i<closeCells.length;i++){
+    for(var k = 0;k<closeCells[i].walls.length;k++){
+      walls.push(closeCells[i].walls[k]);
+    }
+  }
+
+  for(var i = 0;i<this.borderWalls.length;i++){
+    walls.push(this.borderWalls[i]);
+  }
+
+  for(var i = 0;i<walls.length;i++){
+    if(walls[i].isColliding(character.pos,character.rad)){
+
+      dx*=Math.cos(walls[i].angle);
+      dy*=Math.sin(walls[i].angle);
+      character.pos.sub(prevMove);
+      character.targetPos = new JSVector(character.pos.x,character.pos.y);
+    }
+  }
+
+  return new JSVector(dx,dy);
 }

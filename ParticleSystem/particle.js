@@ -2,22 +2,23 @@
 function Particle(x,y,acc){
   this.pos = new JSVector(x, y); //initialize pos at emitter pos
   //VELOCITY
-//  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
+  //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
   this.vel = new JSVector(Math.random()*2-1, Math.random()*2-1);
   //
   this.acc = acc;
   this.lifeSpan = 200;
+  this.clr = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
 
 }
 
 Particle.prototype.draw = function(){
 
-  context.strokeStyle = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
-  context.beginPath();
-  context.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
-  context.stroke();
-  context.fillStyle = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
-  context.fill();
+  ctx.strokeStyle = this.clr;
+  ctx.beginPath();
+  ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
+  ctx.stroke();
+  ctx.fillStyle = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
+  ctx.fill();
 
 }
 

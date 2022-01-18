@@ -1,10 +1,19 @@
+window.addEventListener("mousedown", ()=>{
+  mouseStatus = true;
+  mousePos = new JSVector(event.offsetX, event.offsetY);
+  particleSystems.push(new ParticleSystem(cnv.width/2,cnv.height/2, .8, mousePos));
+});
+
+window.addEventListener("mouseup", ()=>{
+  mouseStatus = false;
+  particleSystems.splice(0, 1);
+});
 
 function ParticleSystem(x,y,accMag,destination){
   this.pos = new JSVector(x,y);
   this.acc = destination;
   this.acc.sub(this.pos);
-  this.acc.setMagnitude(0.8);
-  console.log(this.acc);
+  this.acc.setMagnitude(.9);
   this.particles = [];
 
 }

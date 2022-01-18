@@ -8,7 +8,9 @@ function Player(x,y,rad,color,speed,ctx){
   this.prevMove = new JSVector(0,0);
 }
 
-Player.prototype.update = function(dx,dy,mazeGenerator){
+Player.prototype.update = function(mazeGenerator){
+  let dx = controls.x;
+  let dy = controls.y;
 
   let delta = mazeGenerator.detectCharacterCollision(dx,dy,this,this.prevMove);
 

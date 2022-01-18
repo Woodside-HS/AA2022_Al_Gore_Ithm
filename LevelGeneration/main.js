@@ -3,6 +3,7 @@ window.addEventListener("load", init);
 var cnv,ctx;
 var mazeGenerator;
 var keys;
+var controls;
 var player;
 
 window.addEventListener('keypress',keyDown);
@@ -18,6 +19,8 @@ function keyUp(e){
 function init(){
     cnv = document.getElementById("cnv");
     ctx = cnv.getContext("2d");
+
+    controls = new JSVector(0,0);
 
     keys = [];
 
@@ -43,19 +46,19 @@ function update(){
 }
 
 function processInput(){
-  let dx = 0;
-  let dy = 0;
+  controls.x = 0;
+  controls.y = 0;
   if(keys["KeyW"]){
-    dy = -1;
+    controls.y = -1;
   }
   else if(keys["KeyS"]){
-    dy = 1;
+    controls.y = 1;
   }
   if(keys["KeyD"]){
-    dx = 1;
+    controls.x = 1;
   }
   else if(keys["KeyA"]){
-    dx = -1;
+    controls.x = -1;
   }
-  player.update(dx,dy,mazeGenerator);
+  player.update(mazeGenerator);
 }

@@ -1,9 +1,8 @@
-function MazeGenerator(pos,cellSize,rows,cols,ctx,wallClr){
+function MazeGenerator(cellSize,rows,cols,ctx,wallClr){
   this.ctx = ctx;
   this.rows = rows;
   this.cols = cols;
   this.cellSize = cellSize;
-  this.pos = pos;
   this.cells = [];
   this.borderWalls = [];
   this.wallClr = wallClr
@@ -90,15 +89,12 @@ MazeGenerator.prototype.resetGrid = function(){
 }
 
 MazeGenerator.prototype.update = function(){
-  this.ctx.save();
-  this.ctx.translate(this.pos.x,this.pos.y);
   for(var i = 0;i<this.cells.length;i++){
     this.cells[i].draw();
   }
   for(var i = 0;i<this.borderWalls.length;i++){
-    this.borderWalls[i].run();
+    this.borderWalls[i].draw();
   }
-  this.ctx.restore();
 }
 
 MazeGenerator.prototype.detectCharacterCollision = function(dx,dy,character,prevMove){

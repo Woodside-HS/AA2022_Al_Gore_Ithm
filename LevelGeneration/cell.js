@@ -14,7 +14,7 @@ function Cell(x,y,scale,ctx,wallClr){
 
 Cell.prototype.draw = function(){
   for(var i = 0;i<this.walls.length;i++){
-    this.walls[i].run();
+    this.walls[i].draw();
   }
 }
 

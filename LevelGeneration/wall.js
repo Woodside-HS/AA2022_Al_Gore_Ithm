@@ -6,7 +6,7 @@ function Wall(ctx,x,y,angle,length,clr){
   this.width = 2;
   this.clr = clr;
 }
-Wall.prototype.run = function(){
+Wall.prototype.draw = function(){
   this.ctx.beginPath();
   this.ctx.moveTo(this.pos.x, this.pos.y);
   this.ctx.lineTo(this.pos.x+this.length*Math.cos(this.angle), this.pos.y+this.length*Math.sin(this.angle));

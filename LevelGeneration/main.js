@@ -1,10 +1,9 @@
 window.addEventListener("load", init);
 
 var cnv,ctx;
-var mazeGenerator;
 var keys;
-var controls;
-var player;
+var level = [];
+var currentLevel;
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
@@ -20,16 +19,23 @@ function init(){
     cnv = document.getElementById("cnv");
     ctx = cnv.getContext("2d");
 
-    controls = new JSVector(0,0);
-
     keys = [];
 
-    let cellSize = 50;
-    mazeGenerator = new MazeGenerator(cellSize,cnv.height/cellSize,cnv.width/cellSize,ctx,new JSVector(0,0,0,1));
+    let cellSize = 100;
+    let player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),7,ctx);
+    let level1 = new Level(6,6,cellSize,null,null,player,ctx) //creates new level with no enemies or boss parameters - null,null -
 
-    player = new Player(cellSize/2,cellSize/2,7,new Color(255,0,0,1),7,ctx);
+    currentLevel = 0;
+    levels = [];
+    levels.push(level1);
+
+    reloadLevel();
 
     animate();
+}
+
+function reloadLevel(){
+  levels[currentLevel].load();
 }
 
 function animate() {
@@ -41,24 +47,5 @@ function animate() {
 }
 
 function update(){
-  mazeGenerator.update();
-  processInput();
-}
-
-function processInput(){
-  controls.x = 0;
-  controls.y = 0;
-  if(keys["KeyW"]){
-    controls.y = -1;
-  }
-  else if(keys["KeyS"]){
-    controls.y = 1;
-  }
-  if(keys["KeyD"]){
-    controls.x = 1;
-  }
-  else if(keys["KeyA"]){
-    controls.x = -1;
-  }
-  player.update(mazeGenerator);
+  levels[currentLevel].update();
 }

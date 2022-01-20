@@ -1,11 +1,33 @@
-function Level(r,c,cellSize,enemies,boss,ctx){
+function Level(r,c,cellSize,enemies,boss,player,ctx){
     this.mazeGenerator = new MazeGenerator(cellSize,r,c,ctx,new Color(0,0,0,1));
     this.enemies = enemies;
     this.boss = boss; //To do: create enemy class
+    this.player = player;
     this.ctx = ctx;
 }
 
 Level.prototype.update = function(){
   this.mazeGenerator.update();
-  player.update(this.mazeGenerator);
+
+  /*for(var i = 0;i<this.enemies.length;i++){
+    this.enemies[i].update(this.mazeGenerator)
+  }
+  this.boss.update(this.mazeGenerator);
+  *///IMPLEMENT LATER
+
+  this.player.update(this.mazeGenerator);
+}
+
+Level.prototype.load = function(){
+  let cellSize = this.mazeGenerator.cellSize;
+  let c = this.mazeGenerator.cols;
+  let r = this.mazeGenerator.rows;
+
+  this.player.pos = new JSVector(cellSize/2,cellSize/2); //top left of maze
+  //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
+  this.scatterEnemies();
+}
+
+Level.prototype.scatterEnemies = function(){
+  //IMPLEMENT LATER
 }

@@ -4,15 +4,16 @@ function Player(x,y,rad,color,speed,ctx){
   this.rad = rad;
   this.color = color;
   this.speed = speed;
-  this.ctx = ctx;
+  this.vel = new JSVector(0,0);
   this.prevMove = new JSVector(0,0);
+  this.ctx = ctx;
 }
 
 Player.prototype.update = function(mazeGenerator){
-  let dx = controls.x;
-  let dy = controls.y;
 
-  let delta = mazeGenerator.detectCharacterCollision(dx,dy,this,this.prevMove);
+  this.processInput();
+
+  let delta = mazeGenerator.detectCharacterCollision(this.vel.x,this.vel.y,this,this.prevMove);
 
   if(Math.abs(delta.x)<Number.EPSILON&&Math.abs(delta.y)<Number.EPSILON){
     this.move(0.2);
@@ -32,6 +33,25 @@ Player.prototype.move = function(t){
   dir.setMagnitude(dir.getMagnitude()*t);
   this.prevMove = dir;
   this.pos.add(dir);
+}
+
+Player.prototype.processInput = function(){
+  let dx,dy = 0;
+
+  if(keys["KeyW"]){
+    dy = -1;
+  }
+  else if(keys["KeyS"]){
+    dy = 1;
+  }
+  if(keys["KeyD"]){
+    dx = 1;
+  }
+  else if(keys["KeyA"]){
+    dx = -1;
+  }
+
+  this.vel = new JSVector(dx,dy);
 }
 
 Player.prototype.draw = function(){

@@ -27,7 +27,5 @@ Wall.prototype.isColliding = function(pos, rad){
   dist*= Math.abs(Math.cos(this.angle));
 // the previous 2 lines use this formula to calculate the shortest distance from the ball to the wall:
 // https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
-
-
   return dist<rad; // if the distance calculated above is less than the radius, this means that it's colliding
 }

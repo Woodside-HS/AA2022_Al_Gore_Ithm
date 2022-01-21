@@ -1,22 +1,12 @@
+window.addEventListener("load", init);
 var canvas, ctx;
 var walls = [];
-var keys;
-
-window.addEventListener("load", init);
-window.addEventListener('keypress', keyDown);
-window.addEventListener('keyup', keyUp);
-
-function keyDown(e) { //testing next level function
-  keys[e.code] = true;
-}
-function keyUp(e){
-  keys[e.code] = false;
-}
-
 function init(){
   canvas = document.getElementById("cnv");
   ctx = canvas.getContext("2d");
-  keys = [];
+  window.addEventListener("keydown", keyDownHandler);
+  window.addEventListener("keyup", keyUpHandler);
+  window.addEventListener("keydown", collisionChecker);
   loadPlayer();
   loadWalls(5);
   animate();
@@ -24,50 +14,13 @@ function init(){
 
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  update();
-
-  requestAnimationFrame(animate);
-}
-
-function update(){
-  checkPlayerInput();
   player.run();
   for (let i = 0; i<walls.length; i++){
     walls[i].run();
   }
-  checkCollisions();
+  collisionChecker();
+  window.requestAnimationFrame(animate);
 }
-
-function checkPlayerInput(){
-  if(keys["KeyA"]){
-    //player.vel.x = -4;
-    player.controlLeft = true;
-    player.controlRight = false;
-  }
-  else if(keys["KeyD"]){
-    //player.vel.x = 4;
-    player.controlRight = true;
-    player.controlLeft = false;
-  }
-  else{
-    player.vel.x = 0;
-  }
-
-  if(keys["KeyW"]){
-    //player.vel.y = -4;
-    player.controlUp = true;
-    player.controlDown = false;
-  }
-  else if(keys["KeyS"]){
-    //player.vel.y = 4;
-    player.controlDown = true;
-    player.controlUp = false;
-  }
-  else{
-    player.vel.y = 0;
-  }
-}
-
 function loadPlayer(){
   let x = 100;
   let y = 100;
@@ -92,8 +45,46 @@ function loadWalls(n){
     walls.push(new Wall(x, y, lineWidth, wallLength, wallType, wallCount));
   }
 }
+function keyDownHandler(event){
 
-function (event){
+  if(event.code == "KeyW"){
+    //player.vel.y = -4;
+    player.controlUp = true;
+  }
+  if(event.code == "KeyS"){
+    //player.vel.y = 4;
+    player.controlDown = true;
+  }
+  if(event.code == "KeyA"){
+    //player.vel.x = -4;
+    player.controlLeft = true;
+  }
+  if(event.code == "KeyD"){
+    //player.vel.x = 4;
+    player.controlRight = true;
+  }
+  //the collision only works properly if you're stopped and coliding.
+  //if you hold the key down you'll go straight through.
+}
+function keyUpHandler(event){
+  if(event.code == "KeyW"){
+    player.vel.y = 0;
+    player.controlUp = false;
+  }
+  if(event.code == "KeyS"){
+    player.vel.y = 0;
+    player.controlDown = false;
+  }
+  if(event.code == "KeyA"){
+    player.vel.x = 0;
+    player.controlLeft = false;
+  }
+  if(event.code == "KeyD"){
+    player.vel.x = 0;
+    player.controlRight = false;
+  }
+}
+function collisionChecker(event){
   if(player.controlUp){
     player.wallScore = 0;
     for (let i = 0; i<walls[0].wallCount; i++){
@@ -151,4 +142,3 @@ function (event){
     }
   }
 }
-*/

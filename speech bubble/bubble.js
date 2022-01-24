@@ -15,9 +15,6 @@ class Bubble{
     this.charactersBack = 0;
     this.life = life;
     this.initialLife = life;
-    console.log(this.length/2.4 * this.fontSize*1.1);
-    console.log(this.width*this.fontSize*1.3);
-    console.log((this.length/2.4 * this.fontSize*1.1)/(this.width*this.fontSize*1.3));
   }
   run(){
     this.update();
@@ -35,15 +32,10 @@ class Bubble{
     this.ctx.fillStyle = "rgba(0,0,0,"+this.life/10+")"; //fades out on the last 10 frames
     this.ctx.strokeStyle = "rgba(0,0,0,"+this.life/10+")";
     //this.ctx.strokeStyle = "rgba(0,0,0,"+this.life/this.initialLife+")";
-    this.ctx.rect(this.mouseX, this.mouseY, this.length/2.4 *this.fontSize*1.1, this.width*this.fontSize*1.3);
-    this.ctx.moveTo(this.mouseX + this.fontSize * this.length*1/3, this.mouseY + this.width*this.fontSize*1.3);
+    this.ctx.rect(this.mouseX, this.mouseY, this.length/2.4 *this.fontSize*1.1, this.width*this.fontSize*1.35);
+    this.ctx.moveTo(this.mouseX + this.fontSize * this.length*1/3, this.mouseY + this.width*this.fontSize*1.35);
     this.ctx.lineTo(this.mouseX + this.fontSize * this.length*2.916/10, this.mouseY + this.width*this.fontSize*2.2); //rectangle and box creation that is scalable on paramaters passed
-      for (let i = 0; i<this.width; i++){
-        /*
-        if(this.message.length<= this.length*2.4 !true){
-          this.ctx.fillText(this.message, this.mouseX + 10, this.mouseY+ 20+this.fontSize*1.1*i); //display the text straight up if it can be done in one line
-        }
-        */
+      for (let i = 0; i<this.width+1; i++){ //use 2.XXX for line left, 3.XXX for line right
           this.charactersBack = 0
           if(this.message.length <= this.length){
             this.charactersBack = 0;
@@ -60,9 +52,7 @@ class Bubble{
           }
           //this.ctx.fillText(this.message.substring(i*this.length*2.4 - this.charactersBack, (i+1)*this.length*2.4 - this.charactersBack), this.mouseX+10, this.mouseY +this.fontSize*1.15*(i+1));
           this.ctx.fillText(this.message.substring(0, this.length - this.charactersBack), this.mouseX+10, this.mouseY +this.fontSize*1.15*(i+1));
-          //console.log(this.message.substring(0, this.length - this.charactersBack));
           this.message = this.message.substring(this.length - this.charactersBack);
-          //console.log(this.message);
       }
     this.ctx.stroke();
   }

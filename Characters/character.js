@@ -14,9 +14,9 @@ Character.prototype.update = function(mazeGenerator){
 
   if(this.life<0) return false;
 
-  let delta = mazeGenerator.detectCharacterCollision(this.vel.x,this.vel.y,this,this.prevMove);
+  let delta = mazeGenerator.detectCharacterCollision(this.vel.x,this.vel.y,this,this.prevMove); //Updates movement depending on collision with walls of maze
 
-  if(Math.abs(delta.x)<Number.EPSILON&&Math.abs(delta.y)<Number.EPSILON){
+  if(delta.getMagnitude()<Number.EPSILON){ //Checks if delta is basically zero
     this.move(0.2);
     this.draw();
     return true;
@@ -33,7 +33,7 @@ Character.prototype.update = function(mazeGenerator){
 
 Character.prototype.move = function(t){
   let dir = JSVector.subGetNew(this.targetPos,this.pos);
-  dir.setMagnitude(dir.getMagnitude()*t);
+  dir.setMagnitude(dir.getMagnitude()*t); //interpolation
   this.prevMove = dir;
   this.pos.add(dir);
 }

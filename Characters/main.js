@@ -23,16 +23,18 @@ function init(){
 
     //TEST LEVEL
     let cellSize = 100;
+    let r = 6;
+    let c = 6;
     let life = 100;
     let player = new Character(cellSize/2,cellSize/2,15,new Color(255,0,0,1),7,life,ctx);
-    let enemy1 = new Character(Math.random()*cnv.width,Math.random()*cnv.height,13,new Color(0,200,50,1),5,life,ctx);
-    let enemy2 = new Character(Math.random()*cnv.width,Math.random()*cnv.height,13,new Color(0,200,50,1),5,life,ctx);
-    let enemy3 = new Character(Math.random()*cnv.width,Math.random()*cnv.height,13,new Color(0,50,200,1),5,life,ctx);
-    let enemy4 = new Character(Math.random()*cnv.width,Math.random()*cnv.height,13,new Color(0,50,200,1),5,life,ctx);
+    let enemy1 = new Character(Math.random()*cellSize*c,Math.random()*cellSize*r,13,new Color(0,200,50,1),5,life,ctx);
+    let enemy2 = new Character(Math.random()*cellSize*c,Math.random()*cellSize*r,13,new Color(0,200,50,1),5,life,ctx);
+    let enemy3 = new Character(Math.random()*cellSize*c,Math.random()*cellSize*r,13,new Color(0,50,200,1),5,life,ctx);
+    let enemy4 = new Character(Math.random()*cellSize*c,Math.random()*cellSize*r,13,new Color(0,50,200,1),5,life,ctx);
     let enemies = [enemy1,enemy2,enemy3,enemy4];
-    let boss = new Character(Math.random()*cnv.width,Math.random()*cnv.height,17,new Color(25,25,50,1),9,life,ctx);
+    let boss = new Character(cellSize*(c-1)+cellSize/2,cellSize*(r-1)+cellSize/2,17,new Color(25,25,50,1),9,life,ctx);
 
-    let level1 = new Level(6,6,cellSize,enemies,boss,player,ctx) //creates new level with no enemies or boss parameters - null,null -
+    let level1 = new Level(r,c,cellSize,enemies,boss,player,ctx) //creates new level with no enemies or boss parameters - null,null -
 
     currentLevel = 0;
     levels = [];

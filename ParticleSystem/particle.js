@@ -7,7 +7,7 @@ function Particle(x,y,acc){
   //
   this.acc = acc;
   this.lifeSpan = 200;
-  this.clr = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
+  this.clr = Color.generateRandomColor(155,1,1,false);
 
 }
 
@@ -17,7 +17,7 @@ Particle.prototype.draw = function(){
   ctx.beginPath();
   ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
   ctx.stroke();
-  ctx.fillStyle = new Color(Math.random()*255,Math.random()*255,Math.random()*255,this.lifeSpan);
+  ctx.fillStyle = this.clr;
   ctx.fill();
 
 }

@@ -110,15 +110,51 @@ MazeGenerator.prototype.detectCharacterCollision = function(dx,dy,character,prev
   let i_center = Math.round(c + r*this.cols);
   let i_n = i_center-this.cols;
   let i_w = i_center-1;
+  let i_s = i_center+this.cols;
+  let i_e = i_center+1;
+  let i_nw = i_n-1;
+  let i_ne = i_n+1;
+  let i_sw = i_s-1;
+  let i_se = i_s+1;
 
-  //loads current, top, and left cell of current cell to be used for wall collisions
+  //loads all surrounding cells *******************//
   let center = this.cells[i_center]; //current cell
   let n = this.cells[i_n]; //top cell
   let w = this.cells[i_w]; //left cell
+  let s = this.cells[i_s];
+  let e = this.cells[i_e];
+  let nw = this.cells[i_nw];
+  let ne = this.cells[i_ne];
+  let sw = this.cells[i_sw];
+  let se = this.cells[i_se];
 
-  if(center!=undefined)closeCells.push(center);
-  if(n!=undefined)closeCells.push(n);
-  if(i_center%this.cols!=0&&w!=undefined)closeCells.push(w);
+  let northBorder = i_n<0;
+  let southBorder = i_s>=this.cells.length;
+  let eastBorder = i_e%this.cols==0;
+  let westBorder = i_center%this.cols==0;
+
+  if(center!=undefined){
+    closeCells.push(center);
+  }
+
+  if(!northBorder){
+    closeCells.push(n);
+
+    if(!westBorder) closeCells.push(nw);
+    if(!eastBorder) closeCells.push(ne);
+  }
+
+  if(!southBorder){
+    closeCells.push(s);
+
+    if(!westBorder) closeCells.push(sw);
+    if(!eastBorder) closeCells.push(se);
+  }
+
+  if(!westBorder) closeCells.push(w);
+  if(!eastBorder) closeCells.push(e);
+
+  //*************************************************//
 
   let walls = [];
   //loads all walls surrounding the current cell

@@ -1,16 +1,3 @@
-//Listener to determine when click to make particle system
-window.addEventListener("mousedown", ()=>{
-  mouseStatus = true;
-  particleSystem = new ParticleSystem(cnv.width/2,cnv.height/2);
-});
-//Listener to determine when to stop running particle System
-window.addEventListener("mouseup", ()=>{
-  mouseStatus = false;
-});
-//Listner to track mouse movement to be able to drag and shoot.
-window.addEventListener("mousemove", (event) => {
-  mousePos = new JSVector(event.clientX, event.clientY);
-})
 
 function ParticleSystem(x,y){
   this.pos = new JSVector(x,y);
@@ -19,7 +6,9 @@ function ParticleSystem(x,y){
 
 ParticleSystem.prototype.run = function(){
   this.update();
-  this.render();
+  if(mouseStatus){
+      this.render();
+  }
 }
 
 ParticleSystem.prototype.render = function(){

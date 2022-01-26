@@ -1,6 +1,6 @@
 window.addEventListener("load", init);
 
-var cnv,ctx;
+var cnv,ctx,cnvMini,ctxMini;
 var keys;
 var level = [];
 var currentLevel;

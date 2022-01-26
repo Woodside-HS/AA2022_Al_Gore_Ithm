@@ -1,8 +1,8 @@
 window.addEventListener("load", init);
 
 var cnv,ctx;
-var levelPath;
 var keys;
+var game;
 
 window.addEventListener('keypress', keyDown);
 window.addEventListener('keyup',keyUp);
@@ -21,7 +21,7 @@ function init(){
   ctx = cnv.getContext("2d");
   keys = [];
 
-  levelPath = LevelPath.generateNewPath(5,ctx); //generates # of new levels and creates visual path
+  game = new Game(ctx);
 
   animate();
 }
@@ -38,8 +38,9 @@ function animate(){
 
 function update(){
   if(keys["Space"]){
-    levelPath.nextLevel();
+   game.levelPath.nextLevel(); //TESTING
     keys["Space"] = false;
   }
-  levelPath.display();
+
+  game.update();
 }

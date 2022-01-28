@@ -21,7 +21,7 @@ Level.prototype.update = function(){
   }
   this.boss.update(this.maze);*/
 
-  this.player.update(this.maze);
+  this.player.run(this.maze);
 }
 
 Level.prototype.processInput = function(){

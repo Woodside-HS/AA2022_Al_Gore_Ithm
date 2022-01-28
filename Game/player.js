@@ -8,9 +8,9 @@ function Player(x,y,rad,clr,speed,life,ctx){
 
 Player.prototype = new Character(); //inherits character class
 
-Player.prototype.run = function(){
+Player.prototype.run = function(maze){
   this.processInput();
-  this.update(); //runs character update method
+  this.update(maze); //runs character update method
   this.shootParticles(); //shoots particles if mouse down - aimed towards mouse click
 }
 

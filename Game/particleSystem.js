@@ -3,21 +3,12 @@ function ParticleSystem(x,y){
   this.particles = [];
 }
 
-ParticleSystem.prototype.run = function(){
-  this.update();
-  if(mouseStatus){
-      this.render();
-  }
-}
-
-ParticleSystem.prototype.render = function(){
-  this.particles.push(new Particle(this.pos.x,this.pos.y, this.acc));
+ParticleSystem.prototype.generateParticles = function(targetPos,vel){
+  this.setDir(mousePos);
+  this.particles.push(new Particle(this.pos.x,this.pos.y,vel,this.acc));
 }
 
 ParticleSystem.prototype.update = function(){
-  this.setDir(mousePos);
-
-
   //PARTICLE LIFESPAN
   for(var i = this.particles.length-1;i>=0;i--){
     let p = this.particles[i];

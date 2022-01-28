@@ -2,7 +2,7 @@
 So much fun
 
 Coders:
-Shai Dickman, Connor Herson, Connor Williams, Andrew Mills, Greta Hachigian Krutzer
+Shai Dickman, Connor Herson, Connor Williams, Andrew Mills, Greta Hachigian-Kreutzer
 
 Game Plan: https://docs.google.com/document/d/15k_gbpSIIZLbpw7KajyaYOaPfetBPqPvSAFiz9xsc3E/edit
 

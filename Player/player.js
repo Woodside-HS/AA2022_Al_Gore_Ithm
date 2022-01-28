@@ -3,20 +3,20 @@ function Player(x,y,rad,clr,speed,life,ctx){
   Character.call(this,x,y,rad,clr,speed,life,ctx);
 
   this.particleSystem = new ParticleSystem(x,y);
-  this.particleSystem.pos = this.pos;
+  this.particleSystem.pos = this.pos; //position of particle system points to position of player
 }
 
-Player.prototype = new Character();
+Player.prototype = new Character(); //inherits character class
 
 Player.prototype.run = function(){
   this.processInput();
-  this.update();
-  this.shootParticles();
+  this.update(); //runs character update method
+  this.shootParticles(); //shoots particles if mouse down - aimed towards mouse click
 }
 
 Player.prototype.processInput = function(){
   let dx,dy = 0;
-
+  //sets direction of movement depending on keys down
   if(keys["KeyW"]){
     dy = -1;
   }
@@ -34,8 +34,8 @@ Player.prototype.processInput = function(){
 }
 
 Player.prototype.shootParticles = function(){
-  if(mouseStatus){
+  if(mouseStatus){ //only shoots when mouse down
     this.particleSystem.generateParticles(mousePos,this.vel);
   }
-  this.particleSystem.update();
+  this.particleSystem.update(); //updates all particles regardless if mouse down
 }

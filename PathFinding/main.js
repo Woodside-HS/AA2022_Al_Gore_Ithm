@@ -4,6 +4,8 @@
     THIS CLASS IS FOR TESTING PURPOSES ONLY. IT WILL NOT BE IMPLEMENTED IN THE FINAL PROJECT
 
 */
+
+
 window.addEventListener("load", init);
 
 var cnv,ctx;

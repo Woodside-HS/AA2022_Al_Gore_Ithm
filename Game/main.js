@@ -27,9 +27,7 @@ function init(){
 }
 
 function animate(){
-  //ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
-  ctx.fillStyle = "black";
-  ctx.fillRect(0,0,cnv.width,cnv.height);
+  ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
 
   update();
 
@@ -37,10 +35,5 @@ function animate(){
 }
 
 function update(){
-  if(keys["Space"]){
-   game.levelPath.nextLevel(); //TESTING
-    keys["Space"] = false;
-  }
-
   game.update();
 }

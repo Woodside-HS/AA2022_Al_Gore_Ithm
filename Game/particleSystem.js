@@ -5,7 +5,7 @@ function ParticleSystem(x,y,ctx){
 }
 
 ParticleSystem.prototype.generateParticles = function(targetPos,vel){
-  this.setDir(mousePos);
+  this.setDir(targetPos);
   this.particles.push(new Particle(this.pos.x,this.pos.y,vel,this.acc,this.ctx));
 }
 

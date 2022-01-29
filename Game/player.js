@@ -2,7 +2,7 @@ function Player(x,y,rad,clr,speed,life,ctx){
 
   Character.call(this,x,y,rad,clr,speed,life,ctx);
 
-  this.particleSystem = new ParticleSystem(x,y);
+  this.particleSystem = new ParticleSystem(x,y,ctx);
   this.particleSystem.pos = this.pos; //position of particle system points to position of player
 }
 

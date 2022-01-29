@@ -75,7 +75,7 @@ Maze.prototype.resetGrid = function(){
     for(var i = 0;i<this.cols;i++){
       let x = i*this.cellSize;
       let y = j*this.cellSize;
-      let cell = new Cell(x,y,this.cellSize,ctx,this.wallClr);
+      let cell = new Cell(x,y,this.cellSize,this.ctx,this.wallClr);
       this.cells.push(cell);
     }
   }

@@ -3,14 +3,16 @@ const gameStates = new Enum(
   'PlayingLevel'
 );
 
-function Game(ctx){
+function Game(cnv,ctx){
+  this.cnv = cnv;
+  this.ctx = ctx;
   this.levels = [];
   this.currentLevel = 0;
 
   let cellSize = 100;
-  let player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,ctx);
-  let level1 = new Level(6,6,cellSize,null,null,player,ctx) //creates new level with no enemies or boss parameters - null,null -
-  let level2 = new Level(6,6,cellSize,null,null,player,ctx)
+
+  let level1 = new Level(6,6,cellSize,null,null,this.cnv,this.ctx) //creates new level with no enemies or boss parameters - null,null -
+  let level2 = new Level(6,6,cellSize,null,null,this.cnv,this.ctx)
 
   this.levels.push(level1);
   this.levels.push(level2);
@@ -24,6 +26,7 @@ function Game(ctx){
 }
 
 Game.prototype.update = function(){
+  this.ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
 
   if(keys["Space"]){
    this.levelPath.nextLevel(); //TESTING

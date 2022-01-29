@@ -1,6 +1,5 @@
 window.addEventListener("load", init);
 
-var cnv,ctx;
 var mousePos,mouseStatus;
 var keys;
 
@@ -27,20 +26,18 @@ function keyUp(e){
 }
 
 function init(){
-  cnv = document.getElementById("cnv");
-  ctx = cnv.getContext("2d");
+  let cnv = document.getElementById("cnv");
+  let ctx = cnv.getContext("2d");
   keys = [];
   mousePos = new JSVector(0,0);
   mouseStatus = false;
 
-  game = new Game(ctx);
+  game = new Game(cnv,ctx);
 
   animate();
 }
 
 function animate(){
-  ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
-
   update();
 
   requestAnimationFrame(animate);

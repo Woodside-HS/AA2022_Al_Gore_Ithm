@@ -1,4 +1,4 @@
-function Particle(x,y,vel,acc){
+function Particle(x,y,vel,acc,ctx){
   this.pos = new JSVector(x, y); //initialize pos at emitter pos
   //VELOCITY
   //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
@@ -7,17 +7,18 @@ function Particle(x,y,vel,acc){
   this.acc = acc;
   this.lifeSpan = 200;
   this.clr = Color.generateRandomColor(155,1,1,false);
+  this.ctx = ctx;
 
 }
 
 Particle.prototype.draw = function(){
 
-  ctx.strokeStyle = this.clr;
-  ctx.beginPath();
-  ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
-  ctx.stroke();
-  ctx.fillStyle = this.clr;
-  ctx.fill();
+  this.ctx.strokeStyle = this.clr;
+  this.ctx.beginPath();
+  this.ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
+  this.ctx.stroke();
+  this.ctx.fillStyle = this.clr;
+  this.ctx.fill();
 
 }
 

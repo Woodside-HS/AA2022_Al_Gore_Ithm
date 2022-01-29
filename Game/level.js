@@ -1,9 +1,10 @@
-function Level(r,c,cellSize,enemies,boss,player,ctx){
+function Level(r,c,cellSize,enemies,boss,cnv,ctx){
     //Generates maze for level
     this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
     this.enemies = enemies;
     this.boss = boss; //To do: create enemy class
-    this.player = player;
+    this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,ctx);
+    this.cnv = cnv;
     this.ctx = ctx;
 }
 
@@ -76,5 +77,5 @@ Level.prototype.generateIcon = function(n,i){
   if(i==0||i==n-1) x = cnv.width/2; //centers first and last icons
   if(i==n-1) rad*=1.2; //final level has larger icon
 
-  this.icon = new LevelIcon(ctx,x,y,clr,rad,label)
+  this.icon = new LevelIcon(this.ctx,x,y,clr,rad,label)
 }

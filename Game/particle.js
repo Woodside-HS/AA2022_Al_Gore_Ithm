@@ -3,6 +3,7 @@ function Particle(x,y,vel,acc){
   //VELOCITY
   //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
   this.vel = JSVector.addGetNew(vel,new JSVector(Math.random()*2-1, Math.random()*2-1));
+  this.rad = 6;
   //
   this.acc = acc;
   this.lifeSpan = 200;
@@ -14,7 +15,7 @@ Particle.prototype.draw = function(){
 
   ctx.strokeStyle = this.clr;
   ctx.beginPath();
-  ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
+  ctx.arc(this.pos.x, this.pos.y, this.rad, Math.PI*2, 0, false);
   ctx.stroke();
   ctx.fillStyle = this.clr;
   ctx.fill();
@@ -32,8 +33,9 @@ Particle.prototype.run = function(){
   this.draw();
 }
 
-Particle.prototype.isDead = function(){
-  if(this.lifeSpan < 0.0){
+Particle.prototype.isDead = function(maze){
+  let colliding = maze.detectCollision(this);
+  if(this.lifeSpan < 0.0||colliding){
     return true;
   }else{
     return false;

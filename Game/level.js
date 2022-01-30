@@ -1,11 +1,11 @@
 function Level(r,c,cellSize,enemies,boss,cnv,ctx){
+  this.cnv = cnv;
+  this.ctx = ctx;
     //Generates maze for level
-    this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
-    this.enemies = enemies;
-    this.boss = boss; //To do: create enemy class
-    this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,ctx);
-    this.cnv = cnv;
-    this.ctx = ctx;
+  this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
+  this.enemies = enemies;
+  this.boss = boss; //To do: create enemy class
+  this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
 }
 
 Level.prototype.update = function(){
@@ -14,18 +14,18 @@ Level.prototype.update = function(){
 
   this.maze.update();
 
-  this.player.run(this.maze); //updates player
-
-  if(this.enemies==null) return;
-  for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-    if(!this.enemies[i].update(this.maze)){
-      this.enemies.splice(i,1);
-      i--;
-    }
+  if(this.enemies!=null){
+    for(var i = 0;i<this.enemies.length;i++){ //updates enemies
+      if(!this.enemies[i].update(this.maze)){
+        this.enemies.splice(i,1);
+        i--;
+      }
+    }  
   }
 
-  if(this.boss==null) return;
-  this.boss.update(this.maze); //updates boss
+  if(this.boss!=null) this.boss.update(this.maze); //updates boss
+
+  this.player.run(this.maze); //updates player
 }
 
 Level.prototype.processInput = function(){

@@ -6,6 +6,7 @@ function Pathfinder(cells, numRows, numCols, start, destination){
     for(let r = 0;r<numRows; r++){
       this.cells[c].push(cells[c*numCols+r]);
       this.cells[c][r].visited = false;
+      this.cells[c][r].previousCell = null;
     }
   } //converts the 1D array (thanks shai) into a 2D array of cells, all of which are not visited yet
 
@@ -70,11 +71,11 @@ Pathfinder.prototype.finishedPath = function(cell){ //this method is called once
   //once this recursive function is broken, this.path[] will be an array of cells which, in order, contain the path
 }
 
-Pathfinder.getCoordinates = function(pos, scale){
+Pathfinder.getCoordinates = function(pos, scale){ // returns the coordinates of the cell an object is in
   return new JSVector(Math.floor(pos.x/scale), Math.floor(pos.y/scale));
 }
 
-Pathfinder.getCell = function(cells, numCols, pos, scale){
+Pathfinder.getCell = function(cells, numCols, pos, scale){ // returns the cell object an object is in
   let coordinates = this.getCoordinates(pos, scale);
   return cells[numCols*coordinates.y+coordinates.x];
 }

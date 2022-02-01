@@ -14,7 +14,7 @@ Character.prototype.update = function(maze){
 
   if(this.life<0) return false;
 
-  let delta = maze.detectCharacterCollision(this.vel.x,this.vel.y,this,this.prevMove); //Updates movement depending on collision with walls of maze
+  let delta = maze.executeCollision(this.vel.x,this.vel.y,this,this.prevMove); //Updates movement depending on collision with walls of maze
 
   if(delta.getMagnitude()<Number.EPSILON){ //Checks if delta is basically zero
     this.move(0.2);

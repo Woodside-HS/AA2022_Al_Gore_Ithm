@@ -11,7 +11,11 @@ Player.prototype = new Character(); //inherits character class
 Player.prototype.run = function(maze){
   this.processInput();
   this.update(maze); //runs character update method
-  this.shootParticles(); //shoots particles if mouse down - aimed towards mouse click
+
+  if(mouseStatus){ //only shoots when mouse down
+    this.particleSystem.generateParticles(mousePos,this.vel);
+  }
+  this.particleSystem.update(maze); //updates all particles regardless if mouse down //shoots particles if mouse down - aimed towards mouse click
 }
 
 Player.prototype.processInput = function(){
@@ -31,11 +35,4 @@ Player.prototype.processInput = function(){
   }
 
   this.vel = new JSVector(dx,dy);
-}
-
-Player.prototype.shootParticles = function(){
-  if(mouseStatus){ //only shoots when mouse down
-    this.particleSystem.generateParticles(mousePos,this.vel);
-  }
-  this.particleSystem.update(); //updates all particles regardless if mouse down
 }

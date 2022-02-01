@@ -26,6 +26,7 @@ function Actor(cnv, ctx, scale, numRows, numCols){
   this.vel = JSVector.subGetNew(this.path[1].coordinates, this.path[0].coordinates).setMagnitude(3);
   this.acc = new JSVector(0, 0);
   this.destination = new JSVector(this.scale/2, this.scale/2);
+  this.lerp = false;
 }
 
 Actor.prototype.update = function(){
@@ -44,13 +45,31 @@ Actor.prototype.update = function(){
       }
     }
   }
-  else this.destination = levels[currentLevel].player.pos;
+  else{
+    this.lerp = true;
+    this.destination = levels[currentLevel].player.pos;
+    if(JSVector.subGetNew(this.pos, this.destination).getMagnitude()>this.scale){
+      this.lerp = false;
+      let startingCell = Pathfinder.getCell(levels[currentLevel].maze.cells, this.numCols, this.pos, this.scale);
+      let targetCell = Pathfinder.getCell(levels[currentLevel].maze.cells, this.numCols, levels[currentLevel].player.pos, this.scale);
+      this.path = new Pathfinder(levels[currentLevel].maze.cells, this.numRows, this.numCols, startingCell, targetCell);
+    }
+  }
 
-  this.acc = JSVector.subGetNew(this.destination, this.pos).setMagnitude(1);
-  let oldVel = this.vel.getMagnitude();
-  this.vel.add(this.acc);
-  this.vel.setMagnitude(oldVel);
-  this.pos.add(this.vel);
+
+  if(this.lerp){
+    let dir = JSVector.subGetNew(this.destination, this.pos).divide(12);
+    if(dir.getMagnitude()>Number.EPSILON){
+      this.pos.add(dir);
+    }
+  }
+  else{
+    this.acc = JSVector.subGetNew(this.destination, this.pos).setMagnitude(1);
+    let oldVel = this.vel.getMagnitude();
+    this.vel.add(this.acc);
+    this.vel.setMagnitude(oldVel);
+    this.pos.add(this.vel);
+  }
 
 }
 Actor.prototype.draw = function(){

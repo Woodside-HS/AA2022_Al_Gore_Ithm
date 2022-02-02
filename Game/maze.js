@@ -100,8 +100,8 @@ Maze.prototype.update = function(){
   }
 }
 
-Maze.prototype.detectCharacterCollision = function(dx,dy,character,prevMove){
-  let shiftedPos = new JSVector(character.pos.x-this.cellSize/2,character.pos.y-this.cellSize/2); //position of character shifted to center of cell
+Maze.prototype.loadSurroundingWalls = function(object){
+  let shiftedPos = new JSVector(object.pos.x-this.cellSize/2,object.pos.y-this.cellSize/2); //position of character shifted to center of cell
 
   let closeCells = [];
 
@@ -137,22 +137,22 @@ Maze.prototype.detectCharacterCollision = function(dx,dy,character,prevMove){
     closeCells.push(center);
   }
 
-  if(!northBorder){
+  if(!northBorder&&n!=undefined){
     closeCells.push(n);
 
-    if(!westBorder) closeCells.push(nw);
-    if(!eastBorder) closeCells.push(ne);
+    if(!westBorder&&nw!=undefined) closeCells.push(nw);
+    if(!eastBorder&&ne!=undefined) closeCells.push(ne);
   }
 
-  if(!southBorder){
+  if(!southBorder&&s!=undefined){
     closeCells.push(s);
 
-    if(!westBorder) closeCells.push(sw);
-    if(!eastBorder) closeCells.push(se);
+    if(!westBorder&&sw!=undefined) closeCells.push(sw);
+    if(!eastBorder&&se!=undefined) closeCells.push(se);
   }
 
-  if(!westBorder) closeCells.push(w);
-  if(!eastBorder) closeCells.push(e);
+  if(!westBorder&&w!=undefined) closeCells.push(w);
+  if(!eastBorder&&e!=undefined) closeCells.push(e);
 
   //*************************************************//
 
@@ -167,16 +167,34 @@ Maze.prototype.detectCharacterCollision = function(dx,dy,character,prevMove){
   for(var i = 0;i<this.borderWalls.length;i++){
     walls.push(this.borderWalls[i]);
   }
+
+  return walls;
+}
+
+Maze.prototype.executeCollision = function(dx,dy,object,prevMove){ //detects collision and changes velocity of object accordingly
+  let walls = this.loadSurroundingWalls(object);
   //checks if character is colliding any walls and updates velocity depending on angle of walls
   for(var i = 0;i<walls.length;i++){
-    if(walls[i].isColliding(character.pos,character.rad)){
+    if(walls[i].isColliding(object.pos,object.rad)){
 
       dx*=Math.cos(walls[i].angle);
       dy*=Math.sin(walls[i].angle);
-      character.pos.sub(prevMove);
-      character.targetPos = new JSVector(character.pos.x,character.pos.y);
+      object.pos.sub(prevMove);
+      object.targetPos = new JSVector(object.pos.x,object.pos.y);
     }
   }
 
   return new JSVector(dx,dy); //return chenged velocity depending on wall collisions
+}
+
+Maze.prototype.detectCollision = function(object){ //only returns status of whether or not an object is colliding into the maze wall
+  let walls = this.loadSurroundingWalls(object);
+  //checks if character is colliding any walls and returns true if so
+  for(var i = 0;i<walls.length;i++){
+    if(walls[i].isColliding(object.pos,object.rad)){
+      return true;
+    }
+  }
+
+  return false;
 }

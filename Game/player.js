@@ -17,6 +17,8 @@ Player.prototype.run = function(maze){
     this.particleSystem.generateParticles(mousePos,this.vel);
   }
   this.particleSystem.update(maze); //updates all particles regardless if mouse down //shoots particles if mouse down - aimed towards mouse click
+
+  this.healthbar.run();
 }
 
 Player.prototype.processInput = function(){

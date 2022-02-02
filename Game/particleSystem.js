@@ -1,11 +1,12 @@
-function ParticleSystem(x,y){
+function ParticleSystem(x,y,ctx){
   this.pos = new JSVector(x,y);
   this.particles = [];
+  this.ctx = ctx;
 }
 
 ParticleSystem.prototype.generateParticles = function(targetPos,vel){
-  this.setDir(mousePos);
-  this.particles.push(new Particle(this.pos.x,this.pos.y,vel,this.acc));
+  this.setDir(targetPos);
+  this.particles.push(new Particle(this.pos.x,this.pos.y,vel,this.acc,this.ctx));
 }
 
 ParticleSystem.prototype.update = function(maze){

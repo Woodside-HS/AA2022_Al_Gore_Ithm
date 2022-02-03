@@ -8,6 +8,10 @@ function Maze(cellSize,rows,cols,ctx,wallClr){
   this.wallClr = wallClr
   this.pos = new JSVector(cellSize/2,cellSize/2);
 
+  this.regenerate();
+}
+
+Maze.prototype.regenerate = function(){
   this.resetGrid();
   this.generateMaze(0);
 

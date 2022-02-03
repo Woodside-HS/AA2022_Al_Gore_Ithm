@@ -22,7 +22,7 @@ class Pickup{
     }
     if(this.clock>=60 && this.clock<70){
       this.vel.y += .05;
-    }
+    }//repush
     if(this.clock>120){
       this.clock = 0;
     }

@@ -5,11 +5,12 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
   this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
 }
 
 Level.prototype.update = function(){
-
+  this.ctx.save();
+  this.ctx.translate(this.maze.pos.x,this.maze.pos.y);
   this.processInput();
 
   this.maze.update();
@@ -20,12 +21,14 @@ Level.prototype.update = function(){
         this.enemies.splice(i,1);
         i--;
       }
-    }  
+    }
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
 
   this.player.run(this.maze); //updates player
+  this.ctx.restore();
+  this.player.healthbar.run();
 }
 
 Level.prototype.processInput = function(){

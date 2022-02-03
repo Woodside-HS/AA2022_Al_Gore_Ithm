@@ -6,6 +6,7 @@ function Maze(cellSize,rows,cols,ctx,wallClr){
   this.cells = [];
   this.borderWalls = [];
   this.wallClr = wallClr
+  this.pos = new JSVector(cellSize/2,cellSize/2);
 
   this.resetGrid();
   this.generateMaze(0);

@@ -14,14 +14,9 @@ Player.prototype.run = function(maze){
   this.update(maze); //runs character update method
 
   if(mouseStatus){ //only shoots when mouse down
-    this.particleSystem.generateParticles(mousePos,this.vel);
+    let target = JSVector.addGetNew(mousePos,this.pos);
+    //target.add(new JSVector(this.cnv.width/2,this.cnv.height/2));
+    this.particleSystem.generateParticles(target,this.vel);
   }
   this.particleSystem.update(maze); //updates all particles regardless if mouse down //shoots particles if mouse down - aimed towards mouse click
-}
-
-Player.prototype.draw = function(){
-  this.ctx.beginPath();
-  this.ctx.arc(this.cnv.width/2,this.cnv.height/2,this.rad,0,Math.PI*2);
-  this.ctx.fillStyle = this.clr.toString();
-  this.ctx.fill();
 }

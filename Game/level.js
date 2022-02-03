@@ -9,8 +9,9 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
 }
 
 Level.prototype.update = function(){
+  let cellSize = this.maze.cellSize/2;
   this.ctx.save();
-  this.ctx.translate(-this.player.pos.x,-this.player.pos.y);
+  this.ctx.translate(2*cellSize-this.player.pos.x,2*cellSize-this.player.pos.y);
   this.processInput();
 
   this.maze.update();
@@ -25,9 +26,8 @@ Level.prototype.update = function(){
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
-
-  this.ctx.restore();
   this.player.run(this.maze); //updates player
+  this.ctx.restore();
   this.player.healthbar.run();
 }
 
@@ -54,8 +54,6 @@ Level.prototype.load = function(){
   let cellSize = this.maze.cellSize;
 
   this.maze.regenerate();
-  this.player.pos = new JSVector(cellSize/2,cellSize/2); //top left of maze
-  this.player.particleSystem.pos = this.player.pos;
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   this.scatterEnemies();
 }

@@ -5,16 +5,16 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
   this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
-  this.zoomScale = new JSVector(1,1);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(255,0,0,1),2,100,this.cnv,this.ctx);
+  this.zoomFactor = 3;
 }
 
 Level.prototype.update = function(){
   this.ctx.save();
-  let x = this.cnv.width/2-this.player.pos.x;
-  let y = this.cnv.height/2-this.player.pos.y;
+  let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
+  let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
+  this.ctx.scale(this.zoomFactor,this.zoomFactor);
   this.ctx.translate(x,y);
-  this.ctx.scale(this.zoomScale.x,this.zoomScale.y);
   this.processInput();
 
   this.maze.update();

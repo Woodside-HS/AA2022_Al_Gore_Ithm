@@ -3,7 +3,7 @@ function Particle(x,y,vel,acc,ctx){
   //VELOCITY
   //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
   this.vel = JSVector.addGetNew(vel,new JSVector(Math.random()*2-1, Math.random()*2-1));
-  this.rad = 6;
+  this.rad = 2;
   //
   this.acc = acc;
   this.lifeSpan = 200;
@@ -16,7 +16,7 @@ Particle.prototype.draw = function(){
 
   this.ctx.strokeStyle = this.clr;
   this.ctx.beginPath();
-  this.ctx.arc(this.pos.x, this.pos.y, 6, Math.PI*2, 0, false);
+  this.ctx.arc(this.pos.x, this.pos.y, this.rad, Math.PI*2, 0, false);
   this.ctx.stroke();
   this.ctx.fillStyle = this.clr;
   this.ctx.fill();

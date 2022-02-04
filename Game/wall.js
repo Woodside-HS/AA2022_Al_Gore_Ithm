@@ -18,7 +18,7 @@ Wall.prototype.isColliding = function(pos, rad){
   let centerpos = new JSVector(Math.cos(this.angle), Math.sin(this.angle)); // represent the angle as a vector with magnitude 1
   centerpos.multiply(this.length/2); // set the magnitude to half the length
   centerpos.add(this.pos); // add the end position, making centerpos represent the position of the middle of the wall segment
-  if(JSVector.subGetNew(centerpos, pos).getMagnitude()>this.length/2+rad){ // if the ball isn't close enough to the wall, return false automatically
+  if(JSVector.subGetNew(centerpos, pos).getMagnitude()>this.length/2+rad+this.width/2){ // if the ball isn't close enough to the wall, return false automatically
     return false;
   }
 
@@ -27,5 +27,13 @@ Wall.prototype.isColliding = function(pos, rad){
   dist*= Math.abs(Math.cos(this.angle));
 // the previous 2 lines use this formula to calculate the shortest distance from the ball to the wall:
 // https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
-  return dist<rad; // if the distance calculated above is less than the radius, this means that it's colliding
+  return dist<rad+this.width/2; // if the distance calculated above is less than the radius, this means that it's colliding
+}
+Wall.prototype.getMinPos = function(pos,rad){ //gives closest possible position between object and wall
+
+  let minDist = rad+this.width/2;
+  let x = pos.x+Math.sin(-this.angle)*(minDist+this.pos.x);
+  let y = pos.y+Math.cos(-this.angle)*(minDist+this.pos.y);
+
+  return new JSVector(x,y);
 }

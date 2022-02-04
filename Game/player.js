@@ -4,7 +4,6 @@ function Player(x,y,rad,clr,speed,life,cnv,ctx){
 
   this.cnv = cnv;
   this.particleSystem = new ParticleSystem(x,y,ctx);
-  this.particleSystem.pos = this.pos; //position of particle system points to position of player
   this.healthbar = new Healthbar(cnv,ctx,this.life/100);
 }
 
@@ -12,7 +11,7 @@ Player.prototype = new Character(); //inherits character class
 
 Player.prototype.run = function(maze){
   this.update(maze); //runs character update method
-
+  this.particleSystem.pos = new JSVector(this.pos.x,this.pos.y);
   if(mouseStatus){ //only shoots when mouse down
     let target = JSVector.addGetNew(mousePos,this.pos);
     target.sub(new JSVector(this.cnv.width/2,this.cnv.height/2));

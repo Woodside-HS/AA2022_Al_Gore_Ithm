@@ -10,8 +10,8 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
 
 Level.prototype.update = function(){
   this.ctx.save();
-  this.ctx.translate(this.player.pos.x,this.player.pos.y);
-  this.ctx.scale(2,2);
+  this.ctx.translate(this.cnv.width/2-this.player.pos.x,this.cnv.height/2-this.player.pos.y);
+  //this.ctx.scale(2,2);
   this.processInput();
 
   this.maze.update();

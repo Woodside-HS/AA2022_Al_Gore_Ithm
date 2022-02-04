@@ -15,7 +15,7 @@ Player.prototype.run = function(maze){
 
   if(mouseStatus){ //only shoots when mouse down
     let target = JSVector.addGetNew(mousePos,this.pos);
-    //target.add(new JSVector(this.cnv.width/2,this.cnv.height/2));
+    target.sub(new JSVector(this.cnv.width/2,this.cnv.height/2));
     this.particleSystem.generateParticles(target,this.vel);
   }
   this.particleSystem.update(maze); //updates all particles regardless if mouse down //shoots particles if mouse down - aimed towards mouse click

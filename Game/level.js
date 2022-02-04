@@ -9,9 +9,9 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
 }
 
 Level.prototype.update = function(){
-  let cellSize = this.maze.cellSize/2;
   this.ctx.save();
-  this.ctx.translate(2*cellSize-this.player.pos.x,2*cellSize-this.player.pos.y);
+  this.ctx.translate(this.player.pos.x,this.player.pos.y);
+  this.ctx.scale(2,2);
   this.processInput();
 
   this.maze.update();

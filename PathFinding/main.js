@@ -1,22 +1,23 @@
-/*
-    IMPORTANT:
-
-    THIS CLASS IS FOR TESTING PURPOSES ONLY. IT WILL NOT BE IMPLEMENTED IN THE FINAL PROJECT
-
-*/
-
-
 window.addEventListener("load", init);
 
-var cnv,ctx;
+var mousePos,mouseStatus;
 var keys;
-var level = [];
-var currentLevel;
-var actor;
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
+window.addEventListener("mousedown",mouseDown);
+window.addEventListener("mouseup",mouseUp);
+window.addEventListener("mousemove",mouseMove);
 
+function mouseDown(){
+  mouseStatus = true;
+}
+function mouseUp(){
+  mouseStatus = false;
+}
+function mouseMove(){
+  mousePos = new JSVector(event.clientX, event.clientY);
+}
 function keyDown(e) { //testing next level function
   keys[e.code] = true;
 }
@@ -25,40 +26,37 @@ function keyUp(e){
 }
 
 function init(){
-    cnv = document.getElementById("cnv");
-    ctx = cnv.getContext("2d");
+  let cnv = document.getElementById("cnv");
+  let ctx = cnv.getContext("2d");
+  keys = [];
+  mousePos = new JSVector(0,0);
+  mouseStatus = false;
 
-    keys = [];
-
-    let cellSize = 60;
-    let player = new Player(cellSize/2,cellSize/2,10,new Color(255,0,0,1),7,ctx);
-    let level1 = new Level(10,10,cellSize,null,null,player,ctx) //creates new level with no enemies or boss parameters - null,null -
-
-    currentLevel = 0;
-    levels = [];
-    levels.push(level1);
+  game = new Game(cnv,ctx);
+  game.update();
 
 
-    reloadLevel();
-    levels[currentLevel].update();
 
-    actor = new Actor(cnv, ctx, 60, 10, 10);
-    animate();
+  //PATH FINDING AND FOLLOWING TEST CODE:
+
+  let pos = new JSVector(Math.floor(Math.random()*6), Math.floor(Math.random()*6));
+  let scale = game.levels[0].maze.cellSize
+  pos.multiply(scale);
+  pos.add(new JSVector(scale/2, scale/2))
+  enemy = new Enemy(pos.x, pos.y, 15, "blue", game.levels[0].maze, 3, 1, cnv, ctx);
+
+
+  //
+  animate();
 }
 
-function reloadLevel(){
-  levels[currentLevel].load();
-}
-
-function animate() {
-  ctx.clearRect(0,0,cnv.width,cnv.height);
-
+function animate(){
   update();
 
-  requestAnimationFrame(animate); // next cycle
+  requestAnimationFrame(animate);
 }
 
 function update(){
-  levels[currentLevel].update();
-  actor.run();
+  game.update();
+  enemy.run();
 }

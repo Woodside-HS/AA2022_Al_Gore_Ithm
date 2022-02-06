@@ -14,27 +14,36 @@ class Pickup{
     this.draw();
   }
   update(){
-    if(this.clock<=50){
-      this.vel.y = 0.5;
+    if(this.clock>=0 && this.clock<=10){
+      this.vel.y += .05;
     }
-    if(this.clock>50 && this.clock<60){
+    if(this.clock>10 && this.clock<50){
+      this.vel.y = .5
+    }
+    if(this.clock>=50 && this.clock<60){
       this.vel.y -= .05;
     }
     if(this.clock>=60 && this.clock<70){
+      this.vel.y -= .05;
+    }
+    if(this.clock>70 && this.clock<=110){
+      this.vel.y = -.5;
+    }
+    if(this.clock>110 && this.clock<120){
       this.vel.y += .05;
-    }//repush
-    if(this.clock>120){
+    }
+    if(this.clock>=120){
       this.clock = 0;
     }
-
-    this.vel.add(this.acc);
     this.loc.add(this.vel);
-    console.log(this.vel.y);
     this.clock++;
   }
   draw(){
     this.ctx.beginPath();
     this.ctx.arc(this.loc.x, this.loc.y, 10,0,Math.PI*2);
+    if(this.itemType == "powerup"){
+        this.ctx.fill();
+    }
     this.ctx.stroke();
   }
 }

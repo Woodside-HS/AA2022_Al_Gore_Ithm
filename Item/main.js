@@ -6,7 +6,7 @@ var pickups = [];
 function init(){
   cnv = document.getElementById("cnv");
   ctx = cnv.getContext("2d");
-  loadItem();
+  loadItem(5);
   animate();
 }
 
@@ -22,19 +22,21 @@ function update(){
     pickups[i].draw();
   }
 }
-function loadItem(){
-  let itemRandomizer = Math.random()*3;
-  let itemType = null;
-  if(itemRandomizer<1.5){
-    itemType = "tool"
+function loadItem(n){
+  for (let i = 0; i<n; i++){
+    let itemRandomizer = Math.random()*3;
+    let itemType = null;
+    if(itemRandomizer<1){
+      itemType = "tool"
+    }
+    else if (itemRandomizer>=1 && itemRandomizer<=2){
+      itemType = "powerup"
+    }
+    let itemMessage = "Man Bear Pig is real";
+    let x = Math.random()*(this.cnv.width-200)+100;
+    let y = Math.random()*(this.cnv.height-200)+100;
+    pickups.push(new Pickup(itemType, itemMessage, x, y));
   }
-  else if (itemRandomizer>=1.5 && itemRandomizer<=3){
-    itemType = "powerup"
-  }
-  let itemMessage = "Man Bear Pig is real";
-  let x = Math.random()*(this.cnv.width-200)+100;
-  let y = Math.random()*(this.cnv.height-200)+100;
-  pickups.push(new Pickup(itemType, itemMessage, x, y));
 }
 /*
 function clickListener(event){

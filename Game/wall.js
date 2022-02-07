@@ -36,7 +36,7 @@ Wall.prototype.isColliding = function(pos,rad){
 Wall.prototype.getMinPos = function(pos,rad){ //gives closest possible position between object and wall
 
   let dist = this.getDist(pos);
-  let minDist = rad+this.width*0.55;
+  let minDist = rad+this.width*0.5;
 
   let delta = Math.sign(dist)*(Math.abs(dist)-minDist);
 

@@ -16,7 +16,6 @@ Character.prototype.update = function(maze){
   let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze
 
   if(delta.getMagnitude()>Number.EPSILON){ //Checks if delta is basically zero
-    delta.setMagnitude(this.speed);
     this.targetPos.add(delta);
   }
 
@@ -42,5 +41,5 @@ Character.prototype.draw = function(){
 
 Character.prototype.setVel = function(dx,dy){
   this.vel = new JSVector(dx,dy);
-  this.vel.multiply(this.speed);
+  if(this.vel.getMagnitude()>Number.EPSILON)this.vel.setMagnitude(this.speed);
 }

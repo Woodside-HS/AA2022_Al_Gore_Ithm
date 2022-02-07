@@ -188,7 +188,7 @@ Maze.prototype.executeCollision = function(dx,dy,object){ //detects collision an
       dy*=Math.sin(walls[i].angle);
       //object.pos.sub(prevMove);
       //object.pos = walls[i].getMinPos(nextPos,object.rad);
-      object.targetPos = walls[i].getMinPos(object.pos,object.rad);//new JSVector(object.pos.x,object.pos.y);
+      object.targetPos = walls[i].getMinPos(object.targetPos,object.rad);//new JSVector(object.pos.x,object.pos.y);
     }
   }
 

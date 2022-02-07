@@ -17,6 +17,9 @@ ParticleSystem.prototype.update = function(maze){
     if(p.isDead(maze)){
       this.particles.splice(i, 1);
     }
+    else{
+      p.draw();
+    }
   }
 }
 //setDir gets new vector from the click and orgin of particle system to shoot in correct dir

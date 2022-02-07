@@ -13,14 +13,12 @@ Character.prototype.update = function(maze){
 
   if(this.life<0) return false;
 
-  let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze
-
-  if(delta.getMagnitude()>Number.EPSILON){ //Checks if delta is basically zero
-    this.targetPos.add(delta);
-  }
-
   this.move(0.2);
   this.draw();
+
+  let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze
+
+  this.targetPos.add(delta);
 
   return true;
 }

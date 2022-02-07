@@ -9,7 +9,6 @@ function Particle(x,y,vel,acc,ctx){
   this.lifeSpan = 200;
   this.clr = Color.generateRandomColor(155,1,1,false);
   this.ctx = ctx;
-
 }
 
 Particle.prototype.draw = function(){
@@ -23,15 +22,10 @@ Particle.prototype.draw = function(){
 
 }
 
-Particle.prototype.update = function(){
+Particle.prototype.run = function(){
   this.vel.add(this.acc);
   this.pos.add(this.vel);
   this.lifeSpan -= 1;
-}
-
-Particle.prototype.run = function(){
-  this.update();
-  this.draw();
 }
 
 Particle.prototype.isDead = function(maze){

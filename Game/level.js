@@ -10,12 +10,14 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
 }
 
 Level.prototype.update = function(){
+
+  this.processInput();
+
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
   let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
   this.ctx.scale(this.zoomFactor,this.zoomFactor);
   this.ctx.translate(x,y);
-  this.processInput();
 
   this.maze.update();
 
@@ -49,7 +51,7 @@ Level.prototype.processInput = function(){
   else if(keys["KeyA"]){
     dx = -1;
   }
-  this.player.vel = new JSVector(dx,dy);
+  this.player.setVel(dx,dy);
 }
 
 Level.prototype.load = function(){

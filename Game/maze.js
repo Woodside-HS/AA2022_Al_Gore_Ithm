@@ -176,17 +176,19 @@ Maze.prototype.loadSurroundingWalls = function(object){
   return walls;
 }
 
-Maze.prototype.executeCollision = function(dx,dy,object,prevMove){ //detects collision and changes velocity of object accordingly
+Maze.prototype.executeCollision = function(dx,dy,object){ //detects collision and changes velocity of object accordingly
   let walls = this.loadSurroundingWalls(object);
   //checks if character is colliding any walls and updates velocity depending on angle of walls
+  let nextPos = JSVector.addGetNew(object.targetPos,new JSVector(dx,dy));
+
   for(var i = 0;i<walls.length;i++){
-    if(walls[i].isColliding(object.pos,object.rad)){
+    if(walls[i].isColliding(nextPos,object.rad)){
 
       dx*=Math.cos(walls[i].angle);
       dy*=Math.sin(walls[i].angle);
-      object.pos.sub(prevMove);
-      //object.pos = walls[i].getMinPos(object.pos,object.rad);
-      object.targetPos = new JSVector(object.pos.x,object.pos.y);
+      //object.pos.sub(prevMove);
+      //object.pos = walls[i].getMinPos(nextPos,object.rad);
+      object.targetPos = walls[i].getMinPos(object.pos,object.rad);//new JSVector(object.pos.x,object.pos.y);
     }
   }
 

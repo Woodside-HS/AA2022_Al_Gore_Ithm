@@ -1,5 +1,5 @@
 class Pickup{
-  constructor(itemType, itemMessage, x, y, ctx, cnv){
+  constructor(itemType, itemMessage, x, y, ctx, cnv, rad){
     this.cnv = cnv;
     this.ctx = ctx;
     this.pos = new JSVector(x,y);
@@ -8,6 +8,7 @@ class Pickup{
     this.vel = new JSVector(0,0);
     this.acc = new JSVector(0,0);
     this.clock = 0; //movement is based on a cycle, this keeps track of time
+    this.rad = rad;
   }
   run(){
     this.update();
@@ -40,10 +41,11 @@ class Pickup{
     this.vel.y = Math.sin(this.clock)/6;
     this.pos.add(this.vel);
     this.clock+= .05;
+    if (this.clock>6.25){this.clock =0;}
   }
   draw(){
     this.ctx.beginPath();
-    this.ctx.arc(this.pos.x, this.pos.y, 10,0,Math.PI*2);
+    this.ctx.arc(this.pos.x, this.pos.y, this.rad,0,Math.PI*2);
     if(this.itemType == "powerup"){
         this.ctx.fill();
     }

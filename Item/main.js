@@ -32,10 +32,11 @@ function loadItem(n){
     else if (itemRandomizer>=1 && itemRandomizer<=2){
       itemType = "powerup"
     }
+    let rad = 10;
     let itemMessage = "Man Bear Pig is real";
     let x = Math.random()*(this.cnv.width-200)+100;
     let y = Math.random()*(this.cnv.height-200)+100;
-    pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv));
+    pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv, rad));
   }
 }
 /*

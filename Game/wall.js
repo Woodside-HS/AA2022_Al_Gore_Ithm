@@ -7,10 +7,9 @@ function Wall(ctx,x,y,angle,length,clr){
   this.clr = clr;
 }
 Wall.prototype.draw = function(){
-  let drawLength = this.length+this.width/2;
   this.ctx.beginPath();
   this.ctx.moveTo(this.pos.x, this.pos.y);
-  this.ctx.lineTo(this.pos.x+drawLength*Math.cos(this.angle), this.pos.y+drawLength*Math.sin(this.angle));
+  this.ctx.lineTo(this.pos.x+this.length*Math.cos(this.angle), this.pos.y+this.length*Math.sin(this.angle));
   this.ctx.lineWidth = this.width;
   this.ctx.strokeStyle = this.clr.toString();
   this.ctx.stroke();

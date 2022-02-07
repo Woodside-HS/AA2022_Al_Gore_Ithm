@@ -1,4 +1,4 @@
-function Level(r,c,cellSize,enemies,boss,cnv,ctx){
+function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
@@ -6,7 +6,7 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx){
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
   this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx);
-  this.zoomFactor = 3;
+  this.zoomFactor = zoomFactor;
 }
 
 Level.prototype.update = function(){

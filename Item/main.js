@@ -35,7 +35,7 @@ function loadItem(n){
     let itemMessage = "Man Bear Pig is real";
     let x = Math.random()*(this.cnv.width-200)+100;
     let y = Math.random()*(this.cnv.height-200)+100;
-    pickups.push(new Pickup(itemType, itemMessage, x, y));
+    pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv));
   }
 }
 /*

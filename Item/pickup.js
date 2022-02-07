@@ -1,8 +1,8 @@
 class Pickup{
-  constructor(itemType, itemMessage, x, y){
-    this.cnv = document.getElementById("cnv");
-    this.ctx = this.cnv.getContext("2d");
-    this.loc = new JSVector(x,y);
+  constructor(itemType, itemMessage, x, y, ctx, cnv){
+    this.cnv = cnv;
+    this.ctx = ctx;
+    this.pos = new JSVector(x,y);
     this.itemType = itemType;
     this.itemMessage = itemMessage;
     this.vel = new JSVector(0,0);
@@ -14,6 +14,7 @@ class Pickup{
     this.draw();
   }
   update(){
+    /*
     if(this.clock>=0 && this.clock<=10){
       this.vel.y += .05;
     }
@@ -35,12 +36,14 @@ class Pickup{
     if(this.clock>=120){
       this.clock = 0;
     }
-    this.loc.add(this.vel);
-    this.clock++;
+    */
+    this.vel.y = Math.sin(this.clock)/6;
+    this.pos.add(this.vel);
+    this.clock+= .05;
   }
   draw(){
     this.ctx.beginPath();
-    this.ctx.arc(this.loc.x, this.loc.y, 10,0,Math.PI*2);
+    this.ctx.arc(this.pos.x, this.pos.y, 10,0,Math.PI*2);
     if(this.itemType == "powerup"){
         this.ctx.fill();
     }

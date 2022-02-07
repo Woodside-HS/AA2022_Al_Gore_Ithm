@@ -41,5 +41,5 @@ Character.prototype.draw = function(){
 
 Character.prototype.setVel = function(dx,dy){
   this.vel = new JSVector(dx,dy);
-  if(this.vel.getMagnitude()>Number.EPSILON)this.vel.setMagnitude(this.speed);
+  if(this.vel.getMagnitude()>Number.EPSILON)this.vel.setMagnitude(this.speed); //sets the velocity to a magnitude of speed to ensure constant speed regardless of direction
 }

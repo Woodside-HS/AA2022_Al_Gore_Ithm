@@ -17,6 +17,7 @@ Wall.prototype.draw = function(){
 Wall.prototype.getDist = function(pos){
   let dist = pos.x*Math.tan(this.angle)-pos.y+this.pos.y-this.pos.x*Math.tan(this.angle);
   dist*= Math.abs(Math.cos(this.angle));
+  // https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
 
   return dist;
 }
@@ -29,8 +30,7 @@ Wall.prototype.isColliding = function(pos,rad){
   }
 
   let dist = Math.abs(this.getDist(pos));
-// the previous 2 lines use this formula to calculate the shortest distance from the ball to the wall:
-// https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
+
   return dist<rad+this.width/2; // if the distance calculated above is less than the radius, this means that it's colliding
 }
 Wall.prototype.getMinPos = function(pos,rad){ //gives closest possible position between object and wall

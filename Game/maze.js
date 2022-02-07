@@ -1,4 +1,4 @@
-function Maze(cellSize,rows,cols,ctx,wallClr){
+function Maze(cellSize,rows,cols,ctx,wallClr,cellImgSrc){
   this.ctx = ctx;
   this.rows = rows;
   this.cols = cols;
@@ -7,6 +7,8 @@ function Maze(cellSize,rows,cols,ctx,wallClr){
   this.borderWalls = [];
   this.wallClr = wallClr
   this.pos = new JSVector(cellSize/2,cellSize/2);
+
+  this.cellImgSrc = cellImgSrc;
 
   this.regenerate();
 }
@@ -80,7 +82,7 @@ Maze.prototype.resetGrid = function(){
     for(var i = 0;i<this.cols;i++){
       let x = i*this.cellSize;
       let y = j*this.cellSize;
-      let cell = new Cell(x,y,this.cellSize,this.ctx,this.wallClr);
+      let cell = new Cell(x,y,this.cellSize,this.ctx,this.wallClr,this.cellImgSrc);
       this.cells.push(cell);
     }
   }

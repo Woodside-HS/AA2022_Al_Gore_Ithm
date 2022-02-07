@@ -1,11 +1,11 @@
-function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor){
+function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
-  this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
+  this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1),cellImgSrc);
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx,"../Files/algore.jpeg");
   this.zoomFactor = zoomFactor;
 }
 

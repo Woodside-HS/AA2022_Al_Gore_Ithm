@@ -1,35 +1,80 @@
-function Level(r,c,cellSize,enemies,boss,player,ctx){
-    //this.mazeGenerator = new MazeGenerator(cellSize,r,c,ctx,new Color(0,0,0,1));
-    this.enemies = enemies;
-    this.boss = boss; //To do: create enemy class
-    this.player = player;
-    this.ctx = ctx;
+function Level(r,c,cellSize,enemies,boss,cnv,ctx){
+  this.cnv = cnv;
+  this.ctx = ctx;
+    //Generates maze for level
+  this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
+  this.enemies = enemies;
+  this.boss = boss; //To do: create enemy class
+  this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
 }
 
 Level.prototype.update = function(){
-  this.mazeGenerator.update();
 
-  /*for(var i = 0;i<this.enemies.length;i++){
-    this.enemies[i].update(this.mazeGenerator)
+  this.processInput();
+
+  this.maze.update();
+
+  if(this.enemies!=null){
+    for(var i = 0;i<this.enemies.length;i++){ //updates enemies
+      if(!this.enemies[i].update(this.maze)){
+        this.enemies.splice(i,1);
+        i--;
+      }
+    }  
   }
-  this.boss.update(this.mazeGenerator);
-  *///IMPLEMENT LATER
 
-  this.player.update(this.mazeGenerator);
+  if(this.boss!=null) this.boss.update(this.maze); //updates boss
+
+  this.player.run(this.maze); //updates player
+}
+
+Level.prototype.processInput = function(){
+  let dx,dy = 0;
+
+  if(keys["KeyW"]){
+    dy = -1;
+  }
+  else if(keys["KeyS"]){
+    dy = 1;
+  }
+  if(keys["KeyD"]){
+    dx = 1;
+  }
+  else if(keys["KeyA"]){
+    dx = -1;
+  }
+  this.player.vel = new JSVector(dx,dy);
 }
 
 Level.prototype.load = function(){
-  let cellSize = this.mazeGenerator.cellSize;
-  let c = this.mazeGenerator.cols;
-  let r = this.mazeGenerator.rows;
+  let cellSize = this.maze.cellSize;
+  let c = this.maze.cols;
+  let r = this.maze.rows;
 
   this.player.pos = new JSVector(cellSize/2,cellSize/2); //top left of maze
+  this.player.particleSystem.pos = this.player.pos;
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   this.scatterEnemies();
 }
 
 Level.prototype.scatterEnemies = function(){
-  //IMPLEMENT LATER
+  if(this.enemies==null) return;
+
+  let cellIndexes = [];
+
+  for(var i = 0;i<this.enemies.length;i++){ //assigns enemy to a random cell that is not already assigned an enemy
+    if(cellIndexes.length==0){
+      for(var k = 1;k<this.maze.cells.length-1;k++){//loads all cells except for first cell(player start) and last cell(boss)
+        cellIndexes.push(k);
+      }
+    }
+    let len = cellIndexes.length;
+    let index = Math.floor(Math.random()*len);
+    let cell = this.maze.cells[cellIndexes[index]];
+    this.enemies[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
+    this.enemies[i].targetPos = new JSVector(this.enemies[i].pos.x,this.enemies[i].pos.y);
+    cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
+  }
 }
 
 Level.prototype.generateIcon = function(n,i){
@@ -52,5 +97,5 @@ Level.prototype.generateIcon = function(n,i){
   if(i==0||i==n-1) x = cnv.width/2; //centers first and last icons
   if(i==n-1) rad*=1.2; //final level has larger icon
 
-  this.icon = new LevelIcon(ctx,x,y,clr,rad,label)
+  this.icon = new LevelIcon(this.ctx,x,y,clr,rad,label)
 }

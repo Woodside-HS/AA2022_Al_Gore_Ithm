@@ -4,7 +4,7 @@ function Player(x,y,rad,clr,speed,life,cnv,ctx){
 
   this.cnv = cnv;
   this.particleSystem = new ParticleSystem(x,y,ctx);
-  this.healthbar = new Healthbar(cnv,ctx,this.life/100);
+  this.healthbar = new Healthbar(cnv,ctx,this.life);
 }
 
 Player.prototype = new Character(); //inherits character class

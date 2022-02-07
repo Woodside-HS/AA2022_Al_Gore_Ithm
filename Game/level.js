@@ -5,7 +5,10 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1),cellImgSrc);
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx,"../Files/algore.jpeg");
+
+  let playerImg;
+  //let playerImg = "../Files/algore.jpeg";
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx,playerImg);
   this.zoomFactor = zoomFactor;
 }
 

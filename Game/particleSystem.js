@@ -16,7 +16,7 @@ ParticleSystem.prototype.update = function(maze){
   //PARTICLE LIFESPAN
   for(var i = this.particles.length-1;i>=0;i--){
     let p = this.particles[i];
-    p.run();
+    p.update();
     if(p.isDead(maze)){
       this.particles.splice(i, 1);
     }

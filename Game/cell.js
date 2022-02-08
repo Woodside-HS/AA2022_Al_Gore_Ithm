@@ -21,7 +21,7 @@ function Cell(x,y,scale,ctx,wallClr,imgSrc){
 Cell.prototype.draw = function(){
   let shift = 0//-this.wallWidth/2;
   let area = (this.scale-this.wallWidth)/this.scale;
-  //if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
+  if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
 
   for(var i = 0;i<this.walls.length;i++){
     this.walls[i].draw();

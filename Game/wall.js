@@ -1,18 +1,47 @@
-function Wall(ctx,x,y,angle,length,clr){
+function Wall(ctx,x,y,angle,length,clr,imgSrc,width){
   this.ctx = ctx;
   this.pos = new JSVector(x,y);
   this.angle = angle*Math.PI/180;
   this.length = length;
-  this.width = 2;
+  this.width = width;
   this.clr = clr;
+  this.img = new Image();
+  this.imgSet = false;
+  if(imgSrc!=undefined){
+    this.img.src = imgSrc;
+    this.imgSet = true;
+  }
 }
-Wall.prototype.draw = function(){
+Wall.prototype.displayLine = function(){ //displays wall as a line
   this.ctx.beginPath();
-  this.ctx.moveTo(this.pos.x, this.pos.y);
-  this.ctx.lineTo(this.pos.x+this.length*Math.cos(this.angle), this.pos.y+this.length*Math.sin(this.angle));
+  let yShift = this.width/2*Math.sin(this.angle);
+  let xShift = -this.width/2*Math.cos(this.angle);
+  let len = this.length-xShift;
+  this.ctx.moveTo(this.pos.x+xShift,this.pos.y+yShift);
+  this.ctx.lineTo(this.pos.x+len*Math.cos(this.angle), this.pos.y+len*Math.sin(this.angle));
+  this.ctx.closePath();
   this.ctx.lineWidth = this.width;
   this.ctx.strokeStyle = this.clr.toString();
   this.ctx.stroke();
+}
+Wall.prototype.displayImage = function(){ //displays wall image rather than black line
+  var sx = this.img.width*0.005;
+  var sy = this.img.height*0.005;
+  let shift = this.width*Math.cos(this.angle);
+  var x = this.pos.x+this.width/2-shift;
+  var y = this.pos.y-this.width/2;//*Math.cos(this.angle);
+  let focus = 8; //sharpness of image displayed
+  var imgCropWidth = (this.length+this.width/2+shift)*focus;
+  var imgCropHeight = this.width/2*focus;
+  this.ctx.translate(x, y);
+  this.ctx.rotate(this.angle);
+  this.ctx.drawImage(this.img,sx,sy,imgCropWidth,imgCropHeight,0,0,this.length+shift,this.width);
+  this.ctx.rotate(-this.angle);
+  this.ctx.translate(-x, -y);
+}
+Wall.prototype.draw = function(){
+  if(!this.imgSet) this.displayLine();
+  else this.displayImage();
 }
 Wall.prototype.getDist = function(pos){
   let dist = pos.x*Math.tan(this.angle)-pos.y+this.pos.y-this.pos.x*Math.tan(this.angle);

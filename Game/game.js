@@ -34,7 +34,8 @@ function Game(cnv,ctx){
 }
 
 Game.prototype.update = function(){
-  this.ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
+  this.ctx.fillStyle = "black";
+  this.ctx.fillRect(0,0,cnv.width,cnv.height); //clears canvas
 
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view

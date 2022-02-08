@@ -12,14 +12,13 @@ function Particle(x,y,vel,acc,ctx){
 }
 
 Particle.prototype.draw = function(){
-
+  this.ctx.beginPath();
   this.ctx.strokeStyle = this.clr;
   this.ctx.beginPath();
-  this.ctx.arc(this.pos.x, this.pos.y, this.rad, Math.PI*2, 0, false);
+  this.ctx.arc(this.pos.x, this.pos.y, this.rad, 0,Math.PI*2);
   this.ctx.stroke();
   this.ctx.fillStyle = this.clr;
   this.ctx.fill();
-
 }
 
 Particle.prototype.run = function(){

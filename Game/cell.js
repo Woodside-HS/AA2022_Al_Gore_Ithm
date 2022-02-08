@@ -13,12 +13,13 @@ function Cell(x,y,scale,ctx,wallClr,imgSrc){
 
   this.img = new Image();
   this.img.src = imgSrc;
+  this.wallWidth = 10;
 }
 
 Cell.prototype.draw = function(){
-
+  let shift = -this.wallWidth/2;
   let area = 1;
-  if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2,this.pos.y+this.scale*(1-area)/2,this.scale*area,this.scale*area);
+  //if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
 
   for(var i = 0;i<this.walls.length;i++){
     this.walls[i].draw();
@@ -36,6 +37,10 @@ Cell.prototype.generateWalls = function(){
 }
 
 Cell.prototype.addWall = function(x,y,angle,length){
-  let wall = new Wall(this.ctx,x,y,angle,length,this.wallClr);
+
+  let num_walls =  5; //5 different jpeg walls
+  let rand_wall = Math.ceil(Math.random()*num_walls);
+  let wallImgSrc = "../Files/Walls/wall"+rand_wall+".png";
+  let wall = new Wall(this.ctx,x,y,angle,length,this.wallClr,wallImgSrc,this.wallWidth);
   this.walls.push(wall);
 }

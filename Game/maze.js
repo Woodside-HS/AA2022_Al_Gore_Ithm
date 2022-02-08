@@ -91,9 +91,9 @@ Maze.prototype.resetGrid = function(){
   let height = this.rows*this.cellSize;
 
   //gives world a border
-
-  let n = new Wall(this.ctx,0,0,0,width,this.wallClr);
-  let w = new Wall(this.ctx,0,0,90,height,this.wallClr);
+  let borderWidth = 12;
+  let n = new Wall(this.ctx,0,0,0,width,this.wallClr,null,borderWidth);
+  let w = new Wall(this.ctx,0,0,90,height,this.wallClr,null,borderWidth);
 
   this.borderWalls = [n,w];
 }

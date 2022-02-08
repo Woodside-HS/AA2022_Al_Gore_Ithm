@@ -1,4 +1,6 @@
 function Cell(x,y,scale,ctx,wallClr,imgSrc){
+  this.previousCell = null;
+  this.coordinates = new JSVector(Math.floor(x/scale), Math.floor(y/scale));
   this.pos = new JSVector(x,y);
   this.scale = scale;
   this.ctx = ctx;

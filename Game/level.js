@@ -7,7 +7,7 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.boss = boss; //To do: create enemy class
 
   let playerImg = "../Files/algore.jpeg";
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx,playerImg);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,0.5,this.cnv,this.ctx,playerImg);
   this.zoomFactor = zoomFactor;
 }
 
@@ -25,10 +25,13 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(!this.enemies[i].update(this.maze)){
+      this.enemies[i].run(this.maze, this.player.pos);
+      /*
+      if(!this.enemies[i].run(this.maze, this.player.pos)){
         this.enemies.splice(i,1);
         i--;
       }
+      */
     }
   }
 

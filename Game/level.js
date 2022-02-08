@@ -1,16 +1,23 @@
-function Level(r,c,cellSize,enemies,boss,cnv,ctx){
+function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
   this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,15,new Color(255,0,0,1),5,100,this.cnv,this.ctx);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx);
+  this.zoomFactor = zoomFactor;
 }
 
 Level.prototype.update = function(){
 
   this.processInput();
+
+  this.ctx.save();
+  let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
+  let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
+  this.ctx.scale(this.zoomFactor,this.zoomFactor);
+  this.ctx.translate(x,y);
 
   this.maze.update();
 
@@ -20,12 +27,13 @@ Level.prototype.update = function(){
         this.enemies.splice(i,1);
         i--;
       }
-    }  
+    }
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
-
   this.player.run(this.maze); //updates player
+  this.ctx.restore();
+  this.player.healthbar.run();
 }
 
 Level.prototype.processInput = function(){
@@ -43,16 +51,14 @@ Level.prototype.processInput = function(){
   else if(keys["KeyA"]){
     dx = -1;
   }
-  this.player.vel = new JSVector(dx,dy);
+  this.player.setVel(dx,dy);
 }
 
 Level.prototype.load = function(){
-  let cellSize = this.maze.cellSize;
-  let c = this.maze.cols;
-  let r = this.maze.rows;
 
-  this.player.pos = new JSVector(cellSize/2,cellSize/2); //top left of maze
-  this.player.particleSystem.pos = this.player.pos;
+  let cellSize = this.maze.cellSize;
+
+  this.maze.regenerate();
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   this.scatterEnemies();
 }

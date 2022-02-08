@@ -15,15 +15,18 @@ function Cell(x,y,scale,ctx,wallClr,imgSrc){
 
   this.img = new Image();
   this.img.src = imgSrc;
+
   this.wallWidth = 10;
 }
 
 Cell.prototype.draw = function(){
   let shift = -this.wallWidth/2;
-  let area = 1;//(this.scale-this.wallWidth)/this.scale;
-  if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
+  let area = 1//(this.scale-this.wallWidth)/this.scale;
 
-  for(var i = 0;i<this.walls.length;i++){
+  //draws cell background (Red carpet)
+  this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
+
+  for(var i = 0;i<this.walls.length;i++){//draw walls of cell
     this.walls[i].draw();
   }
 }

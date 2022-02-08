@@ -20,6 +20,9 @@ ParticleSystem.prototype.update = function(maze){
     if(p.isDead(maze)){
       this.particles.splice(i, 1);
     }
+    else{
+      p.draw();
+    }
   }
 }
 

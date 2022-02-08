@@ -1,11 +1,9 @@
-function Particle(x,y,vel,acc,ctx){
+function Particle(x,y,rad,vel,ctx){
   this.pos = new JSVector(x, y); //initialize pos at emitter pos
   //VELOCITY
-  //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
-  this.vel = JSVector.addGetNew(vel,new JSVector(Math.random()*2-1, Math.random()*2-1));
-  this.rad = 2;
-  //
-  this.acc = acc;
+  //this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
+  this.vel = vel;//JSVector.addGetNew(vel,new JSVector(Math.random()*2-1, Math.random()*2-1));
+  this.rad = 3;
   this.lifeSpan = 200;
   this.clr = Color.generateRandomColor(155,1,1,false);
   this.ctx = ctx;
@@ -22,15 +20,14 @@ Particle.prototype.draw = function(){
 
 }
 
-Particle.prototype.run = function(){
-  this.vel.add(this.acc);
+Particle.prototype.update = function(){
   this.pos.add(this.vel);
   this.lifeSpan -= 1;
 }
 
 Particle.prototype.isDead = function(maze){
   let colliding = maze.detectCollision(this);
-  if(this.lifeSpan < 0.0||colliding){
+  if(this.lifeSpan < 0||colliding){
     return true;
   }else{
     return false;

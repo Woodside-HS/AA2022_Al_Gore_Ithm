@@ -4,9 +4,12 @@ function ParticleSystem(x,y,ctx){
   this.ctx = ctx;
 }
 
-ParticleSystem.prototype.generateParticles = function(targetPos,vel){
-  this.setDir(targetPos);
-  this.particles.push(new Particle(this.pos.x,this.pos.y,vel,this.acc,this.ctx));
+ParticleSystem.prototype.generateParticles = function(targetPos,characterVel){
+  //this.setDir(targetPos);
+  let vel = JSVector.subGetNew(targetPos,this.pos).add(characterVel);
+  vel.setMagnitude(5);
+  this.rad = 6;
+  this.particles.push(new Particle(this.pos.x,this.pos.y,this.rad,vel,this.ctx));
 }
 
 ParticleSystem.prototype.update = function(maze){
@@ -22,7 +25,8 @@ ParticleSystem.prototype.update = function(maze){
     }
   }
 }
+
 //setDir gets new vector from the click and orgin of particle system to shoot in correct dir
-ParticleSystem.prototype.setDir = function(enemypos){
-  this.acc = JSVector.subGetNew(enemypos,this.pos).setMagnitude(.1);
-}
+//ParticleSystem.prototype.setDir = function(enemypos){
+ //this.acc = JSVector.subGetNew(enemypos,this.pos).setMagnitude(0.3);
+//}

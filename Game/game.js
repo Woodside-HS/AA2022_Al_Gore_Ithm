@@ -11,13 +11,14 @@ function Game(cnv,ctx){
 
   let cellSize = 100;
   let zoomFactor = 3;
+
   //LEVEL 1 GENERATION**************************//
   let enemies_1 = [ //populates enemy array with test enemies
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),2,1,this.cnv, this.ctx),
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,1,this.cnv, this.ctx),
     new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),1,1,this.cnv, this.ctx),
   ];
-  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor) //creates new level with no enemies or boss parameters - null,null -
+  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"../Files/cell_level1.jpeg") //creates new level with no enemies or boss parameters - null,null -
   //*******************************************//
 
   this.levels.push(level1);
@@ -33,7 +34,8 @@ function Game(cnv,ctx){
 }
 
 Game.prototype.update = function(){
-  this.ctx.clearRect(0,0,cnv.width,cnv.height); //clears canvas
+  this.ctx.fillStyle = "black";
+  this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
 
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view

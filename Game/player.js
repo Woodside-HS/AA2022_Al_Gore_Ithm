@@ -1,6 +1,6 @@
-function Player(x,y,rad,clr,speed,life,cnv,ctx){
+function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
 
-  Character.call(this,x,y,rad,clr,speed,life,ctx);
+  Character.call(this,x,y,rad,clr,speed,life,ctx,imgSrc);
 
   this.cnv = cnv;
   this.particleSystem = new ParticleSystem(x,y,ctx);

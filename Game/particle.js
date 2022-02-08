@@ -10,14 +10,13 @@ function Particle(x,y,rad,vel,ctx){
 }
 
 Particle.prototype.draw = function(){
-
+  this.ctx.beginPath();
   this.ctx.strokeStyle = this.clr;
   this.ctx.beginPath();
   this.ctx.arc(this.pos.x, this.pos.y, this.rad, Math.PI*2, 0, false);
   this.ctx.stroke();
   this.ctx.fillStyle = this.clr;
   this.ctx.fill();
-
 }
 
 Particle.prototype.update = function(){

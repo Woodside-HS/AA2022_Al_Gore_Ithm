@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,ctx){
+function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -7,6 +7,9 @@ function Character(x,y,rad,clr,speed,life,ctx){
   this.life = life;
   this.clr = clr;
   this.ctx = ctx;
+
+  this.img = new Image();
+  if(imgSrc!=undefined) this.img.src = imgSrc;
 }
 
 Character.prototype.update = function(maze){
@@ -35,6 +38,8 @@ Character.prototype.draw = function(){
   this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
   this.ctx.fillStyle = this.clr.toString();
   this.ctx.fill();
+
+  if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
 }
 
 Character.prototype.setVel = function(dx,dy){

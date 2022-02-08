@@ -5,6 +5,8 @@ function Cell(x,y,scale,ctx,wallClr,imgSrc){
   this.connectedTo = -1;
   this.visited = false;
   this.wallStatus = {
+    n:false,
+    w:false,
     s:true,
     e:true
   }
@@ -33,6 +35,12 @@ Cell.prototype.generateWalls = function(){
   }
   if(this.wallStatus.e){
     this.addWall(this.pos.x+this.scale,this.pos.y,90,this.scale);
+  }
+  if(this.wallStatus.n){
+    this.addWall(this.pos.x,this.pos.y,0,this.scale);
+  }
+  if(this.wallStatus.w){
+    this.addWall(this.pos.x,this.pos.y,90,this.scale);
   }
 }
 

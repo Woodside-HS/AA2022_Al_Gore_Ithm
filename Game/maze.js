@@ -4,7 +4,6 @@ function Maze(cellSize,rows,cols,ctx,wallClr,cellImgSrc){
   this.cols = cols;
   this.cellSize = cellSize;
   this.cells = [];
-  this.borderWalls = [];
   this.wallClr = wallClr
   this.pos = new JSVector(cellSize/2,cellSize/2);
 
@@ -83,27 +82,22 @@ Maze.prototype.resetGrid = function(){
       let x = i*this.cellSize;
       let y = j*this.cellSize;
       let cell = new Cell(x,y,this.cellSize,this.ctx,this.wallClr,this.cellImgSrc);
+
+      if(j==0){
+        cell.wallStatus.n = true;
+      }
+      if(i==0){
+        cell.wallStatus.w = true;
+      }
+
       this.cells.push(cell);
     }
   }
-
-  let width = this.cols*this.cellSize;
-  let height = this.rows*this.cellSize;
-
-  //gives world a border
-  let borderWidth = 12;
-  let n = new Wall(this.ctx,0,0,0,width,this.wallClr,null,borderWidth);
-  let w = new Wall(this.ctx,0,0,90,height,this.wallClr,null,borderWidth);
-
-  this.borderWalls = [n,w];
 }
 
 Maze.prototype.update = function(){
   for(var i = 0;i<this.cells.length;i++){
     this.cells[i].draw();
-  }
-  for(var i = 0;i<this.borderWalls.length;i++){
-    this.borderWalls[i].draw();
   }
 }
 
@@ -169,10 +163,6 @@ Maze.prototype.loadSurroundingWalls = function(object){
     for(var k = 0;k<closeCells[i].walls.length;k++){
       walls.push(closeCells[i].walls[k]);
     }
-  }
-  //loads broder walls of world
-  for(var i = 0;i<this.borderWalls.length;i++){
-    walls.push(this.borderWalls[i]);
   }
 
   return walls;

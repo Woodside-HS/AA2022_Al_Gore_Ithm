@@ -10,12 +10,12 @@ function Game(cnv,ctx){
   this.currentLevel = 0;
 
   let cellSize = 100;
-  let zoomFactor = 1;
+  let zoomFactor = 3;
   //LEVEL 1 GENERATION**************************//
   let enemies_1 = [ //populates enemy array with test enemies
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),12,1,this.cnv, this.ctx),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),10,1,this.cnv, this.ctx),
-    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),8,1,this.cnv, this.ctx),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),2,1,this.cnv, this.ctx),
+    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,1,this.cnv, this.ctx),
+    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),1,1,this.cnv, this.ctx),
   ];
   let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor) //creates new level with no enemies or boss parameters - null,null -
   //*******************************************//

@@ -5,7 +5,7 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor){
   this.maze = new Maze(cellSize,r,c,ctx,new Color(0,0,0,1));
   this.enemies = enemies;
   this.boss = boss; //To do: create enemy class
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(0,0,255,1),2,0.5,this.cnv,this.ctx);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/12,new Color(0,0,255,1),3,0.5,this.cnv,this.ctx);
   this.zoomFactor = zoomFactor;
 }
 
@@ -23,10 +23,13 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(!this.enemies[i].update(this.maze)){
+      this.enemies[i].run(this.maze, this.player.pos);
+      /*
+      if(!this.enemies[i].run(this.maze, this.player.pos)){
         this.enemies.splice(i,1);
         i--;
       }
+      */
     }
   }
 

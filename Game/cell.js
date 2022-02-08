@@ -25,7 +25,8 @@ Cell.prototype.draw = function(){
 
   //draws cell background (Red carpet)
   this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x+this.scale*(1-area)/2+shift,this.pos.y+this.scale*(1-area)/2+shift,this.scale*area,this.scale*area);
-
+}
+Cell.prototype.displayWalls = function(){
   for(var i = 0;i<this.walls.length;i++){//draw walls of cell
     this.walls[i].draw();
   }

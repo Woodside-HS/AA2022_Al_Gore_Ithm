@@ -23,10 +23,13 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(!this.enemies[i].update(this.maze)){
+      this.enemies[i].run(this.maze, this.player.pos);
+      /*
+      if(!this.enemies[i].run(this.maze, this.player.pos)){
         this.enemies.splice(i,1);
         i--;
       }
+      */
     }
   }
 

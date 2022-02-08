@@ -4,8 +4,6 @@ function Particle(x,y,acc){
   //VELOCITY
   //  this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
   this.vel = new JSVector(Math.random()*2-1, Math.random()*2-1);
-  //
-  this.acc = acc;
   this.lifeSpan = 200;
   this.clr = Color.generateRandomColor(155,1,1,false);
 
@@ -23,7 +21,6 @@ Particle.prototype.draw = function(){
 }
 
 Particle.prototype.update = function(){
-  this.vel.add(this.acc);
   this.pos.add(this.vel);
   this.lifeSpan -= 1;
 }

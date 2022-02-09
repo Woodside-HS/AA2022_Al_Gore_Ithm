@@ -14,7 +14,7 @@ Enemy.prototype.run = function(maze, targetPos, playerParticleSystem){
   this.findPath(maze, targetPos);
   this.update(maze);
   this.shoot(maze, targetPos);
-  this.lifeSpan(playerParticleSystem);
+  this.isDead(playerParticleSystem);
 }
 
 Enemy.prototype.findPath = function(maze, targetPos){
@@ -51,7 +51,7 @@ Enemy.prototype.shoot = function(maze, targetPos){
   }
   this.particleSystem.update(maze);
 }
-Enemy.prototype.lifeSpan = function(playerParticleSystem){
+Enemy.prototype.isDead = function(playerParticleSystem){
 for(i=0; i < playerParticleSystem.particles.length; i++){
     let hit = this.pos.distance(playerParticleSystem.particles[i].pos)
     if(hit < this.rad){

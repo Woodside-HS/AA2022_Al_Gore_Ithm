@@ -25,7 +25,7 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      this.enemies[i].run(this.maze, this.player.pos);
+      this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       /*
       if(!this.enemies[i].run(this.maze, this.player.pos)){
         this.enemies.splice(i,1);
@@ -39,6 +39,13 @@ Level.prototype.update = function(){
   this.player.run(this.maze); //updates player
   this.ctx.restore();
   this.player.healthbar.run();
+
+  //Kills enemies when enemies.health = 0;
+  for(let i=0; i<this.enemies.length; i++){
+    if(this.enemies[i].health < 0){
+      this.enemies.splice(i,1);
+    }
+  }
 }
 
 Level.prototype.processInput = function(){

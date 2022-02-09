@@ -3,16 +3,18 @@ function Enemy(x, y, rad, clr, speed, life, cnv, ctx){
   this.acc = new JSVector(0, 0);
   this.path = [];
   this.vel = new JSVector(0, speed);
+  this.rad = rad;
   this.particleSystem = new ParticleSystem(x,y,ctx);
-  this.health = 20;
+  this.health = 250;
 }
 
 Enemy.prototype = new Character();
 
-Enemy.prototype.run = function(maze, targetPos){
+Enemy.prototype.run = function(maze, targetPos, playerParticleSystem){
   this.findPath(maze, targetPos);
   this.update(maze);
   this.shoot(maze, targetPos);
+  this.lifeSpan(playerParticleSystem);
 }
 
 Enemy.prototype.findPath = function(maze, targetPos){
@@ -49,6 +51,11 @@ Enemy.prototype.shoot = function(maze, targetPos){
   }
   this.particleSystem.update(maze);
 }
-Enemy.prototype.health = function(){
-
+Enemy.prototype.lifeSpan = function(playerParticleSystem){
+for(i=0; i < playerParticleSystem.particles.length; i++){
+    let hit = this.pos.distance(playerParticleSystem.particles[i].pos)
+    if(hit < this.rad){
+      this.health--;
+    }
+  }
 }

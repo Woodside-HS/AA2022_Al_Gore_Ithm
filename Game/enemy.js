@@ -21,8 +21,11 @@ Enemy.prototype.findPath = function(maze, targetPos){
   }
 
   let oldVel = this.vel.getMagnitude();
+  let dist = this.pos.distance(targetPos);
+  if(dist < 250){
   this.vel.add(this.acc);
   this.vel.setMagnitude(oldVel);
+}
 }
 
 Enemy.prototype.setPath = function(maze, targetPos){
@@ -45,4 +48,7 @@ Enemy.prototype.shoot = function(maze, targetPos){
     this.particleSystem.generateParticles(targetPos, this.vel);
   }
   this.particleSystem.update(maze);
+}
+Enemy.prototype.health = function(){
+
 }

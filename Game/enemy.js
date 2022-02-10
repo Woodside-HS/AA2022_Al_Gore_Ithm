@@ -11,8 +11,8 @@ Enemy.prototype = new Character();
 
 Enemy.prototype.run = function(maze, targetPos, particleSystem){
   this.findPath(maze, targetPos);
-  this.update(maze);
   this.shoot(maze, targetPos);
+  this.update(maze);
   this.detectParticles(particleSystem);
 }
 

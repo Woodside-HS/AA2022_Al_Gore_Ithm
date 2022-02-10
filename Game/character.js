@@ -38,8 +38,14 @@ Character.prototype.draw = function(){
   this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
   this.ctx.fillStyle = this.clr.toString();
   this.ctx.fill();
+  if(this.img.src!=undefined&&this.img.src!="") this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
 
-  if(this.img.src!=null) this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
+  else{
+    this.ctx.beginPath();
+    this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
+    this.ctx.fillStyle = this.clr.toString();
+    this.ctx.fill();
+  }
 }
 
 Character.prototype.setVel = function(dx,dy){

@@ -1,15 +1,19 @@
-function Enemy(x, y, rad, clr, speed, life, cnv, ctx){
-  Character.call(this, x, y, rad, clr, speed, life, ctx);
+function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc){
+  Character.call(this, x, y, rad, clr, speed, life, ctx,imgSrc);
   this.acc = new JSVector(0, 0);
   this.path = [];
-  this.vel = new JSVector(0, speed);
+  this.rad = rad;
+  this.particleSystem = new ParticleSystem(x,y,ctx);
+  this.triggered = false;
 }
 
 Enemy.prototype = new Character();
 
-Enemy.prototype.run = function(maze, targetPos){
+Enemy.prototype.run = function(maze, targetPos, particleSystem){
   this.findPath(maze, targetPos);
+  this.shoot(maze, targetPos);
   this.update(maze);
+  this.detectParticles(particleSystem);
 }
 
 Enemy.prototype.findPath = function(maze, targetPos){
@@ -17,9 +21,16 @@ Enemy.prototype.findPath = function(maze, targetPos){
       this.setPath(maze, targetPos);
   }
 
-  let oldVel = this.vel.getMagnitude();
-  this.vel.add(this.acc);
-  this.vel.setMagnitude(oldVel);
+  let dist = this.pos.distance(targetPos);
+  if(dist < 250){
+    this.triggered = true;
+  }
+  if(this.triggered){
+    if(this.vel.getMagnitude()<=Number.EPSILON) this.vel = new JSVector(0,this.speed);
+    let oldVel = this.vel.getMagnitude();
+    this.vel.add(this.acc);
+    this.vel.setMagnitude(oldVel);
+  }
 }
 
 Enemy.prototype.setPath = function(maze, targetPos){
@@ -34,4 +45,12 @@ Enemy.prototype.setPath = function(maze, targetPos){
   else this.destination = targetPos;
 
   this.acc = JSVector.subGetNew(this.destination, this.pos).setMagnitude(1);
+}
+Enemy.prototype.shoot = function(maze, targetPos){
+  this.particleSystem.pos = new JSVector(this.pos.x, this.pos.y);
+  let dist = this.pos.distance(targetPos);
+  if(dist < 100){
+    this.particleSystem.generateParticles(targetPos, this.vel);
+  }
+  this.particleSystem.update(maze);
 }

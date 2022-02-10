@@ -18,4 +18,5 @@ Player.prototype.run = function(maze){
     target.sub(new JSVector(this.cnv.width/2,this.cnv.height/2));
     this.particleSystem.generateParticles(target,this.vel);
   }
+  this.healthbar.health = this.life;
 }

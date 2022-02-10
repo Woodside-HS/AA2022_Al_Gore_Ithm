@@ -7,11 +7,13 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.boss = boss; //To do: create enemy class
 
   let playerImg = "../Files/algore.jpeg";
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,0.5,this.cnv,this.ctx,playerImg);
+  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
   this.zoomFactor = zoomFactor;
 }
 
 Level.prototype.update = function(){
+
+  if(this.checkLevelStatus()) return true;
 
   this.processInput();
 
@@ -25,7 +27,8 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      this.enemies[i].run(this.maze, this.player.pos);
+      this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
+      this.player.detectParticles(this.enemies[i].particleSystem);
       /*
       if(!this.enemies[i].run(this.maze, this.player.pos)){
         this.enemies.splice(i,1);
@@ -39,6 +42,27 @@ Level.prototype.update = function(){
   this.player.run(this.maze); //updates player
   this.ctx.restore();
   this.player.healthbar.run();
+
+  //Kills enemies when enemies.health = 0;
+  for(let i=0; i<this.enemies.length; i++){
+    if(this.enemies[i].life < 0){
+      this.enemies.splice(i,1);
+    }
+  }
+
+  return false;
+}
+
+Level.prototype.checkLevelStatus = function(){
+  if(this.player.life<=0){
+    alert("You Lose!!!");
+    return true;
+  }
+  else if(this.enemies.length==0){
+    alert("You Win!!!");
+    return true;
+  }
+  return false;
 }
 
 Level.prototype.processInput = function(){

@@ -1,13 +1,15 @@
-function Healthbar(cnv, ctx, startinghealth){
+function Healthbar(cnv, ctx, startingHealth){
   this.cnv = cnv;
   this.ctx = ctx;
   this.pos = new JSVector(5, 5);
-  this.health = startinghealth;
+  this.startingHealth = startingHealth;
+  this.health = startingHealth;
 }
 
 Healthbar.prototype.run = function(){
-  this.gradFill(this.health);
-  this.dispText(this.health);
+  let lifeProportion = this.health/this.startingHealth;
+  this.gradFill(lifeProportion);
+  this.dispText(lifeProportion);
 }
 
 Healthbar.prototype.incrementApproval = function(delta){

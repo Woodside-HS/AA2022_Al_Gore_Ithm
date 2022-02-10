@@ -14,7 +14,10 @@ function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
 
 Character.prototype.update = function(maze){
 
-  if(this.life<0) return false;
+  if(this.life<0){
+    this.life = 0;
+    return false;
+  }
 
   this.move(0.2);
   this.draw();
@@ -51,4 +54,12 @@ Character.prototype.draw = function(){
 Character.prototype.setVel = function(dx,dy){
   this.vel = new JSVector(dx,dy);
   if(this.vel.getMagnitude()>Number.EPSILON)this.vel.setMagnitude(this.speed); //sets the velocity to a magnitude of speed to ensure constant speed regardless of direction
+}
+Character.prototype.detectParticles = function(particleSystem){
+  for(i=0; i < particleSystem.particles.length; i++){
+    let hit = this.pos.distance(particleSystem.particles[i].pos)
+    if(hit < this.rad){
+      this.life--;
+    }
+  }
 }

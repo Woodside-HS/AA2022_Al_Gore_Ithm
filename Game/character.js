@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
+function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -6,10 +6,13 @@ function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
   this.vel = new JSVector(0,0);
   this.life = life;
   this.clr = clr;
+  this.cnv = cnv;
   this.ctx = ctx;
 
   this.img = new Image();
   if(imgSrc!=undefined) this.img.src = imgSrc;
+
+  this.particleSystem = new ParticleSystem(x,y,this.ctx);
 }
 
 Character.prototype.update = function(maze){

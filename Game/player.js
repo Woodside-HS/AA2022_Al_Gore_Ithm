@@ -1,10 +1,6 @@
 function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
-
-  Character.call(this,x,y,rad,clr,speed,life,ctx,imgSrc);
-
-  this.cnv = cnv;
-  this.particleSystem = new ParticleSystem(x,y,ctx);
-  this.healthbar = new Healthbar(cnv,ctx,this.life);
+  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc);
+  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life);
 }
 
 Player.prototype = new Character(); //inherits character class

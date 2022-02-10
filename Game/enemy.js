@@ -1,10 +1,10 @@
 function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc){
-  Character.call(this, x, y, rad, clr, speed, life, ctx,imgSrc);
+  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc);
   this.acc = new JSVector(0, 0);
   this.path = [];
   this.rad = rad;
-  this.particleSystem = new ParticleSystem(x,y,ctx);
   this.triggered = false;
+  //this.healthbar.width = 50;
 }
 
 Enemy.prototype = new Character();
@@ -14,6 +14,8 @@ Enemy.prototype.run = function(maze, targetPos, particleSystem){
   this.shoot(maze, targetPos);
   this.update(maze);
   this.detectParticles(particleSystem);
+  //this.healthbar.pos = new JSVector(this.pos.x,this.pos.y+this.rad*1.1);
+  //this.healthbar.run(false);
 }
 
 Enemy.prototype.findPath = function(maze, targetPos){

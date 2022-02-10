@@ -4,12 +4,13 @@ function Healthbar(cnv, ctx, startingHealth){
   this.pos = new JSVector(5, 5);
   this.startingHealth = startingHealth;
   this.health = startingHealth;
+  this.width = this.cnv.width;
 }
 
-Healthbar.prototype.run = function(){
+Healthbar.prototype.run = function(textEnabled){
   let lifeProportion = this.health/this.startingHealth;
   this.gradFill(lifeProportion);
-  this.dispText(lifeProportion);
+  if(textEnabled) this.dispText(lifeProportion);
 }
 
 Healthbar.prototype.incrementApproval = function(delta){
@@ -22,7 +23,7 @@ Healthbar.prototype.value_limit = function(val, min, max) {
 }
 
 Healthbar.prototype.gradFill = function(approval){
-  var width = approval*(this.cnv.width-2*this.pos.x);
+  var width = approval*(this.width-2*this.pos.x);
   var height = 20
   var grd=this.ctx.createLinearGradient(0,0,width,0);
   grd.addColorStop(0, new Color(255, 0, 0, 1));

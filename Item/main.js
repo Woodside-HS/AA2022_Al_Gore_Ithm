@@ -1,8 +1,15 @@
 window.addEventListener("load", init);
 //window.addEventListener("click",clickListener);
 //window.addEventListener("keypress", keyPressListener);
+/*
+const image = document.getElementById('powerup.png');
+image.addEventListener('load', e => {
+  drawImage(image, 33, 71, 104, 124, 21, 20, 87, 104);
+});
+*/
 var cnv, ctx, mouseX, mouseY;
 var pickups = [];
+//let img = document.getElementById("imgSource");
 function init(){
   cnv = document.getElementById("cnv");
   ctx = cnv.getContext("2d");
@@ -12,6 +19,7 @@ function init(){
 
 function animate(){
   ctx.clearRect(0,0,cnv.width,cnv.height);
+  //ctx.drawImage(img, 50, 50);
   update();
   window.requestAnimationFrame(animate);
 }
@@ -24,7 +32,7 @@ function update(){
 }
 function loadItem(n){
   for (let i = 0; i<n; i++){
-    let itemRandomizer = Math.random()*3;
+    let itemRandomizer = Math.random()*2;
     let itemType = null;
     if(itemRandomizer<1){
       itemType = "tool"
@@ -39,6 +47,7 @@ function loadItem(n){
     pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv, rad));
   }
 }
+
 /*
 function clickListener(event){
   mouseX = event.clientX-10;

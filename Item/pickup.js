@@ -9,45 +9,26 @@ class Pickup{
     this.acc = new JSVector(0,0);
     this.clock = 0; //movement is based on a cycle, this keeps track of time
     this.rad = rad;
+    this.img = new Image(); //kinda dumb dont know why you do this but just followed the YT vid
   }
   run(){
     this.update();
     this.draw();
   }
   update(){
-    /*
-    if(this.clock>=0 && this.clock<=10){
-      this.vel.y += .05;
-    }
-    if(this.clock>10 && this.clock<50){
-      this.vel.y = .5
-    }
-    if(this.clock>=50 && this.clock<60){
-      this.vel.y -= .05;
-    }
-    if(this.clock>=60 && this.clock<70){
-      this.vel.y -= .05;
-    }
-    if(this.clock>70 && this.clock<=110){
-      this.vel.y = -.5;
-    }
-    if(this.clock>110 && this.clock<120){
-      this.vel.y += .05;
-    }
-    if(this.clock>=120){
-      this.clock = 0;
-    }
-    */
-    this.vel.y = Math.sin(this.clock)/6;
-    this.pos.add(this.vel);
-    this.clock+= .05;
-    if (this.clock>6.25){this.clock =0;}
+    this.vel.y = Math.sin(this.clock)/6; //cycle based movement, operates on a clock
+    this.pos.add(this.vel); //adding pos to vel
+    this.clock+= .05; //increments the clock which therfore affects velocity above
+    if (this.clock>6.25){this.clock =0;} //length of period is around 6.25 seconds on the clock; itll reset when it hits zero
   }
   draw(){
     this.ctx.beginPath();
     this.ctx.arc(this.pos.x, this.pos.y, this.rad,0,Math.PI*2);
     if(this.itemType == "powerup"){
-        this.ctx.fill();
+        this.img.src = "IMG_4373.jpg"; //when we merge to main, i'll get this in the files system and rewrite the code. just looked at linked YT vid for saying img.src
+        this.ctx.drawImage(this.img, this.pos.x-this.rad, this.pos.y-this.rad, this.rad*2, this.rad*2); //sets the image
+        //this.ctx.fill();
+        //https://www.youtube.com/watch?v=BBvXJsDDYMc godly vid explains how i did this
     }
     this.ctx.stroke();
   }

@@ -40,7 +40,7 @@ Level.prototype.update = function(){
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
   this.ctx.restore();
-  this.player.healthbar.run(true,20,0.5);
+  this.player.healthbar.run(true);
 
   //Kills enemies when enemies.health = 0;
   for(let i=0; i<this.enemies.length; i++){
@@ -48,8 +48,6 @@ Level.prototype.update = function(){
       this.enemies.splice(i,1);
     }
   }
-
-  return this.checkLevelStatus();
 }
 
 Level.prototype.checkLevelStatus = function(){

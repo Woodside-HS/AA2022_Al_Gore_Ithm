@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth){
+function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -12,7 +12,7 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth){
   this.img = new Image();
   if(imgSrc!=undefined) this.img.src = imgSrc;
 
-  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth);
+  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth,healthHeight);
   this.particleSystem = new ParticleSystem(x,y,this.ctx);
 }
 
@@ -42,6 +42,7 @@ Character.prototype.move = function(t){
 }
 
 Character.prototype.draw = function(){
+
   this.ctx.beginPath();
   this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
   this.ctx.fillStyle = this.clr.toString();

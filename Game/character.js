@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
+function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -6,10 +6,14 @@ function Character(x,y,rad,clr,speed,life,ctx,imgSrc){
   this.vel = new JSVector(0,0);
   this.life = life;
   this.clr = clr;
+  this.cnv = cnv;
   this.ctx = ctx;
 
   this.img = new Image();
-  if(imgSrc!=undefined) this.img.src = imgSrc;
+  if(imgSrc!=undefined) this.img.src = imgSrc; //loads image into img object
+
+  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth,healthHeight); //creates health bar with life set to current life of character
+  this.particleSystem = new ParticleSystem(x,y,this.ctx); //creates basic particle system
 }
 
 Character.prototype.update = function(maze){
@@ -24,7 +28,8 @@ Character.prototype.update = function(maze){
 
   let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze
 
-  this.targetPos.add(delta);
+  this.targetPos.add(delta); //move target position based on movement velocity (delta)
+  this.healthbar.health = this.life; //resets the life of the health bar to the current character life
 
   return true;
 }
@@ -37,18 +42,7 @@ Character.prototype.move = function(t){
 }
 
 Character.prototype.draw = function(){
-  this.ctx.beginPath();
-  this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
-  this.ctx.fillStyle = this.clr.toString();
-  this.ctx.fill();
   if(this.img.src!=undefined&&this.img.src!="") this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
-
-  else{
-    this.ctx.beginPath();
-    this.ctx.arc(this.pos.x,this.pos.y,this.rad,0,Math.PI*2);
-    this.ctx.fillStyle = this.clr.toString();
-    this.ctx.fill();
-  }
 }
 
 Character.prototype.setVel = function(dx,dy){

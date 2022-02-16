@@ -47,8 +47,8 @@ function update(){
   game.update();
 }
 
-function play(){
-  //<button onclick="play()">Play Audio</button>
-  var audio = new Audio('https://static.wikia.nocookie.net/annex/images/0/01/ReaganBeginsBombingRussia.ogg/revision/latest?cb=20090801083034');
-  audio.play();
-}
+// function play(){
+//   //<button onclick="play()">Play Audio</button>
+//   var audio = new Audio('https://static.wikia.nocookie.net/annex/images/0/01/ReaganBeginsBombingRussia.ogg/revision/latest?cb=20090801083034');
+//   audio.play();
+// }

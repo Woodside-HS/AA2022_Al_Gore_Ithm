@@ -1,6 +1,5 @@
 function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
-  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc);
-  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life);
+  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc,cnv.width-10);
 }
 
 Player.prototype = new Character(); //inherits character class
@@ -14,5 +13,4 @@ Player.prototype.run = function(maze){
     target.sub(new JSVector(this.cnv.width/2,this.cnv.height/2));
     this.particleSystem.generateParticles(target,this.vel);
   }
-  this.healthbar.health = this.life;
 }

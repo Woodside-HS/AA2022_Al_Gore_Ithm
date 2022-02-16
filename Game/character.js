@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
+function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -12,6 +12,7 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
   this.img = new Image();
   if(imgSrc!=undefined) this.img.src = imgSrc;
 
+  this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth);
   this.particleSystem = new ParticleSystem(x,y,this.ctx);
 }
 
@@ -28,6 +29,7 @@ Character.prototype.update = function(maze){
   let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze
 
   this.targetPos.add(delta);
+  this.healthbar.health = this.life;
 
   return true;
 }

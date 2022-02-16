@@ -8,22 +8,17 @@ function Healthbar(cnv, ctx, startingHealth,width,height){
   this.height = height;
 }
 
-Healthbar.prototype.run = function(textEnabled){
+Healthbar.prototype.run = function(textEnabled){ //if text enabled, calls interpret approval method that shows text interpretation of approval
   let lifeProportion = this.health/this.startingHealth;
   this.gradFill(lifeProportion);
   if(textEnabled) this.dispText(lifeProportion);
-}
-
-Healthbar.prototype.incrementApproval = function(delta){
-  this.health += delta;
-  this.health = this.value_limit(this.health, 0, 1);
 }
 
 Healthbar.prototype.value_limit = function(val, min, max) {
   return val < min ? min : (val > max ? max : val);
 }
 
-Healthbar.prototype.gradFill = function(approval){
+Healthbar.prototype.gradFill = function(approval){ //fills health bar with gradient dependent on health proportion
   var width = approval*this.width;
   var grd=this.ctx.createLinearGradient(this.pos.x,this.pos.y,this.pos.x+width,this.pos.y);
   grd.addColorStop(0, new Color(255, 0, 0, 1));

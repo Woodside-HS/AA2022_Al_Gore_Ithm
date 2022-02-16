@@ -40,7 +40,7 @@ Level.prototype.update = function(){
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
   this.ctx.restore();
-  this.player.healthbar.run(true);
+  this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
 
   //Kills enemies when enemies.health = 0;
   for(let i=0; i<this.enemies.length; i++){

@@ -13,8 +13,6 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
 
 Level.prototype.update = function(){
 
-  if(this.checkLevelStatus()) return true;
-
   this.processInput();
 
   this.ctx.save();
@@ -24,6 +22,8 @@ Level.prototype.update = function(){
   this.ctx.translate(x,y);
 
   this.maze.update();
+
+  this.player.run(this.maze); //updates player
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
@@ -39,9 +39,8 @@ Level.prototype.update = function(){
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
-  this.player.run(this.maze); //updates player
   this.ctx.restore();
-  this.player.healthbar.run();
+  this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
 
   //Kills enemies when enemies.health = 0;
   for(let i=0; i<this.enemies.length; i++){
@@ -49,8 +48,6 @@ Level.prototype.update = function(){
       this.enemies.splice(i,1);
     }
   }
-
-  return false;
 }
 
 Level.prototype.checkLevelStatus = function(){

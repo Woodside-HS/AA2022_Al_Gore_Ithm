@@ -44,7 +44,8 @@ function loadItem(n){
     let itemMessage = "Man Bear Pig is real"; //message but not yet implemented
     let x = Math.random()*(this.cnv.width-200)+100;
     let y = Math.random()*(this.cnv.height-200)+100;
-    pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv, rad));
+    let imgSrc = "../Files/demoItem.jpg"
+    pickups.push(new Pickup(itemType, itemMessage, x, y, ctx, cnv, rad, imgSrc));
   }
 }
 

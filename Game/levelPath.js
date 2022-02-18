@@ -53,7 +53,7 @@ LevelPath.prototype.display = function(){
       this.ctx.beginPath();
       this.ctx.moveTo(pos0.x,pos0.y);
       this.ctx.lineTo(pos1.x,pos1.y);
-      this.ctx.strokeStyle = "black";
+      this.ctx.strokeStyle = "white";
       this.ctx.stroke();
     }
   }

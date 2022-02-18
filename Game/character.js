@@ -54,6 +54,7 @@ Character.prototype.detectParticles = function(particleSystem){
     let hit = this.pos.distance(particleSystem.particles[i].pos)
     if(hit < this.rad){
       this.life--;
+      particleSystem.particles[i].lifeSpan = 0;
     }
   }
 }

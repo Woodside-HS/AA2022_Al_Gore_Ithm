@@ -12,14 +12,31 @@ function Game(cnv,ctx){
   let cellSize = 100;
   let zoomFactor = 2;
 
-  let dubbya = new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"../Files/dubbya.jpeg");
-  let cheney = new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg");
-  let newt = new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg");
+  let dubbya = new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,100,this.cnv, this.ctx,"../Files/dubbya.jpeg");
+  let cheney = new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,75,this.cnv, this.ctx,"../Files/cheney.jpg");
+  let newt = new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,50,this.cnv, this.ctx,"../Files/newt.jpg");
   //LEVEL 1 GENERATION**************************//
+
   let enemies_1 = [ //populates enemy array with test enemies
+    /*new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
+    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
+    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
+
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),*/
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg")
+  ];
+  let enemies_2 = [ //populates enemy array with test enemies
     new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"../Files/dubbya.jpeg"),
     new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"../Files/dubbya.jpeg"),
-    
+    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"../Files/dubbya.jpeg"),
+    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"../Files/dubbya.jpeg"),
+
+    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"../Files/cheney.jpg"),
@@ -30,10 +47,12 @@ function Game(cnv,ctx){
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg"),
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"../Files/newt.jpg")
   ];
-  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"../Files/cell_level1.jpeg") //creates new level with no enemies or boss parameters - null,null -
+  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"../Files/cell_level1.jpeg");
+  let level2 = new Level(7,7,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"../Files/cell_level1.jpeg");
   //*******************************************//
 
   this.levels.push(level1);
+  this.levels.push(level2);
 
   for(var i = 0;i<this.levels.length;i++){
     this.levels[i].generateIcon(this.levels.length,i);
@@ -43,6 +62,18 @@ function Game(cnv,ctx){
   this.gameState = gameStates.PlayingLevel;
 
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
+}
+
+Game.prototype.nextLevel = function(){
+  if(this.currentLevel<this.levels.length-1){
+    this.setLevel(this.currentLevel+1);
+    return true;
+  }
+  return false;
+}
+
+Game.prototype.setLevel = function(level){
+  this.currentLevel = level;
 }
 
 Game.prototype.update = function(){
@@ -61,7 +92,7 @@ Game.prototype.update = function(){
     case gameStates.PlayingLevel:
       this.levels[this.currentLevel].update();
       if(this.levels[this.currentLevel].checkLevelStatus()){
-        this.gameState = gameStates.WorldMap;
+        if(!this.nextLevel()) this.gameState = gameStates.WorldMap;
       }
       break;
     default:

@@ -30,6 +30,9 @@ function Game(cnv,ctx){
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
   ];
+  let items_1 = [
+    new Pickup(powerup, )
+  ]
   let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpeg") //creates new level with no enemies or boss parameters - null,null -
   //*******************************************//
 

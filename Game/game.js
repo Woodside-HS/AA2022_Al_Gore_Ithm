@@ -20,7 +20,7 @@ function Game(cnv,ctx){
     this.levels[i].generateIcon(this.levels.length,i);
   }
 
-  this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,25,220,1),ctx);
+  this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
 
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
@@ -28,35 +28,35 @@ function Game(cnv,ctx){
 
 Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
   let enemies_1 = [ //populates enemy array with test enemies
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+    /*new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
 
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
   ];
 
-  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpeg");
+  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg");
 
   this.levels.push(level1);
 }
 Game.prototype.generateLevel_2 = function(cellSize,zoomFactor){
   let enemies_2 = [ //populates enemy array with test enemies
-    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
+    /*new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
 
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
 
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
   ];
-  let level2 = new Level(6,6,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpeg");
+  let level2 = new Level(6,6,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg");
 
   this.levels.push(level2);
 }
 Game.prototype.generateLevel_3 = function(cellSize,zoomFactor){
   let enemies_3 = [ //populates enemy array with test enemies
-    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
+    /*new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
     new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
 
     new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
@@ -65,10 +65,10 @@ Game.prototype.generateLevel_3 = function(cellSize,zoomFactor){
 
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
     new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
   ];
-  let level3 = new Level(6,6,cellSize,enemies_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpeg");
+  let level3 = new Level(6,6,cellSize,enemies_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg");
 
   this.levels.push(level3);
 }
@@ -102,6 +102,7 @@ Game.prototype.update = function(){
       this.levels[this.currentLevel].update();
       if(this.levels[this.currentLevel].checkLevelStatus()){
         if(!this.levels[this.currentLevel].detectLoss()) this.nextLevel();
+        else this.levels[this.currentLevel].load();
         this.gameState = gameStates.WorldMap;
       }
       break;

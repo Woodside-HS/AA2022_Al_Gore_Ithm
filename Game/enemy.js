@@ -1,5 +1,5 @@
 function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc){
-  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc,50,10);
+  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc,50,10,new Color(2,0.1,0.1,false));
   this.acc = new JSVector(0, 0);
   this.path = [];
   this.rad = rad;

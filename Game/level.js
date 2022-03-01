@@ -7,7 +7,8 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.boss = boss; //To do: create enemy class
 
   let playerImg = "Files/algore.jpeg";
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
+  this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
+  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
   this.zoomFactor = zoomFactor;
 }
 
@@ -85,11 +86,20 @@ Level.prototype.processInput = function(){
 }
 
 Level.prototype.load = function(){
+  mouseStatus = false;
+
+  this.player.life = this.player.initialLife;
+  this.player.pos = new JSVector(this.playerInitPos.x,this.playerInitPos.y);
+  this.player.targetPos = new JSVector(this.player.pos.x,this.player.pos.y);
+  this.player.setVel(0,0);
 
   let cellSize = this.maze.cellSize;
 
   this.maze.regenerate();
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
+  for(var i = 0;i<this.enemies.length;i++){
+    this.enemies[i].life = this.enemies[i].initialLife;
+  }
   this.scatterEnemies();
 }
 
@@ -127,7 +137,9 @@ Level.prototype.generateIcon = function(n,i){
 
   //create color gradient where as i increases, the icon color becomes darker
   let val = 150 - i/n*100;
-  let clr = new Color((1-i/n)*225,i/n*225,0,1);
+  //let clr = new Color((1-i/n)*225,i/n*225,0,1);
+  let clr = new Color((i/n)*200+55,(i/n)*200+55,(i/n)*200+55,1);
+
   let label = "Level " + (i+1);
 
   if(i==0||i==n-1) x = cnv.width/2; //centers first and last icons

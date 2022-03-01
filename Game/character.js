@@ -1,10 +1,11 @@
-function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight){
+function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight,clrScale){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
   this.speed = speed;
   this.vel = new JSVector(0,0);
   this.life = life;
+  this.initialLife = life;
   this.clr = clr;
   this.cnv = cnv;
   this.ctx = ctx;
@@ -13,7 +14,7 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeigh
   if(imgSrc!=undefined) this.img.src = imgSrc; //loads image into img object
 
   this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth,healthHeight); //creates health bar with life set to current life of character
-  this.particleSystem = new ParticleSystem(x,y,this.ctx); //creates basic particle system
+  this.particleSystem = new ParticleSystem(x,y,this.ctx,clrScale); //creates basic particle system
 }
 
 Character.prototype.update = function(maze){

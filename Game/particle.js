@@ -1,11 +1,11 @@
-function Particle(x,y,rad,vel,ctx){
+function Particle(x,y,rad,vel,ctx,clr){
   this.pos = new JSVector(x, y); //initialize pos at emitter pos
   //VELOCITY
   //this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
   this.vel = vel;//JSVector.addGetNew(vel,new JSVector(Math.random()*2-1, Math.random()*2-1));
   this.rad = 3;
   this.lifeSpan = 200;
-  this.clr = Color.generateRandomColor(155,1,1,false);
+  this.clr = clr;
   this.ctx = ctx;
 }
 

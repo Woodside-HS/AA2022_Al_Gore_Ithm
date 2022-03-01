@@ -101,7 +101,7 @@ Game.prototype.update = function(){
     case gameStates.PlayingLevel:
       this.levels[this.currentLevel].update();
       if(this.levels[this.currentLevel].checkLevelStatus()){
-        this.nextLevel();
+        if(!this.levels[this.currentLevel].detectLoss()) this.nextLevel();
         this.gameState = gameStates.WorldMap;
       }
       break;

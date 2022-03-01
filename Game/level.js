@@ -50,8 +50,12 @@ Level.prototype.update = function(){
   }
 }
 
+Level.prototype.detectLoss = function(){
+  return this.player.life<=0;
+}
+
 Level.prototype.checkLevelStatus = function(){
-  if(this.player.life<=0){
+  if(this.detectLoss()){
     alert("You Lose!!!");
     return true;
   }

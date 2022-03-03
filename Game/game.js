@@ -15,6 +15,8 @@ function Game(cnv,ctx){
   this.generateLevel_1(cellSize,zoomFactor);
   this.generateLevel_2(cellSize,zoomFactor);
   this.generateLevel_3(cellSize,zoomFactor);
+  this.generateLevel_4(cellSize,zoomFactor);
+  this.generateLevel_5(cellSize,zoomFactor);
 
   for(var i = 0;i<this.levels.length;i++){
     this.levels[i].generateIcon(this.levels.length,i);
@@ -27,50 +29,119 @@ function Game(cnv,ctx){
 }
 
 Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
-  let enemies_1 = [ //populates enemy array with test enemies
-    /*new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+  let enemies_1 = [];
 
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
-  ];
+  let num_enemy1 = 5;
+  let num_enemy2 = 3;
+  let num_enemy3 = 0;
 
-  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg");
+  for(var i = 0;i<num_enemy1;i++){
+    enemies_1.push(this.enemyPrefab1());
+  }
+  for(var i = 0;i<num_enemy2;i++){
+    enemies_1.push(this.enemyPrefab2());
+  }
+  for(var i = 0;i<num_enemy3;i++){
+    enemies_1.push(this.enemyPrefab3());
+  }
+
+  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",1);
 
   this.levels.push(level1);
 }
 Game.prototype.generateLevel_2 = function(cellSize,zoomFactor){
-  let enemies_2 = [ //populates enemy array with test enemies
-    /*new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
+  let enemies_2 = [];
 
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+  let num_enemy1 = 4;
+  let num_enemy2 = 4;
+  let num_enemy3 = 1;
 
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
-  ];
-  let level2 = new Level(6,6,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg");
+  for(var i = 0;i<num_enemy1;i++){
+    enemies_2.push(this.enemyPrefab1());
+  }
+  for(var i = 0;i<num_enemy2;i++){
+    enemies_2.push(this.enemyPrefab2());
+  }
+  for(var i = 0;i<num_enemy3;i++){
+    enemies_2.push(this.enemyPrefab3());
+  }
+
+  let level2 = new Level(6,6,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg",1);
 
   this.levels.push(level2);
 }
 Game.prototype.generateLevel_3 = function(cellSize,zoomFactor){
-  let enemies_3 = [ //populates enemy array with test enemies
-    /*new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
-    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
+  let enemies_3 = [];
 
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+  let num_enemy1 = 5;
+  let num_enemy2 = 5;
+  let num_enemy3 = 2;
 
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),*/
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
-  ];
+  for(var i = 0;i<num_enemy1;i++){
+    enemies_3.push(this.enemyPrefab1());
+  }
+  for(var i = 0;i<num_enemy2;i++){
+    enemies_3.push(this.enemyPrefab2());
+  }
+  for(var i = 0;i<num_enemy3;i++){
+    enemies_3.push(this.enemyPrefab3());
+  }
+
   let level3 = new Level(6,6,cellSize,enemies_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg");
 
   this.levels.push(level3);
+}
+Game.prototype.generateLevel_4 = function(cellSize,zoomFactor){
+  let enemies_4 = [];
+
+  let num_enemy1 = 15;
+  let num_enemy2 = 2;
+  let num_enemy3 = 2;
+
+  for(var i = 0;i<num_enemy1;i++){
+    enemies_4.push(this.enemyPrefab1());
+  }
+  for(var i = 0;i<num_enemy2;i++){
+    enemies_4.push(this.enemyPrefab2());
+  }
+  for(var i = 0;i<num_enemy3;i++){
+    enemies_4.push(this.enemyPrefab3());
+  }
+
+  let level4 = new Level(6,6,cellSize,enemies_4,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level4.png");
+
+  this.levels.push(level4);
+}
+Game.prototype.generateLevel_5 = function(cellSize,zoomFactor){
+  let enemies_5 = [];
+
+  let num_enemy1 = 7;
+  let num_enemy2 = 6;
+  let num_enemy3 = 5;
+
+  for(var i = 0;i<num_enemy1;i++){
+    enemies_5.push(this.enemyPrefab1());
+  }
+  for(var i = 0;i<num_enemy2;i++){
+    enemies_5.push(this.enemyPrefab2());
+  }
+  for(var i = 0;i<num_enemy3;i++){
+    enemies_5.push(this.enemyPrefab3());
+  }
+
+  let level5 = new Level(6,6,cellSize,enemies_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
+
+  this.levels.push(level5);
+}
+
+Game.prototype.enemyPrefab1 = function(){
+  return new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),2,100,this.cnv, this.ctx,"Files/newt.jpg",1,3);
+}
+Game.prototype.enemyPrefab2 = function(){
+  return new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg",1,2);
+}
+Game.prototype.enemyPrefab3 = function(){
+  return new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg",2,2);
 }
 
 Game.prototype.nextLevel = function(){

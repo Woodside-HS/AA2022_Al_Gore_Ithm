@@ -1,4 +1,4 @@
-function Particle(x,y,rad,vel,ctx,clr){
+function Particle(x,y,rad,vel,ctx,clr,damage){
   this.pos = new JSVector(x, y); //initialize pos at emitter pos
   //VELOCITY
   //this.vel = new JSVector(Math.random()*5-2, Math.random()*5-2);
@@ -7,6 +7,7 @@ function Particle(x,y,rad,vel,ctx,clr){
   this.lifeSpan = 200;
   this.clr = clr;
   this.ctx = ctx;
+  this.damage = damage;
 }
 
 Particle.prototype.draw = function(){

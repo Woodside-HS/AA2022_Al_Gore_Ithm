@@ -8,7 +8,7 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
 
   let playerImg = "Files/algore.jpeg";
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
-  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
+  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
   this.zoomFactor = zoomFactor;
 }
 
@@ -86,6 +86,8 @@ Level.prototype.processInput = function(){
 }
 
 Level.prototype.load = function(){
+  keys = [];
+  mousePos = new JSVector(0,0);
   mouseStatus = false;
 
   this.player.life = this.player.initialLife;

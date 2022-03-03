@@ -9,9 +9,9 @@ function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc,particleDamage,firin
 Enemy.prototype = new Character();
 
 Enemy.prototype.run = function(maze, targetPos, particleSystem){
+  this.shoot(maze, targetPos);
   this.update(maze);
   this.findPath(maze, targetPos);
-  this.shoot(maze, targetPos);
   this.detectParticles(particleSystem);
 
   this.healthbar.pos = new JSVector(this.pos.x-this.healthbar.width/2,this.pos.y-this.rad-this.healthbar.height*1.1); //sets position of healthbar relative to position of enemy

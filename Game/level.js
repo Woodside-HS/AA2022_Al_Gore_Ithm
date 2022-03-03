@@ -101,6 +101,7 @@ Level.prototype.load = function(){
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   for(var i = 0;i<this.enemies.length;i++){
     this.enemies[i].life = this.enemies[i].initialLife;
+    this.enemies.path = [];
   }
   this.scatterEnemies();
 }

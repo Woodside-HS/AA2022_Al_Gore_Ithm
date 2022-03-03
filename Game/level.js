@@ -1,4 +1,5 @@
 function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
+  this.levelState = 1;
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
@@ -53,11 +54,12 @@ Level.prototype.update = function(){
 Level.prototype.checkLevelStatus = function(){
   if(this.player.life<=0){
     alert("You Lose!!!");
-    return true;
+  //  return true;
   }
   else if(this.enemies.length==0){
-    alert("You Win!!!");
-    return true;
+  //  alert("You Win!!!");
+    this.levelState = 2;
+  //  return true;
   }
   return false;
 }
@@ -83,10 +85,13 @@ Level.prototype.processInput = function(){
 Level.prototype.load = function(){
 
   let cellSize = this.maze.cellSize;
-
+  if(this.levelState == 1){
   this.maze.regenerate();
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   this.scatterEnemies();
+}else if(this.levelState == 2){
+  
+}
 }
 
 Level.prototype.scatterEnemies = function(){

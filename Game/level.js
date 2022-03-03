@@ -28,27 +28,15 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
+      if(this.enemies[i].life<0) continue; //kills enemies if life < 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
-      /*
-      if(!this.enemies[i].run(this.maze, this.player.pos)){
-        this.enemies.splice(i,1);
-        i--;
-      }
-      */
     }
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
   this.ctx.restore();
   this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
-
-  //Kills enemies when enemies.health = 0;
-  for(let i=0; i<this.enemies.length; i++){
-    if(this.enemies[i].life < 0){
-      this.enemies.splice(i,1);
-    }
-  }
 }
 
 Level.prototype.detectLoss = function(){
@@ -60,11 +48,13 @@ Level.prototype.checkLevelStatus = function(){
     alert("You Lose!!!");
     return true;
   }
-  else if(this.enemies.length==0){
+  else{
+    for(var i = 0;i<this.enemies.length;i++){
+      if(this.enemies[i].life>0) return false;
+    }
     alert("You Win!!!");
     return true;
   }
-  return false;
 }
 
 Level.prototype.processInput = function(){

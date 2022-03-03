@@ -13,10 +13,10 @@ function Game(cnv,ctx){
   let zoomFactor = 2;
 
   this.generateLevel_1(cellSize,zoomFactor);
-  this.generateLevel_2(cellSize,zoomFactor);
-  this.generateLevel_3(cellSize,zoomFactor);
-  this.generateLevel_4(cellSize,zoomFactor);
-  this.generateLevel_5(cellSize,zoomFactor);
+  //this.generateLevel_2(cellSize,zoomFactor);
+  //this.generateLevel_3(cellSize,zoomFactor);
+  //this.generateLevel_4(cellSize,zoomFactor);
+  //this.generateLevel_5(cellSize,zoomFactor);
 
   for(var i = 0;i<this.levels.length;i++){
     this.levels[i].generateIcon(this.levels.length,i);
@@ -31,8 +31,8 @@ function Game(cnv,ctx){
 Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
   let enemies_1 = [];
 
-  let num_enemy1 = 5;
-  let num_enemy2 = 3;
+  let num_enemy1 = 1;
+  let num_enemy2 = 0;
   let num_enemy3 = 0;
 
   for(var i = 0;i<num_enemy1;i++){
@@ -173,7 +173,7 @@ Game.prototype.update = function(){
       this.levels[this.currentLevel].update();
       if(this.levels[this.currentLevel].checkLevelStatus()){
         if(!this.levels[this.currentLevel].detectLoss()) this.nextLevel();
-        else this.levels[this.currentLevel].load();
+        else this.setLevel(this.currentLevel);
         this.gameState = gameStates.WorldMap;
       }
       break;

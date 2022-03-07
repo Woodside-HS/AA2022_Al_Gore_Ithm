@@ -103,6 +103,9 @@ Level.prototype.load = function(){
   }
 
   this.scatter(this.pickups);
+  for(let i=0;i<this.pickups.length;i++){
+    this.pickups[i].basePos = this.pickups[i].pos;
+  }
 }
 
 Level.prototype.scatter = function(objects){

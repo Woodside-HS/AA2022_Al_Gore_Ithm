@@ -51,7 +51,7 @@ Enemy.prototype.setPath = function(maze, targetPos){ //sets the movement within 
 Enemy.prototype.shoot = function(maze, targetPos){ //shoots particle system at target position
   this.particleSystem.pos = new JSVector(this.pos.x, this.pos.y);
   let dist = this.pos.distance(targetPos);
-  if(dist < 100){
+  if(dist < 100 && game.levels[game.currentLevel].detectPause != true){
     this.particleSystem.generateParticles(targetPos, this.vel);
   }
   this.particleSystem.update(maze);

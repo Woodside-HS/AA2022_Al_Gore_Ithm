@@ -1,4 +1,5 @@
 const gameStates = new Enum(
+  'StartScreen',
   'WorldMap',
   'PlayingLevel'
 );
@@ -21,11 +22,9 @@ function Game(cnv,ctx){
   for(var i = 0;i<this.levels.length;i++){
     this.levels[i].generateIcon(this.levels.length,i);
   }
-
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
-  this.gameState = gameStates.PlayingLevel;
-
-  this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
+  this.gameState = gameStates.StartScreen;
+  this.levels[this.currentLevel].load();
 }
 
 Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
@@ -161,6 +160,9 @@ Game.prototype.setLevel = function(level){
 }
 
 Game.prototype.update = function(){
+if(this.gameState == gameStates.StartScreen){
+  this.startScreen();
+}else{
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
 
@@ -183,5 +185,17 @@ Game.prototype.update = function(){
       break;
     default:
       console.log("No status");
+    }
+  }
+}
+Game.prototype.startScreen = function(){
+  this.ctx.fillStyle = 'black';
+  this.ctx.font = '48px monospace';
+  this.ctx.fillText("AL-GORE-ITHM", this.cnv.width/2-165, this.cnv.height/2);
+  this.ctx.font = '28px monospace';
+  this.ctx.fillText("Click to Play", this.cnv.width/2-100, this.cnv.height/2+50);
+
+  if(mouseStatus){
+    this.gameState = gameStates.PlayingLevel;
   }
 }

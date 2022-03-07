@@ -10,11 +10,13 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
   this.zoomFactor = zoomFactor;
+  this.detectPause = false;
+  this.drawPauseScreen = 0;
 }
 
 Level.prototype.update = function(){
 
-  this.processInput();
+ this.processInput();
 
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
@@ -23,7 +25,6 @@ Level.prototype.update = function(){
   this.ctx.translate(x,y);
 
   this.maze.update();
-
   this.player.run(this.maze); //updates player
 
   if(this.enemies!=null){
@@ -31,12 +32,13 @@ Level.prototype.update = function(){
       if(this.enemies[i].life<0) continue; //kills enemies if life < 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
-    }
   }
+}
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
   this.ctx.restore();
   this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
+  this.pauseButton();
 }
 
 Level.prototype.detectLoss = function(){
@@ -127,7 +129,6 @@ Level.prototype.generateIcon = function(n,i){
   let y = cnv.height/2 + dist*(n-1)/2.0 - i*dist;
 
   //create color gradient where as i increases, the icon color becomes darker
-  let val = 150 - i/n*100;
   //let clr = new Color((1-i/n)*225,i/n*225,0,1);
   let clr = new Color((i/n)*200+55,(i/n)*200+55,(i/n)*200+55,1);
 
@@ -137,4 +138,28 @@ Level.prototype.generateIcon = function(n,i){
   if(i==n-1) rad*=1.2; //final level has larger icon
 
   this.icon = new LevelIcon(this.ctx,x,y,clr,rad,label)
+}
+Level.prototype.pauseButton = function(){
+  let rectX = 10;
+  let rectY = 30;
+  let rectClr = "white";
+
+  this.ctx.fillStyle = rectClr;
+  this.ctx.strokeStyle = "white";
+  this.ctx.beginPath();
+  this.ctx.fillRect(rectX, rectY, 45, 30);
+
+  if(mousePos.x < 55 && mousePos.x > 10 && mousePos.y < 60 && mousePos.y > 30 && mouseStatus === true){
+    this.detectPause = true;
+    this.drawPauseScreen = 1;
+  }
+  if(this.drawPauseScreen == 1){
+    this.ctx.beginPath();
+    this.ctx.fillRect(10,90,100,125);
+  }
+  //this.fillStyle = textClr;
+  //this.ctx.font = "16px Times New Roman";
+  //this.ctx.textAlign = "left";
+  //this.ctx.fillText("Pause", rectX+45/2,rectY+15);
+
 }

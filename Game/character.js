@@ -23,8 +23,9 @@ Character.prototype.update = function(maze){
     this.life = 0;
     return false;
   }
-
+if(game.levels[game.currentLevel].detectPause != true){ //detecting if pause button pressed to stop moving all characters
   this.move(0.2);
+}
   this.draw();
 
   let delta = maze.executeCollision(this.vel.x,this.vel.y,this); //Updates movement depending on collision with walls of maze

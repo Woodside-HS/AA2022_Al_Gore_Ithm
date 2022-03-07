@@ -53,7 +53,7 @@ LevelPath.prototype.display = function(){
       this.ctx.beginPath();
       this.ctx.moveTo(pos0.x,pos0.y);
       this.ctx.lineTo(pos1.x,pos1.y);
-      this.ctx.strokeStyle = "black";
+      this.ctx.strokeStyle = "white";
       this.ctx.stroke();
     }
   }
@@ -82,6 +82,10 @@ LevelPath.prototype.display = function(){
 }
 
 LevelPath.prototype.nextLevel = function(){
-  this.path = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
+  var index = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
+  this.setPath(index);
+}
+LevelPath.prototype.setPath = function(index){
+  this.path = index;
   this.segment = 0;
 }

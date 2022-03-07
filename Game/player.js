@@ -1,5 +1,5 @@
-function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc){
-  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc,cnv.width-10,20);
+function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,particleDamage,firingRate){
+  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc,cnv.width-10,20,new Color(0.1,0.1,2,false),particleDamage,firingRate);
 }
 
 Player.prototype = new Character(); //inherits character class

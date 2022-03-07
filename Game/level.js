@@ -7,7 +7,8 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.boss = boss; //To do: create enemy class
 
   let playerImg = "Files/algore.jpeg";
-  this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
+  this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
+  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
   this.zoomFactor = zoomFactor;
 }
 
@@ -27,39 +28,31 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
+      if(this.enemies[i].life<0) continue; //kills enemies if life < 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
-      /*
-      if(!this.enemies[i].run(this.maze, this.player.pos)){
-        this.enemies.splice(i,1);
-        i--;
-      }
-      */
     }
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
   this.ctx.restore();
   this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
+}
 
-  //Kills enemies when enemies.health = 0;
-  for(let i=0; i<this.enemies.length; i++){
-    if(this.enemies[i].life < 0){
-      this.enemies.splice(i,1);
-    }
-  }
+Level.prototype.detectLoss = function(){
+  return this.player.life<=0;
 }
 
 Level.prototype.checkLevelStatus = function(){
-  if(this.player.life<=0){
-    alert("You Lose!!!");
+  if(this.detectLoss()){
     return true;
   }
-  else if(this.enemies.length==0){
-    alert("You Win!!!");
+  else{
+    for(var i = 0;i<this.enemies.length;i++){
+      if(this.enemies[i].life>0) return false;
+    }
     return true;
   }
-  return false;
 }
 
 Level.prototype.processInput = function(){
@@ -81,11 +74,23 @@ Level.prototype.processInput = function(){
 }
 
 Level.prototype.load = function(){
+  keys = [];
+  mousePos = new JSVector(0,0);
+  mouseStatus = false;
+
+  this.player.life = this.player.initialLife;
+  this.player.pos = new JSVector(this.playerInitPos.x,this.playerInitPos.y);
+  this.player.targetPos = new JSVector(this.player.pos.x,this.player.pos.y);
+  this.player.setVel(0,0);
 
   let cellSize = this.maze.cellSize;
 
   this.maze.regenerate();
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
+  for(var i = 0;i<this.enemies.length;i++){
+    this.enemies[i].life = this.enemies[i].initialLife;
+    this.enemies[i].path = [];
+  }
   this.scatterEnemies();
 }
 
@@ -123,7 +128,9 @@ Level.prototype.generateIcon = function(n,i){
 
   //create color gradient where as i increases, the icon color becomes darker
   let val = 150 - i/n*100;
-  let clr = new Color((1-i/n)*225,i/n*225,0,1);
+  //let clr = new Color((1-i/n)*225,i/n*225,0,1);
+  let clr = new Color((i/n)*200+55,(i/n)*200+55,(i/n)*200+55,1);
+
   let label = "Level " + (i+1);
 
   if(i==0||i==n-1) x = cnv.width/2; //centers first and last icons

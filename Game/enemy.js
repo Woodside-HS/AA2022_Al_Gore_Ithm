@@ -1,5 +1,5 @@
-function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc){
-  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc,50,10);
+function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc,particleDamage,firingRate){
+  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc,50,10,new Color(2,0.1,0.1,false),particleDamage,firingRate);
   this.acc = new JSVector(0, 0);
   this.path = [];
   this.rad = rad;
@@ -9,9 +9,9 @@ function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc){
 Enemy.prototype = new Character();
 
 Enemy.prototype.run = function(maze, targetPos, particleSystem){
+  this.shoot(maze, targetPos);
   this.update(maze);
   this.findPath(maze, targetPos);
-  this.shoot(maze, targetPos);
   this.detectParticles(particleSystem);
 
   this.healthbar.pos = new JSVector(this.pos.x-this.healthbar.width/2,this.pos.y-this.rad-this.healthbar.height*1.1); //sets position of healthbar relative to position of enemy

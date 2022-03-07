@@ -21,7 +21,7 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   let label = "Test Weapon";
   let rad = 10;
   let imgSrc = null;
-  //this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
 }
 
 Level.prototype.update = function(){
@@ -58,7 +58,8 @@ Level.prototype.update = function(){
   }
 
   this.ctx.restore();
-  this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
+  this.player.healthbar.run(true);
+  this.player.inventory.display(); //runs healthbar with text display enabled set to true
 }
 
 Level.prototype.detectLoss = function(){

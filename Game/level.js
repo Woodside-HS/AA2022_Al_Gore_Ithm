@@ -47,15 +47,10 @@ Level.prototype.checkLevelStatus = function(){
   if(this.detectLoss()){
     return true;
   }
-<<<<<<< Updated upstream
   else{
     for(var i = 0;i<this.enemies.length;i++){
       if(this.enemies[i].life>0) return false;
     }
-    alert("You Win!!!");
-=======
-  else if(this.enemies.length==0){
->>>>>>> Stashed changes
     return true;
   }
 }
@@ -94,10 +89,9 @@ Level.prototype.load = function(){
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   for(var i = 0;i<this.enemies.length;i++){
     this.enemies[i].life = this.enemies[i].initialLife;
-    this.enemies.path = [];
+    this.enemies[i].path = [];
   }
   this.scatterEnemies();
-  console.log("Loaded");
 }
 
 Level.prototype.scatterEnemies = function(){

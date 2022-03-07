@@ -10,12 +10,14 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   let playerImg = "Files/algore.jpeg";
   this.player = new Player(cellSize/2,cellSize/2,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg);
   this.zoomFactor = zoomFactor;
+  this.key;
 }
 
 Level.prototype.update = function(){
 
   this.processInput();
-
+  this.GenerateKey();
+if(this.levelState == 1){
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
   let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
@@ -26,6 +28,11 @@ Level.prototype.update = function(){
 
   this.player.run(this.maze); //updates player
 
+}else if(this.levelState == 2){
+  let bossMaze = new Maze(100,0,0,this.ctx,null,null);
+  bossMaze.update();
+  this.player.run(bossMaze);
+}
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
@@ -85,13 +92,10 @@ Level.prototype.processInput = function(){
 Level.prototype.load = function(){
 
   let cellSize = this.maze.cellSize;
-  if(this.levelState == 1){
   this.maze.regenerate();
   //this.boss.pos = new JSVector(c*cellSize-cellSize/2,r*cellSize-cellSize/2); //bottom right of maze
   this.scatterEnemies();
-}else if(this.levelState == 2){
-  
-}
+
 }
 
 Level.prototype.scatterEnemies = function(){
@@ -135,4 +139,12 @@ Level.prototype.generateIcon = function(n,i){
   if(i==n-1) rad*=1.2; //final level has larger icon
 
   this.icon = new LevelIcon(this.ctx,x,y,clr,rad,label)
+}
+
+Level.prototype.GenerateKey = function(){
+  let clr = "white";
+  this.ctx.beginPath()
+  this.ctx.fillStyle = this.clr;
+  this.ctx.arc(100,300, 15, 0, 2 * Math.PI )
+  this.ctx.fill();
 }

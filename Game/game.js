@@ -18,17 +18,17 @@ function Game(cnv,ctx){
   //LEVEL 1 GENERATION**************************//
   let enemies_1 = [ //populates enemy array with test enemies
     new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
-    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
+//    new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg"),
 
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
-    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+//    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+//    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
+//    new Enemy(0,0,15,Color.generateRandomColor(255,1,1,false),1.5,250,this.cnv, this.ctx,"Files/cheney.jpg"),
 
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
-    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
+//    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+//    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+//    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+//    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg"),
+//    new Enemy(0,0,10,Color.generateRandomColor(255,1,1,false),1,100,this.cnv, this.ctx,"Files/newt.jpg")
   ];
 //  let boss1 = new Boss(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg");
   let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpeg") //creates new level with no enemies or boss parameters - null,null -

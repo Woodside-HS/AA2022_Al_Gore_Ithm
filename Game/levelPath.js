@@ -82,6 +82,10 @@ LevelPath.prototype.display = function(){
 }
 
 LevelPath.prototype.nextLevel = function(){
-  this.path = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
+  var index = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
+  this.setPath(index);
+}
+LevelPath.prototype.setPath = function(index){
+  this.path = index;
   this.segment = 0;
 }

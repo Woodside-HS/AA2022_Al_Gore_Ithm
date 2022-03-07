@@ -45,14 +45,17 @@ Level.prototype.detectLoss = function(){
 
 Level.prototype.checkLevelStatus = function(){
   if(this.detectLoss()){
-    alert("You Lose!!!");
     return true;
   }
+<<<<<<< Updated upstream
   else{
     for(var i = 0;i<this.enemies.length;i++){
       if(this.enemies[i].life>0) return false;
     }
     alert("You Win!!!");
+=======
+  else if(this.enemies.length==0){
+>>>>>>> Stashed changes
     return true;
   }
 }
@@ -94,6 +97,7 @@ Level.prototype.load = function(){
     this.enemies.path = [];
   }
   this.scatterEnemies();
+  console.log("Loaded");
 }
 
 Level.prototype.scatterEnemies = function(){

@@ -149,6 +149,10 @@ Game.prototype.nextLevel = function(){
     this.setLevel(this.currentLevel+1);
     this.levelPath.nextLevel();
   }
+  else{
+    alert("You Win!!!");
+    this.levels[this.currentLevel].load();
+  }
 }
 
 Game.prototype.setLevel = function(level){

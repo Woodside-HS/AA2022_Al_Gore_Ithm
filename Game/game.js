@@ -163,7 +163,8 @@ Game.prototype.setLevel = function(level){
 Game.prototype.update = function(){
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
-
+  audio.play();
+  console.log("pass")
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;

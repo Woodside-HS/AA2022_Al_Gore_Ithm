@@ -2,6 +2,7 @@ window.addEventListener("load", init);
 
 var mousePos,mouseStatus;
 var keys;
+var audio;
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
@@ -31,6 +32,8 @@ function init(){
   keys = [];
   mousePos = new JSVector(0,0);
   mouseStatus = false;
+  audio = new Audio('Files/Al-Gore-ithm_1.mp3');
+  audio.loop = true;
 
   game = new Game(cnv,ctx);
 
@@ -43,6 +46,6 @@ function animate(){
   requestAnimationFrame(animate);
 }
 
-function update(){
-  game.update();
+function update(audio){
+  game.update(audio);
 }

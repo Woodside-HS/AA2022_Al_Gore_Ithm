@@ -142,12 +142,12 @@ Level.prototype.generateIcon = function(n,i){
 Level.prototype.pauseButton = function(){
   let rectX = 10;
   let rectY = 30;
-  let rectClr = "white";
 
-  this.ctx.fillStyle = rectClr;
-  this.ctx.strokeStyle = "white";
   this.ctx.beginPath();
-  this.ctx.fillRect(rectX, rectY, 45, 30);
+  this.ctx.fillStyle = Color.generateRandomColor(255,255,255,0);
+  this.ctx.rect(rectX, rectY, 45, 30);
+  this.ctx.fill();
+  this.ctx.stroke();
 
   if(mousePos.x < 55 && mousePos.x > 10 && mousePos.y < 60 && mousePos.y > 30 && mouseStatus === true){
     this.detectPause = true;
@@ -157,9 +157,19 @@ Level.prototype.pauseButton = function(){
     this.ctx.beginPath();
     this.ctx.fillRect(10,90,100,125);
   }
-  //this.fillStyle = textClr;
-  //this.ctx.font = "16px Times New Roman";
-  //this.ctx.textAlign = "left";
-  //this.ctx.fillText("Pause", rectX+45/2,rectY+15);
+  this.fillStyle = Color.generateRandomColor(0,0,0,0);
+  this.ctx.font = "16px Times New Roman";
+  this.ctx.textAlign = "left";
+  this.ctx.fillText("Pause", rectX+45/2,rectY+15);
 
+  //resume button//
+  if(mousePos.x < 60 && mousePos.x > 10 && mousePos.y < 165 && mousePos.y > 90 && mouseStatus === true){
+    this.detectPause = false;
+    this.drawPauseScreen = 0;
+  }
+  if(mousePos.x < 110 && mousePos.x > 60 && mousePos.y < 215 && mousePos.y > 165 && mouseStatus === true){
+    this.detectPause = false;
+    this.drawPauseScreen = 0;
+    this.player.life = 0;
+  }
 }

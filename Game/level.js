@@ -1,9 +1,10 @@
-function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
+function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
   this.maze = new Maze(cellSize,r,c,ctx,new Color(50,50,50,1),cellImgSrc);
   this.enemies = enemies;
+  this.pickups = pickups;
   this.boss = boss; //To do: create enemy class
 
   let playerImg = "Files/algore.jpeg";
@@ -31,6 +32,11 @@ Level.prototype.update = function(){
       if(this.enemies[i].life<0) continue; //kills enemies if life < 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
+    }
+  }
+  if(this.pickups!=null){
+    for(let i=0;i<this.pickups.length;i++){
+      this.pickups[i].run();
     }
   }
 
@@ -91,15 +97,25 @@ Level.prototype.load = function(){
     this.enemies[i].life = this.enemies[i].initialLife;
     this.enemies[i].path = [];
   }
-  this.scatterEnemies();
+  this.scatter(this.enemies);
+  for(let i=0;i<this.enemies.length;i++){
+    this.enemies[i].targetPos = new JSVector(this.enemies[i].pos.x,this.enemies[i].pos.y);
+  }
+
+  this.scatter(this.pickups);
+  if(this.pickups!=null){
+    for(let i=0;i<this.pickups.length;i++){
+      this.pickups[i].basePos = this.pickups[i].pos;
+    }
+  }
 }
 
-Level.prototype.scatterEnemies = function(){
-  if(this.enemies==null) return;
+Level.prototype.scatter = function(objects){
+  if(objects==null) return;
 
   let cellIndexes = [];
 
-  for(var i = 0;i<this.enemies.length;i++){ //assigns enemy to a random cell that is not already assigned an enemy
+  for(var i = 0;i<objects.length;i++){ //assigns enemy to a random cell that is not already assigned an enemy
     if(cellIndexes.length==0){
       for(var k = 1;k<this.maze.cells.length-1;k++){//loads all cells except for first cell(player start) and last cell(boss)
         cellIndexes.push(k);
@@ -108,8 +124,7 @@ Level.prototype.scatterEnemies = function(){
     let len = cellIndexes.length;
     let index = Math.floor(Math.random()*len);
     let cell = this.maze.cells[cellIndexes[index]];
-    this.enemies[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
-    this.enemies[i].targetPos = new JSVector(this.enemies[i].pos.x,this.enemies[i].pos.y);
+    objects[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
     cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
   }
 }

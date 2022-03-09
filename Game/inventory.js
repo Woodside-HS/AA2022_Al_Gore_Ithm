@@ -10,10 +10,10 @@ Inventory.prototype.display = function(){
   this.ctx.strokeStyle = "white";
   this.ctx.lineWidth = 5;
   this.ctx.strokeRect(this.pos.x,this.pos.y,this.scale.x,this.scale.y);
-  let size = 20;
+  let size = 60;
   this.ctx.lineWidth = 1;
-  this.ctx.font = size+"px serif";
-  this.ctx.strokeText("Inventory",this.pos.x+size,this.pos.y+size);
+  this.ctx.font = size/2+"px serif";
+  this.ctx.strokeText("Inventory",this.pos.x+size,this.pos.y+size/2);
 }
 
 Inventory.prototype.addItem = function(item){

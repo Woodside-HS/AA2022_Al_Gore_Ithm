@@ -36,7 +36,11 @@ Level.prototype.update = function(){
   }
   if(this.pickups!=null){
     for(let i=0;i<this.pickups.length;i++){
-      this.pickups[i].run();
+      this.pickups[i].run(this.player);
+      if(this.pickups[i].collected){
+        this.pickups.splice(i,1);
+        i--;
+      }
     }
   }
 

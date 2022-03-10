@@ -18,7 +18,7 @@ Level.prototype.update = function(){
 
   this.processInput();
   //console.log(this.enemies);
-  console.log("updating");
+  //console.log("updating");
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
   let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
@@ -33,12 +33,12 @@ Level.prototype.update = function(){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
       if(this.enemies[i].life<0){
         if(this.enemies[i].dead == false){
-          this.knockSfx.playSFX("knock");
-          this.enemies[i].dead = true;
+          this.knockSfx.playSFX(); //plays sound on death
+          this.enemies[i].dead = true; //prevents from running again
         }
         continue; //kills enemies if life < 0
       }
-      else{this.enemies[i].dead = false;}
+      else{this.enemies[i].dead = false;} //sets enemy status to not dead if enemy health is greater than 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
     }

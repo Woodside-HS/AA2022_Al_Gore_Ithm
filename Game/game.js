@@ -8,7 +8,7 @@ function Game(cnv,ctx){
   this.ctx = ctx;
   this.levels = [];
   this.currentLevel = 0;
-
+  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   let cellSize = 100;
   let zoomFactor = 2;
 
@@ -24,7 +24,7 @@ function Game(cnv,ctx){
 
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
-  this.music = new Sound('Files/Al-Gore-ithm.mp3');
+  this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
   //this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   this.music.loadMusic();
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game

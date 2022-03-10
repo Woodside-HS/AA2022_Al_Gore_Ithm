@@ -4,6 +4,7 @@ function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc,particleDamage,firin
   this.path = [];
   this.rad = rad;
   this.triggered = false;
+  this.dead = false;
 }
 
 Enemy.prototype = new Character();

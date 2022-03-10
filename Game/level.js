@@ -10,12 +10,14 @@ function Level(r,c,cellSize,enemies,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
   this.zoomFactor = zoomFactor;
+  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
 }
 
 Level.prototype.update = function(){
 
   this.processInput();
-
+  //console.log(this.enemies);
+  console.log("updating");
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
   let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
@@ -28,7 +30,14 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(this.enemies[i].life<0) continue; //kills enemies if life < 0
+      if(this.enemies[i].life<0){
+        if(this.enemies[i].dead == false){
+          this.knockSfx.playSFX("knock");
+          this.enemies[i].dead = true;
+        }
+        continue; //kills enemies if life < 0
+      }
+      else{this.enemies[i].dead = false;}
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
     }

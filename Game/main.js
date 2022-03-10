@@ -32,11 +32,9 @@ function init(){
   keys = [];
   mousePos = new JSVector(0,0);
   mouseStatus = false;
-  audio = new Audio('Files/Al-Gore-ithm_1.mp3');
-  audio.loop = true;
 
   game = new Game(cnv,ctx);
-
+  //audio = new Audio('')
   animate();
 }
 
@@ -46,6 +44,6 @@ function animate(){
   requestAnimationFrame(animate);
 }
 
-function update(audio){
-  game.update(audio);
+function update(){
+  game.update();
 }

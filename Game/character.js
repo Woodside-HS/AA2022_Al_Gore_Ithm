@@ -20,6 +20,7 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeigh
 Character.prototype.update = function(maze){
 
   if(this.life<0){
+
     this.life = 0;
     return false;
   }

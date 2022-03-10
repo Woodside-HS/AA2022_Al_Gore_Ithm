@@ -24,7 +24,9 @@ function Game(cnv,ctx){
 
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
-
+  this.music = new Sound('Files/Al-Gore-ithm.mp3');
+  //this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+  this.music.loadMusic();
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
 }
 
@@ -163,8 +165,6 @@ Game.prototype.setLevel = function(level){
 Game.prototype.update = function(){
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
-  audio.play();
-  console.log("pass")
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;

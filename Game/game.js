@@ -47,7 +47,19 @@ Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
     enemies_1.push(this.enemyPrefab3());
   }
 
-  let level1 = new Level(6,6,cellSize,enemies_1,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",1);
+  let pickups_1 = [];
+
+  let num_healthIncrement = 3;
+  let num_moneyIncrement = 3;
+
+  for(let i=0;i<num_healthIncrement;i++){
+    pickups_1.push(this.generateHealthPickup(cellSize));
+  }
+  for(let i=0;i<num_moneyIncrement;i++){
+    pickups_1.push(this.generateMoneyPickup(cellSize));
+  }
+
+  let level1 = new Level(6,6,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",1);
 
   this.levels.push(level1);
 }
@@ -68,7 +80,7 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor){
     enemies_2.push(this.enemyPrefab3());
   }
 
-  let level2 = new Level(6,6,cellSize,enemies_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg",1);
+  let level2 = new Level(6,6,cellSize,enemies_2,null,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg",1);
 
   this.levels.push(level2);
 }
@@ -89,7 +101,7 @@ Game.prototype.generateLevel_3 = function(cellSize,zoomFactor){
     enemies_3.push(this.enemyPrefab3());
   }
 
-  let level3 = new Level(6,6,cellSize,enemies_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg");
+  let level3 = new Level(6,6,cellSize,enemies_3,null,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg");
 
   this.levels.push(level3);
 }
@@ -110,7 +122,7 @@ Game.prototype.generateLevel_4 = function(cellSize,zoomFactor){
     enemies_4.push(this.enemyPrefab3());
   }
 
-  let level4 = new Level(6,6,cellSize,enemies_4,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level4.png");
+  let level4 = new Level(6,6,cellSize,enemies_4,null,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level4.png");
 
   this.levels.push(level4);
 }
@@ -131,7 +143,7 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor){
     enemies_5.push(this.enemyPrefab3());
   }
 
-  let level5 = new Level(6,6,cellSize,enemies_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
+  let level5 = new Level(6,6,cellSize,enemies_5,null,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
 
   this.levels.push(level5);
 }
@@ -145,7 +157,12 @@ Game.prototype.enemyPrefab2 = function(){
 Game.prototype.enemyPrefab3 = function(){
   return new Enemy(0,0,20,Color.generateRandomColor(255,1,1,false),2,500,this.cnv, this.ctx,"Files/dubbya.jpeg",2,2);
 }
-
+Game.prototype.generateHealthPickup = function(cellSize){
+  return new Pickups(0, 0, 8, "Files/key.png", this.cnv, this.ctx, cellSize/4);
+}
+Game.prototype.generateMoneyPickup = function(cellSize){
+  return new Pickups(0, 0, 8, "Files/key.png", this.cnv, this.ctx, cellSize/4);
+}
 Game.prototype.nextLevel = function(){
   if(this.currentLevel<this.levels.length-1){
     this.setLevel(this.currentLevel+1);

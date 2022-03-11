@@ -179,7 +179,7 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor){
 
   let pickups_5 = [];
 
-  let num_healthIncrement = 5;
+  let num_healthIncrement = 6;
   let num_moneyIncrement = 3;
 
   for(let i=0;i<num_healthIncrement;i++){
@@ -189,7 +189,7 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor){
     pickups_5.push(this.generateMoneyPickup(cellSize));
   }
 
-  let level5 = new Level(6,6,cellSize,enemies_5,pickups_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
+  let level5 = new Level(10,10,cellSize,enemies_5,pickups_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
 
   this.levels.push(level5);
 }

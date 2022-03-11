@@ -28,8 +28,6 @@ function keyUp(e){
 
 function init(){
   let cnv = document.getElementById("cnv");
-  cnv.width = window.innerWidth-10;
-  cnv.height = window.innerHeight-10;
   let ctx = cnv.getContext("2d");
   keys = [];
   mousePos = new JSVector(0,0);

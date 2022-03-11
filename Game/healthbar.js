@@ -31,6 +31,9 @@ Healthbar.prototype.gradFill = function(approval){ //fills health bar with gradi
   }
   this.ctx.fillStyle = grd;
   this.ctx.fillRect(this.pos.x,this.pos.y,width,this.height);
+  this.ctx.strokeStyle = "white";
+  this.ctx.lineWidth = 2;
+  this.ctx.strokeRect(this.pos.x,this.pos.y,this.width,this.height);
 }
 
 Healthbar.prototype.dispText = function(approval){

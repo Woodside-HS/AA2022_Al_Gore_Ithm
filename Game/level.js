@@ -164,7 +164,7 @@ Level.prototype.generateIcon = function(n,i){
   let dist = n>1?(cnv.height-rad*4)/(n-1):0;
 
   //determines random distance away from the y axis
-  let distFromCenter = 0.2;
+  let distFromCenter = 0.1;
   let delta = Math.random()*cnv.width*distFromCenter/2+cnv.width*distFromCenter/2-rad;
   let sign = Math.random()>0.5?1:-1;
 

@@ -14,6 +14,16 @@ Inventory.prototype.display = function(){
   this.ctx.lineWidth = 1;
   this.ctx.font = size/2+"px serif";
   this.ctx.strokeText("Inventory",this.pos.x+size,this.pos.y+size/2);
+
+  size_s = 40;
+  this.ctx.font = size_s/2+"px serif";
+  for(var i = 0;i<this.items.length;i++){
+    this.ctx.strokeStyle = "white";
+    let lbl = this.items[i].label;
+    let shift = 8;
+    this.ctx.strokeRect(this.pos.x,this.pos.y+size_s*i+size_s,this.scale.x,size_s);
+    this.ctx.strokeText(lbl,this.pos.x+shift,this.pos.y+size_s*i+size+shift);
+  }
 }
 
 Inventory.prototype.addItem = function(item){

@@ -31,7 +31,7 @@ Player.prototype.pickUpItem = function(item){
 Player.prototype.dropItem = function(){
   if(this.inventoryArr.length==0) return null;
   let item = this.inventoryArr[0];
-  this.inventoryArr.splic(0,1);
+  this.inventoryArr.splice(0,1);
   this.inventory.removeItem(0);
   item.drop(this);
   return item;

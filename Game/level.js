@@ -17,12 +17,13 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   //TEST WEAPON pickUpItem
   let firingRateDelta = 1.2;
   let particleDamageDelta = 10;
-  let x = this.cnv.width/2;
-  let y = this.cnv.height/2;
   let label = "Test Weapon";
   let rad = 10;
   let imgSrc = null;
-  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
+  this.scatter(this.items);
 }
 
 Level.prototype.update = function(){

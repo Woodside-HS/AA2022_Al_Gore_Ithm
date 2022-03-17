@@ -149,7 +149,7 @@ Level.prototype.pauseButton = function(){
   this.ctx.fill();
   this.ctx.stroke();
 
-  if(mousePos.x < 55 && mousePos.x > 10 && mousePos.y < 60 && mousePos.y > 30 && mouseStatus === true){
+  if(mousePos.x < && mousePos.x > && mousePos.y < && mousePos.y >  && mouseStatus === true){
     this.detectPause = true;
     this.drawPauseScreen = 1;
   }
@@ -163,11 +163,11 @@ Level.prototype.pauseButton = function(){
   this.ctx.fillText("Pause", rectX+45/2,rectY+15);
 
   //resume button//
-  if(mousePos.x < 60 && mousePos.x > 10 && mousePos.y < 165 && mousePos.y > 90 && mouseStatus === true){
+  if(mousePos.x < && mousePos.x > && mousePos.y <  && mousePos.y >  && mouseStatus === true){
     this.detectPause = false;
     this.drawPauseScreen = 0;
   }
-  if(mousePos.x < 110 && mousePos.x > 60 && mousePos.y < 215 && mousePos.y > 165 && mouseStatus === true){
+  if(mousePos.x <  && mousePos.x >  && mousePos.y < && mousePos.y > && mouseStatus === true){
     this.detectPause = false;
     this.drawPauseScreen = 0;
     this.player.life = 0;

@@ -1,4 +1,4 @@
-function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
+function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,items){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
@@ -12,17 +12,8 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.zoomFactor = zoomFactor;
 
-  this.items = [];
+  this.items = items;
 
-  //TEST WEAPON pickUpItem
-  let firingRateDelta = 1.2;
-  let particleDamageDelta = 10;
-  let label = "Test Weapon";
-  let rad = 10;
-  let imgSrc = null;
-  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
-  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
-  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,cnv,ctx,rad,imgSrc));
   this.scatter(this.items);
 }
 
@@ -60,7 +51,7 @@ Level.prototype.update = function(){
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
 
   for(var i = 0;i<this.items.length;i++){
-    this.items[i].draw();
+    this.items[i].update();
     let success = this.player.pickUpItem(this.items[i]);
     if(success){
       this.items.splice(i,1);
@@ -160,6 +151,7 @@ Level.prototype.scatter = function(objects){
     let index = Math.floor(Math.random()*len);
     let cell = this.maze.cells[cellIndexes[index]];
     objects[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
+    objects[i].basePos = new JSVector(objects[i].pos.x,objects[i].pos.y);
     cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
   }
 }

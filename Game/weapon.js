@@ -1,8 +1,7 @@
-function Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc){
+function Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc,scale){
   this.firingRateDelta = firingRateDelta; //scaling factor of rate of firing particles
   this.particleDamageDelta = particleDamageDelta; //constant increase of damage per particle
-
-  Item.call(this,x,y,label,cnv,ctx,rad,imgSrc)
+  Item.call(this,x,y,label,cnv,ctx,rad,imgSrc,scale)
 }
 
 Weapon.prototype = new Item();

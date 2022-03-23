@@ -1,7 +1,7 @@
-function Item(x,y,label,cnv,ctx,rad,imgSrc){
-  Pickup.call(this, null,null, x, y, ctx, cnv, rad, imgSrc);
+function Item(x,y,label,cnv,ctx,rad,imgSrc,scale){
+  Pickups.call(this, x, y, 10,imgSrc,cnv,ctx,scale);
   this.label = label;
   this.used = false;
 }
 
-Item.prototype = new Pickup();
+Item.prototype = new Pickups();

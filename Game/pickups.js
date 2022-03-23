@@ -5,6 +5,7 @@ function Pickups(x, y, rad, imgSrc, cnv, ctx, scale){
   this.basePos = new JSVector(x,y);
   this.pos = new JSVector(x, y);
   this.rad = rad;
+  this.loaded = false;
   this.img = new Image();
   if(imgSrc!=undefined) this.img.src = imgSrc;
 

@@ -56,17 +56,11 @@ Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
   for(let i=0;i<num_moneyIncrement;i++){
     pickups_1.push(this.generateMoneyPickup(cellSize));
   }
-  //TEST WEAPON pickUpItem
-  let items = [];
-  let firingRateDelta = 1.2;
-  let particleDamageDelta = 10;
-  let rad = 10;
-  let label = "Test Weapon";
-  let imgSrc = "Files/sword.png";
-  let bobSize = cellSize/8;
-  items.push(new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,rad,imgSrc,bobSize));
 
-  let level1 = new Level(6,6,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",items);
+  let sword = this.generateWeaponPickup(cellSize,1.2,10,"Files/sword.png","Sword")
+  pickups_1.push(sword);
+
+  let level1 = new Level(6,6,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg");
 
   this.levels.push(level1);
 }
@@ -218,6 +212,10 @@ Game.prototype.generateHealthPickup = function(cellSize, power){
 Game.prototype.generateMoneyPickup = function(cellSize){
   return new Moneypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
+Game.prototype.generateWeaponPickup = function(cellSize,firingRateDelta,particleDamageDelta,imgSrc,label){
+  return new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,10,imgSrc,cellSize/8);
+}
+
 Game.prototype.nextLevel = function(){
   if(this.currentLevel<this.levels.length-1){
     this.setLevel(this.currentLevel+1);

@@ -1,4 +1,4 @@
-function Pickups(x, y, rad, imgSrc, cnv, ctx, scale){
+function Pickups(x, y, rad, imgSrc, cnv, ctx, scale, isPowerup){
   this.cnv = cnv;
   this.ctx = ctx;
   this.scale = scale;
@@ -13,6 +13,7 @@ function Pickups(x, y, rad, imgSrc, cnv, ctx, scale){
   this.frame+=Math.floor(Math.random()*120);
 
   this.collected = false;
+  this.isPowerup = isPowerup;
 }
 
 Pickups.prototype.update = function(){
@@ -23,11 +24,4 @@ Pickups.prototype.update = function(){
 }
 Pickups.prototype.draw = function(){
   if(this.img.src!=undefined&&this.img.src!="") this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
-}
-
-
-Pickups.prototype.checkforcollision = function(player){
-  if(this.pos.distance(player.pos)<this.rad+player.rad){
-    this.collected = true;
-  }
 }

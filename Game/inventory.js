@@ -7,6 +7,21 @@ function Inventory(x,y,w,h,cnv,ctx){
 }
 
 Inventory.prototype.display = function(){
+
+  //SORT inventory so that powerups are on the end
+  for(var i = 0;i<this.items.length;i++){
+    if(this.items[i].isPowerup){
+      for(var k = i+1;k<this.items.length;k++){
+        if(!this.items[k].isPowerup){
+          let temp = this.items[k];
+          this.items[k] = this.items[i];
+          this.items[i] = temp;
+          break;
+        }
+      }
+    }
+  }
+
   this.ctx.strokeStyle = "white";
   this.ctx.lineWidth = 5;
   this.ctx.strokeRect(this.pos.x,this.pos.y,this.scale.x,this.scale.y);
@@ -18,6 +33,8 @@ Inventory.prototype.display = function(){
   size_s = 40;
   this.ctx.font = size_s/2+"px serif";
   for(var i = 0;i<this.items.length;i++){
+    if(this.items[i].isPowerup) continue;
+
     this.ctx.strokeStyle = "white";
     let lbl = this.items[i].label;
     let shift = 8;

@@ -1,4 +1,4 @@
-function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,items){
+function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
@@ -11,10 +11,6 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,i
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.zoomFactor = zoomFactor;
-
-  this.items = items;
-
-  this.scatter(this.items);
 }
 
 Level.prototype.update = function(){
@@ -40,8 +36,9 @@ Level.prototype.update = function(){
   }
   if(this.pickups!=null){
     for(let i=0;i<this.pickups.length;i++){
-      this.pickups[i].run(this.player);
-      if(this.pickups[i].collected){
+      this.pickups[i].update();
+      let success = this.player.pickUpItem(this.pickups[i]);
+      if(success){
         this.pickups.splice(i,1);
         i--;
       }
@@ -49,15 +46,6 @@ Level.prototype.update = function(){
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
-
-  for(var i = 0;i<this.items.length;i++){
-    this.items[i].update();
-    let success = this.player.pickUpItem(this.items[i]);
-    if(success){
-      this.items.splice(i,1);
-      i--;
-    }
-  }
 
   this.ctx.restore();
   this.player.healthbar.run(true);
@@ -109,11 +97,11 @@ Level.prototype.load = function(){
   this.player.setVel(0,0);
 
   //repopulate item array with all items in player inventory
-  let item = null;
+  let pickup = null;
   do{
-    item = this.player.dropItem();
-    if(item!=null) this.items.push(item);
-  }while(item!=null)
+    pickup = this.player.dropItem();
+    if(pickup!=null) this.pickups.push(pickup);
+  }while(pickup!=null)
 
   let cellSize = this.maze.cellSize;
 

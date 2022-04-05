@@ -57,7 +57,10 @@ Game.prototype.generateLevel_1 = function(cellSize,zoomFactor){
     pickups_1.push(this.generateMoneyPickup(cellSize));
   }
 
-  let level1 = new Level(6,6,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",1);
+  let sword = this.generateWeaponPickup(cellSize,1.2,3,"Files/sword.png","Sword")
+  pickups_1.push(sword);
+
+  let level1 = new Level(6,6,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg");
 
   this.levels.push(level1);
 }
@@ -89,6 +92,9 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor){
   for(let i=0;i<num_moneyIncrement;i++){
     pickups_2.push(this.generateMoneyPickup(cellSize));
   }
+
+  let sword = this.generateWeaponPickup(cellSize,1.2,5,"Files/pirateblade.png","Blade");
+  pickups_2.push(sword);
 
   let level2 = new Level(6,6,cellSize,enemies_2,pickups_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg",1);
 
@@ -123,6 +129,9 @@ Game.prototype.generateLevel_3 = function(cellSize,zoomFactor){
     pickups_3.push(this.generateMoneyPickup(cellSize));
   }
 
+  let sword = this.generateWeaponPickup(cellSize,1.3,8,"Files/powderbag.png","Powder Bag");
+  pickups_3.push(sword);
+
   let level3 = new Level(6,6,cellSize,enemies_3,pickups_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg");
 
   this.levels.push(level3);
@@ -155,6 +164,9 @@ Game.prototype.generateLevel_4 = function(cellSize,zoomFactor){
   for(let i=0;i<num_moneyIncrement;i++){
     pickups_4.push(this.generateMoneyPickup(cellSize));
   }
+
+  let sword = this.generateWeaponPickup(cellSize,1.4,9,"Files/sword.png","Sword");
+  pickups_4.push(sword);
 
   let level4 = new Level(6,6,cellSize,enemies_4,pickups_4,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level4.png");
 
@@ -189,6 +201,9 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor){
     pickups_5.push(this.generateMoneyPickup(cellSize));
   }
 
+  let sword = this.generateWeaponPickup(cellSize,1.5,10,"Files/sword.png","Sword");
+  pickups_5.push(sword);
+
   let level5 = new Level(10,10,cellSize,enemies_5,pickups_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg");
 
   this.levels.push(level5);
@@ -209,6 +224,10 @@ Game.prototype.generateHealthPickup = function(cellSize, power){
 Game.prototype.generateMoneyPickup = function(cellSize){
   return new Moneypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
+Game.prototype.generateWeaponPickup = function(cellSize,firingRateDelta,particleDamageDelta,imgSrc,label){
+  return new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,10,imgSrc,cellSize/8);
+}
+
 Game.prototype.nextLevel = function(){
   if(this.currentLevel<this.levels.length-1){
     this.setLevel(this.currentLevel+1);

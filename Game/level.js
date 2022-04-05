@@ -11,18 +11,6 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.zoomFactor = zoomFactor;
-
-  this.items = [];
-
-  //TEST WEAPON pickUpItem
-  let firingRateDelta = 1.2;
-  let particleDamageDelta = 10;
-  let x = this.cnv.width/2;
-  let y = this.cnv.height/2;
-  let label = "Test Weapon";
-  let rad = 10;
-  let imgSrc = null;
-  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
 }
 
 Level.prototype.update = function(){
@@ -48,8 +36,9 @@ Level.prototype.update = function(){
   }
   if(this.pickups!=null){
     for(let i=0;i<this.pickups.length;i++){
-      this.pickups[i].run(this.player);
-      if(this.pickups[i].collected){
+      this.pickups[i].update();
+      let success = this.player.pickUpItem(this.pickups[i]);
+      if(success){
         this.pickups.splice(i,1);
         i--;
       }
@@ -57,15 +46,6 @@ Level.prototype.update = function(){
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
-
-  for(var i = 0;i<this.items.length;i++){
-    this.items[i].draw();
-    let success = this.player.pickUpItem(this.items[i]);
-    if(success){
-      this.items.splice(i,1);
-      i--;
-    }
-  }
 
   this.ctx.restore();
   this.player.healthbar.run(true);
@@ -117,11 +97,11 @@ Level.prototype.load = function(){
   this.player.setVel(0,0);
 
   //repopulate item array with all items in player inventory
-  let item = null;
+  let pickup = null;
   do{
-    item = this.player.dropItem();
-    if(item!=null) this.items.push(item);
-  }while(item!=null)
+    pickup = this.player.dropItem();
+    if(pickup!=null) this.pickups.push(pickup);
+  }while(pickup!=null)
 
   let cellSize = this.maze.cellSize;
 
@@ -159,6 +139,7 @@ Level.prototype.scatter = function(objects){
     let index = Math.floor(Math.random()*len);
     let cell = this.maze.cells[cellIndexes[index]];
     objects[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
+    objects[i].basePos = new JSVector(objects[i].pos.x,objects[i].pos.y);
     cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
   }
 }
@@ -168,7 +149,7 @@ Level.prototype.generateIcon = function(n,i){
   let dist = n>1?(cnv.height-rad*4)/(n-1):0;
 
   //determines random distance away from the y axis
-  let distFromCenter = 0.2;
+  let distFromCenter = 0.1;
   let delta = Math.random()*cnv.width*distFromCenter/2+cnv.width*distFromCenter/2-rad;
   let sign = Math.random()>0.5?1:-1;
 

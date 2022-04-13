@@ -12,6 +12,20 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
   this.zoomFactor = zoomFactor;
   this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+<<<<<<< Updated upstream
+=======
+  this.items = [];
+
+  //TEST WEAPON pickUpItem
+  let firingRateDelta = 1.2;
+  let particleDamageDelta = 10;
+  let x = this.cnv.width/2;
+  let y = this.cnv.height/2;
+  let label = "Test Weapon";
+  let rad = 10;
+  let imgSrc = null;
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
+>>>>>>> Stashed changes
 }
 
 Level.prototype.update = function(){

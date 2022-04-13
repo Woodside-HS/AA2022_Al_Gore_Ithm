@@ -8,7 +8,12 @@ function Game(cnv,ctx){
   this.ctx = ctx;
   this.levels = [];
   this.currentLevel = 0;
+<<<<<<< Updated upstream
   this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+=======
+  this.audioStarted
+
+>>>>>>> Stashed changes
   let cellSize = 100;
   let zoomFactor = 2;
 
@@ -24,9 +29,12 @@ function Game(cnv,ctx){
 
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
+<<<<<<< Updated upstream
   this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
   //this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   this.music.loadMusic();
+=======
+>>>>>>> Stashed changes
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
 }
 
@@ -182,6 +190,15 @@ Game.prototype.setLevel = function(level){
 Game.prototype.update = function(){
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
+<<<<<<< Updated upstream
+=======
+  if (mouseStatus && !this.audioStarted){
+      this.audioStarted = true;
+      this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
+      this.music.loadMusic();
+  }
+
+>>>>>>> Stashed changes
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;

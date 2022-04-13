@@ -9,11 +9,9 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
 
   let playerImg = "Files/algore.jpeg";
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
-  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,1);
+  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.zoomFactor = zoomFactor;
   this.knockSfx = new Sound('Files/enemy_knocked.mp3');
-<<<<<<< Updated upstream
-=======
   this.items = [];
 
   //TEST WEAPON pickUpItem
@@ -25,14 +23,12 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   let rad = 10;
   let imgSrc = null;
   this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
->>>>>>> Stashed changes
 }
 
 Level.prototype.update = function(){
 
   this.processInput();
-  //console.log(this.enemies);
-  //console.log("updating");
+
   this.ctx.save();
   let x = -this.player.pos.x+this.cnv.width/2/this.zoomFactor;
   let y = -this.player.pos.y+this.cnv.height/2/this.zoomFactor;
@@ -64,8 +60,19 @@ Level.prototype.update = function(){
   }
 
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
+
+  for(var i = 0;i<this.items.length;i++){
+    this.items[i].draw();
+    let success = this.player.pickUpItem(this.items[i]);
+    if(success){
+      this.items.splice(i,1);
+      i--;
+    }
+  }
+
   this.ctx.restore();
-  this.player.healthbar.run(true); //runs healthbar with text display enabled set to true
+  this.player.healthbar.run(true);
+  this.player.inventory.display(); //runs healthbar with text display enabled set to true
 }
 
 Level.prototype.detectLoss = function(){
@@ -111,6 +118,13 @@ Level.prototype.load = function(){
   this.player.pos = new JSVector(this.playerInitPos.x,this.playerInitPos.y);
   this.player.targetPos = new JSVector(this.player.pos.x,this.player.pos.y);
   this.player.setVel(0,0);
+
+  //repopulate item array with all items in player inventory
+  let item = null;
+  do{
+    item = this.player.dropItem();
+    if(item!=null) this.items.push(item);
+  }while(item!=null)
 
   let cellSize = this.maze.cellSize;
 
@@ -164,8 +178,6 @@ Level.prototype.generateIcon = function(n,i){
   let x = cnv.width/2 + delta*sign;
   let y = cnv.height/2 + dist*(n-1)/2.0 - i*dist;
 
-  //create color gradient where as i increases, the icon color becomes darker
-  let val = 150 - i/n*100;
   //let clr = new Color((1-i/n)*225,i/n*225,0,1);
   let clr = new Color((i/n)*200+55,(i/n)*200+55,(i/n)*200+55,1);
 

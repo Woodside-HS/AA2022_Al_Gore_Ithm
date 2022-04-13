@@ -15,12 +15,13 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeigh
 
   this.healthbar = new Healthbar(this.cnv,this.ctx,this.life,healthWidth,healthHeight); //creates health bar with life set to current life of character
   this.particleSystem = new ParticleSystem(x,y,this.ctx,clrScale,particleDamage,firingRate,Math.PI/6); //creates basic particle system
+
+  this.damageBuffer = 0;
 }
 
 Character.prototype.update = function(maze){
 
   if(this.life<0){
-
     this.life = 0;
     return false;
   }

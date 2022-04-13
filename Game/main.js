@@ -1,12 +1,7 @@
 window.addEventListener("load", init);
 
 var mousePos,mouseStatus;
-<<<<<<< Updated upstream
-var keys;
-var audio;
-=======
 var keys, music;
->>>>>>> Stashed changes
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
@@ -32,6 +27,8 @@ function keyUp(e){
 
 function init(){
   let cnv = document.getElementById("cnv");
+  cnv.width = window.innerWidth-10;
+  cnv.height = window.innerHeight-10;
   let ctx = cnv.getContext("2d");
   keys = [];
   mousePos = new JSVector(0,0);
@@ -41,7 +38,7 @@ function init(){
   //music.loadMusic();
 
   game = new Game(cnv,ctx);
-  //audio = new Audio('')
+
   animate();
 }
 

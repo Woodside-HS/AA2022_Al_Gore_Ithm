@@ -11,6 +11,7 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.zoomFactor = zoomFactor;
+  this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
 
 Level.prototype.update = function(){
@@ -45,6 +46,11 @@ Level.prototype.update = function(){
     }
   }
 
+  if(this.checkEnemies()){
+    this.key.update();
+    this.player.pickUpItem(this.key);
+  }
+
   if(this.boss!=null) this.boss.update(this.maze); //updates boss
 
   this.ctx.restore();
@@ -55,14 +61,19 @@ Level.prototype.update = function(){
 Level.prototype.detectLoss = function(){
   return this.player.life<=0;
 }
-
+Level.prototype.checkEnemies = function(){
+  for(var i = 0;i<this.enemies.length;i++){
+    if(this.enemies[i].life>0) return false;
+  }
+  return true;
+}
 Level.prototype.checkLevelStatus = function(){
   if(this.detectLoss()){
     return true;
   }
   else{
-    for(var i = 0;i<this.enemies.length;i++){
-      if(this.enemies[i].life>0) return false;
+    if(!this.key.collected){
+      return false;
     }
     return true;
   }
@@ -122,8 +133,14 @@ Level.prototype.load = function(){
       this.pickups[i].basePos = this.pickups[i].pos;
     }
   }
+  this.scatterObject(this.key);
 }
-
+Level.prototype.scatterObject = function(object){
+  let index = Math.floor(Math.random()*this.maze.cells.length);
+  let cell = this.maze.cells[index];
+  object.pos = new JSVector(cell.pos.x+cell.scale/2, cell.pos.y+cell.scale/2);
+  object.basePos = new JSVector(object.pos.x, object.pos.y);
+}
 Level.prototype.scatter = function(objects){
   if(objects==null) return;
 

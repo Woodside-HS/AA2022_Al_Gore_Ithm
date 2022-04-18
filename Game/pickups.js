@@ -1,17 +1,22 @@
-function Pickups(x, y, rad, imgSrc, cnv, ctx, scale){
+function Pickups(x, y, rad, imgSrc, cnv, ctx, scale, isPowerup){
   this.cnv = cnv;
   this.ctx = ctx;
   this.scale = scale;
   this.basePos = new JSVector(x,y);
   this.pos = new JSVector(x, y);
   this.rad = rad;
+  this.loaded = false;
   this.img = new Image();
   if(imgSrc!=undefined) this.img.src = imgSrc;
 
   this.frame = 0;
+  this.frame+=Math.floor(Math.random()*120);
+
+  this.collected = false;
+  this.isPowerup = isPowerup;
 }
 
-Pickups.prototype.run = function(){
+Pickups.prototype.update = function(){
   this.frame++;
   if(this.frame%120==0) this.time = 0;
   this.pos = new JSVector(this.basePos.x, this.basePos.y+this.scale*Math.sin(this.frame*Math.PI/60));

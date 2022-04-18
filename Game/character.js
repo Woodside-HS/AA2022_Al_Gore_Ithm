@@ -1,4 +1,4 @@
-function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight,clrScale,particleDamage,firingRate){
+function Character(x,y,rad,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeight,clrScale,particleDamage,firingRate){
   this.pos = new JSVector(x,y);
   this.targetPos = new JSVector(this.pos.x,this.pos.y);
   this.rad = rad;
@@ -6,7 +6,6 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeigh
   this.vel = new JSVector(0,0);
   this.life = life;
   this.initialLife = life;
-  this.clr = clr;
   this.cnv = cnv;
   this.ctx = ctx;
 
@@ -17,6 +16,11 @@ function Character(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,healthWidth,healthHeigh
   this.particleSystem = new ParticleSystem(x,y,this.ctx,clrScale,particleDamage,firingRate,Math.PI/6); //creates basic particle system
 
   this.damageBuffer = 0;
+}
+
+Character.prototype.setPos = function(pos){
+  this.pos = new JSVector(pos.x,pos.y);
+  this.targetPos = new JSVector(this.pos.x,this.pos.y);
 }
 
 Character.prototype.update = function(maze){
@@ -45,7 +49,7 @@ Character.prototype.move = function(t){
 }
 
 Character.prototype.draw = function(){
-  if(this.img.src!=undefined&&this.img.src!="") this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
+  this.ctx.drawImage(this.img,0,0,this.img.width,this.img.height,this.pos.x-this.rad,this.pos.y-this.rad,this.rad*2,this.rad*2);
 }
 
 Character.prototype.setVel = function(dx,dy){

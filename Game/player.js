@@ -1,5 +1,5 @@
-function Player(x,y,rad,clr,speed,life,cnv,ctx,imgSrc,particleDamage,firingRate){
-  Character.call(this,x,y,rad,clr,speed,life,cnv,ctx,imgSrc,cnv.width-10,20,new Color(0.1,0.1,2,false),particleDamage,firingRate);
+function Player(x,y,rad,speed,life,cnv,ctx,imgSrc,particleDamage,firingRate){
+  Character.call(this,x,y,rad,speed,life,cnv,ctx,imgSrc,cnv.width-10,20,new Color(0.1,0.1,2,false),particleDamage,firingRate);
 
   this.inventory = new Inventory(10,40,240,cnv.height*0.8,this.cnv,this.ctx);
 }

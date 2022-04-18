@@ -10,6 +10,18 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,p
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = player;
   this.zoomFactor = zoomFactor;
+  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+  this.items = [];
+
+  //TEST WEAPON pickUpItem
+  let firingRateDelta = 1.2;
+  let particleDamageDelta = 10;
+  let x = this.cnv.width/2;
+  let y = this.cnv.height/2;
+  let label = "Test Weapon";
+  let rad = 10;
+  let imgSrc = null;
+  this.items.push(new Weapon(firingRateDelta,particleDamageDelta,x,y,label,cnv,ctx,rad,imgSrc));
 }
 
 Level.prototype.update = function(){
@@ -28,7 +40,14 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(this.enemies[i].life<0) continue; //kills enemies if life < 0
+      if(this.enemies[i].life<0){
+        if(this.enemies[i].dead == false){
+          this.knockSfx.playSFX(); //plays sound on death
+          this.enemies[i].dead = true; //prevents from running again
+        }
+        continue; //kills enemies if life < 0
+      }
+      else{this.enemies[i].dead = false;} //sets enemy status to not dead if enemy health is greater than 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
     }

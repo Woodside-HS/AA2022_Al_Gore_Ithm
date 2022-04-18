@@ -1,7 +1,7 @@
 window.addEventListener("load", init);
 
 var mousePos,mouseStatus;
-var keys;
+var keys, music;
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
@@ -33,6 +33,9 @@ function init(){
   keys = [];
   mousePos = new JSVector(0,0);
   mouseStatus = false;
+  //mouseDown.dispatchEvent("mouseDown")
+  music = new Sound('Files/Al-Gore-ithm_1.mp3');
+  //music.loadMusic();
 
   game = new Game(cnv,ctx);
 

@@ -5,11 +5,12 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,p
   this.maze = new Maze(cellSize,r,c,ctx,new Color(50,50,50,1),cellImgSrc);
   this.enemies = enemies;
   this.pickups = pickups;
-  this.boss = boss; //To do: create enemy class
+  this.boss = boss; // to do: make boss
 
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = player;
   this.zoomFactor = zoomFactor;
+  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
 

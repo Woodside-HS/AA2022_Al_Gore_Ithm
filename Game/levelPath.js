@@ -8,7 +8,7 @@ function LevelPath(levels,rad,indicatorClr,ctx){
   this.followPath = false;
   this.speedScale = 0.5;//scale 0 to 1 for speed of path following
   this.frame = 0;
-
+  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   this.generatePath(10/this.levels.length);//generates path where path generator acceleration dependent on amount of levels to ensure consistent curvature
   this.levelIndicator = new LevelIndicator(this.levels[0].icon.pos,rad,indicatorClr,this.ctx); //creates indicator that points to the current level
 }
@@ -84,6 +84,8 @@ LevelPath.prototype.display = function(){
 LevelPath.prototype.nextLevel = function(){
   var index = this.path>=this.pathSegments.length-1?-1:this.path+1; //goes to first level if next level called on last level
   this.setPath(index);
+  this.knockSfx.playSFX(); //running kill sound effect here with the assumption that an enemy will always die when loading next level
+  //console.log("next level"); //if theres a better spot to run this code lmk
 }
 LevelPath.prototype.setPath = function(index){
   this.path = index;

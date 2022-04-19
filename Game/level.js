@@ -1,4 +1,4 @@
-function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
+function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,player){
   this.cnv = cnv;
   this.ctx = ctx;
     //Generates maze for level
@@ -7,9 +7,8 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc){
   this.pickups = pickups;
   this.boss = boss; //To do: create enemy class
 
-  let playerImg = "Files/algore.jpeg";
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
-  this.player = new Player(this.playerInitPos.x,this.playerInitPos.y,cellSize/8,new Color(0,0,255,1),3,1000,this.cnv,this.ctx,playerImg,3,2);
+  this.player = player;
   this.zoomFactor = zoomFactor;
   this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
@@ -30,7 +29,14 @@ Level.prototype.update = function(){
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
-      if(this.enemies[i].life<0) continue; //kills enemies if life < 0
+      if(this.enemies[i].life<0){
+        if(this.enemies[i].dead == false){
+          this.knockSfx.playSFX(); //plays sound on death
+          this.enemies[i].dead = true; //prevents from running again
+        }
+        continue; //kills enemies if life < 0
+      }
+      else{this.enemies[i].dead = false;} //sets enemy status to not dead if enemy health is greater than 0
       this.enemies[i].run(this.maze, this.player.pos, this.player.particleSystem);
       this.player.detectParticles(this.enemies[i].particleSystem);
     }
@@ -96,16 +102,8 @@ Level.prototype.processInput = function(){
   }
   this.player.setVel(dx,dy);
 }
-
-Level.prototype.load = function(){
-  keys = [];
-  mousePos = new JSVector(0,0);
-  mouseStatus = false;
-
+Level.prototype.executeLoss = function(){
   this.player.life = this.player.initialLife;
-  this.player.pos = new JSVector(this.playerInitPos.x,this.playerInitPos.y);
-  this.player.targetPos = new JSVector(this.player.pos.x,this.player.pos.y);
-  this.player.setVel(0,0);
 
   //repopulate item array with all items in player inventory
   let pickup = null;
@@ -113,6 +111,17 @@ Level.prototype.load = function(){
     pickup = this.player.dropItem();
     if(pickup!=null) this.pickups.push(pickup);
   }while(pickup!=null)
+}
+
+Level.prototype.load = function(){
+  keys = [];
+  mousePos = new JSVector(0,0);
+  mouseStatus = false;
+
+  this.cellIndexes = [];//spots filled with pickups or enemies upon loading so no things overlap when generated
+
+  this.player.setPos(this.playerInitPos);
+  this.player.setVel(0,0);
 
   let cellSize = this.maze.cellSize;
 
@@ -144,20 +153,18 @@ Level.prototype.scatterObject = function(object){
 Level.prototype.scatter = function(objects){
   if(objects==null) return;
 
-  let cellIndexes = [];
-
   for(var i = 0;i<objects.length;i++){ //assigns enemy to a random cell that is not already assigned an enemy
-    if(cellIndexes.length==0){
+    if(this.cellIndexes.length==0){
       for(var k = 1;k<this.maze.cells.length-1;k++){//loads all cells except for first cell(player start) and last cell(boss)
-        cellIndexes.push(k);
+        this.cellIndexes.push(k);
       }
     }
-    let len = cellIndexes.length;
+    let len = this.cellIndexes.length;
     let index = Math.floor(Math.random()*len);
-    let cell = this.maze.cells[cellIndexes[index]];
+    let cell = this.maze.cells[this.cellIndexes[index]];
     objects[i].pos = new JSVector(cell.pos.x+cell.scale/2,cell.pos.y+cell.scale/2); //assigns enemy to random cell in maze
     objects[i].basePos = new JSVector(objects[i].pos.x,objects[i].pos.y);
-    cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
+    this.cellIndexes.splice(index,1); //makes sure that only one enemy is assigned per cell
   }
 }
 

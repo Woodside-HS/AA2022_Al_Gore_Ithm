@@ -10,7 +10,7 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,p
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = player;
   this.zoomFactor = zoomFactor;
-  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+  this.knockSfx = new Sound('Game/Files/enemy_knocked.mp3');
   this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
 

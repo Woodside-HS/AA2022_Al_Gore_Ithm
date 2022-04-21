@@ -34,7 +34,7 @@ function init(){
   mousePos = new JSVector(0,0);
   mouseStatus = false;
   //mouseDown.dispatchEvent("mouseDown")
-  music = new Sound('Files/Al-Gore-ithm_1.mp3');
+  music = new Sound('Game/Files/Al-Gore-ithm_1.mp3');
   //music.loadMusic();
 
   game = new Game(cnv,ctx);

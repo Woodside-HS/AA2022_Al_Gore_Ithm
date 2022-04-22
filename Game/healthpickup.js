@@ -2,6 +2,7 @@ function Healthpickup(x, y, rad, cnv, ctx, scale, power){
   this.img = new Image();
   this.img.src = "Files/health.png";
   this.power = power;
+  this.healthPowerUp = new Sound("Files/health_collect_placeholder.mp3");
   Pickups.call(this, x, y, rad, this.img.src, cnv,ctx, scale,true);
 }
 
@@ -15,6 +16,7 @@ Healthpickup.prototype.execute = function(player){
     else player.life = 1000;
     this.collected = true;
   }
+  this.healthPowerUp.playSFX();
 }
 
 Healthpickup.prototype.drop = function(player){

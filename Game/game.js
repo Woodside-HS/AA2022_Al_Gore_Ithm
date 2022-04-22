@@ -8,7 +8,6 @@ function Game(cnv,ctx){
   this.ctx = ctx;
   this.levels = [];
   this.currentLevel = 0;
-  this.audioStarted
   let cellSize = 100;
   let zoomFactor = 2;
 
@@ -228,10 +227,15 @@ Game.prototype.generateWeaponPickup = function(cellSize,firingRateDelta,particle
   return new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,10,imgSrc,cellSize/8);
 }
 
+Game.prototype.checkKeyPress = function(e){
+  if(keys[e.code]){return true;}
+}
+
 Game.prototype.nextLevel = function(){
   if(this.currentLevel<this.levels.length-1){
     this.setLevel(this.currentLevel+1);
     this.levelPath.nextLevel();
+    //move stage clear sound here
   }
   else{
     alert("You Win!!!");
@@ -247,7 +251,7 @@ Game.prototype.setLevel = function(level){
 Game.prototype.update = function(){
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
-  if (mouseStatus && !this.audioStarted){
+  if (mouseStatus && !this.audioStarted){ //should be as simple as calling a function declared in main though idk how to do that exactly
       this.audioStarted = true;
       this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
       this.music.loadMusic();

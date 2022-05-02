@@ -12,6 +12,7 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,p
   this.zoomFactor = zoomFactor;
   this.knockSfx = new Sound('Files/enemy_knocked.mp3');
   this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
+  this.detectPause = false;
 }
 
 Level.prototype.update = function(){
@@ -26,6 +27,7 @@ Level.prototype.update = function(){
 
   this.maze.update();
   this.player.run(this.maze); //updates player
+  this.pauseButton();
 
   if(this.enemies!=null){
     for(var i = 0;i<this.enemies.length;i++){ //updates enemies
@@ -61,6 +63,7 @@ Level.prototype.update = function(){
   this.ctx.restore();
   this.player.healthbar.run(true);
   this.player.inventory.display(); //runs healthbar with text display enabled set to true
+}
 }
 
 Level.prototype.detectLoss = function(){
@@ -194,7 +197,9 @@ Level.prototype.pauseButton = function(){
   let rectY = 30;
 
   this.ctx.beginPath();
-  this.ctx.fillStyle = Color.generateRandomColor(255,255,255,0);
+//  this.ctx.fillStyle = Color.generateRandomColor(255,255,255,0);
+  this.ctx.fillStyle = "white";
+
   this.ctx.rect(rectX, rectY, 45, 30);
   this.ctx.fill();
   this.ctx.stroke();

@@ -25,7 +25,9 @@ function Game(cnv,ctx){
     this.levels[i].generateIcon(this.levels.length,i);
   }
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
-  this.gameState = gameStates.PlayingLevel;
+//  this.gameState = gameStates.PlayingLevel;
+  this.gameState = gameStates.StartScreen;
+
   this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
 
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game

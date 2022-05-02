@@ -1,9 +1,10 @@
-function Enemy(x, y, rad, clr, speed, life, cnv, ctx,imgSrc,particleDamage,firingRate){
-  Character.call(this, x, y, rad, clr, speed, life, cnv,ctx,imgSrc,50,10,new Color(2,0.1,0.1,false),particleDamage,firingRate);
+function Enemy(x, y, rad, speed, life, cnv, ctx,imgSrc,particleDamage,firingRate){
+  Character.call(this, x, y, rad, speed, life, cnv,ctx,imgSrc,50,10,new Color(2,0.1,0.1,false),particleDamage,firingRate);
   this.acc = new JSVector(0, 0);
   this.path = [];
   this.rad = rad;
   this.triggered = false;
+  this.dead = false;
 }
 
 Enemy.prototype = new Character();

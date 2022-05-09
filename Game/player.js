@@ -33,3 +33,7 @@ Player.prototype.dropItem = function(){
   item.drop(this);
   return item;
 }
+
+Player.prototype.dropPowerup = function(){
+  if(this.inventory.items.length==0) return null;
+}

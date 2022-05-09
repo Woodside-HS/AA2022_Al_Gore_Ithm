@@ -75,15 +75,13 @@ Level.prototype.checkEnemies = function(){
   return true;
 }
 Level.prototype.checkLevelStatus = function(){
-  if(this.detectLoss()){
-    return true;
+  let complete = this.detectLoss||(!this.key.collected);
+
+  if(complete){
+    
   }
-  else{
-    if(!this.key.collected){
-      return false;
-    }
-    return true;
-  }
+
+  return complete;
 }
 
 Level.prototype.processInput = function(){

@@ -86,8 +86,8 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor,player){
 
   let pickups_2 = [];
 
-  let num_healthIncrement = 3;
-  let num_moneyIncrement = 3;
+  let num_healthIncrement = 0;
+  let num_moneyIncrement = 0;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_2.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));

@@ -1,6 +1,7 @@
 function Keypickup(x, y, rad, cnv, ctx, scale){
   this.img = new Image();
   this.img.src = "Game/Files/key.png";
+  this.label = "key";
   Pickups.call(this, x, y, rad, this.img.src, cnv,ctx, scale, true);
 }
 

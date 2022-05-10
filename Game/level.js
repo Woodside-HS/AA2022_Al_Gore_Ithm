@@ -75,13 +75,25 @@ Level.prototype.checkEnemies = function(){
   return true;
 }
 Level.prototype.checkLevelStatus = function(){
-  let complete = this.detectLoss||(!this.key.collected);
+  let complete = this.detectLoss()||(this.key.collected);
 
-  if(complete){
-    
+  if(complete){//drops all powerups in the player inventory to prepare for starting level over
+
+    console.log(this.player.inventory.items.length);
+    this.emptyPlayerInventory(true);
+    console.log(this.player.inventory.items.length);
+
   }
 
   return complete;
+}
+
+Level.prototype.emptyPlayerInventory = function(powerup_only){
+  let pickup = null;
+  do{
+    pickup = this.player.dropItem(powerup_only);
+    if(pickup!=null) this.pickups.push(pickup);
+  }while(pickup!=null)
 }
 
 Level.prototype.processInput = function(){
@@ -105,11 +117,7 @@ Level.prototype.executeLoss = function(){
   this.player.life = this.player.initialLife;
 
   //repopulate item array with all items in player inventory
-  let pickup = null;
-  do{
-    pickup = this.player.dropItem();
-    if(pickup!=null) this.pickups.push(pickup);
-  }while(pickup!=null)
+  this.emptyPlayerInventory(false);
 }
 
 Level.prototype.load = function(){

@@ -26,7 +26,7 @@ function Game(cnv,ctx){
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
   this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
-  
+
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
 }
 
@@ -266,6 +266,15 @@ Game.prototype.update = function(){
   if(keys["Space"]){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;
+  }
+  if(keys["KeyM"]){
+    this.music.toggleMusic();
+    keys["KeyM"] = false;
+  }
+  if(keys["KeyN"]){
+    enableSFX = !enableSFX
+    //this.music.toggleSFX(); //i use music to toggle the sound effect since I just need something to toggle a universal switch, and music is already defined as a sound, therefore it has access to that class
+    keys["KeyN"] = false;
   }
 
   switch(this.gameState){

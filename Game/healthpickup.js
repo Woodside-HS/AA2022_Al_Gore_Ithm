@@ -1,6 +1,6 @@
 function Healthpickup(x, y, rad, cnv, ctx, scale, power){
   this.img = new Image();
-  this.img.src = "Files/health.png";
+  this.img.src = "Game/Files/health.png";
   this.power = power;
   Pickups.call(this, x, y, rad, this.img.src, cnv,ctx, scale,true);
 }

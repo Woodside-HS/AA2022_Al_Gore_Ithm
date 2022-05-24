@@ -1,6 +1,6 @@
 function Moneypickup(x, y, rad, cnv, ctx, scale){
   this.img = new Image();
-  this.img.src = "Files/money.png";
+  this.img.src = "Game/Files/money.png";
   Pickups.call(this, x, y, rad, this.img.src, cnv,ctx, scale,true);
 }
 

@@ -10,7 +10,7 @@ function Level(r,c,cellSize,enemies,pickups,boss,cnv,ctx,zoomFactor,cellImgSrc,p
   this.playerInitPos = new JSVector(cellSize/2,cellSize/2);
   this.player = player;
   this.zoomFactor = zoomFactor;
-  this.knockSfx = new Sound('Files/enemy_knocked.mp3');
+  this.knockSfx = new Sound('Game/Files/enemy_knocked.mp3');
   this.key = new Keypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
 }
 
@@ -75,15 +75,25 @@ Level.prototype.checkEnemies = function(){
   return true;
 }
 Level.prototype.checkLevelStatus = function(){
-  if(this.detectLoss()){
-    return true;
+  let complete = this.detectLoss()||(this.key.collected);
+
+  if(complete){//drops all powerups in the player inventory to prepare for starting level over
+
+    console.log(this.player.inventory.items.length);
+    this.emptyPlayerInventory(true);
+    console.log(this.player.inventory.items.length);
+
   }
-  else{
-    if(!this.key.collected){
-      return false;
-    }
-    return true;
-  }
+
+  return complete;
+}
+
+Level.prototype.emptyPlayerInventory = function(powerup_only){
+  let pickup = null;
+  do{
+    pickup = this.player.dropItem(powerup_only);
+    if(pickup!=null) this.pickups.push(pickup);
+  }while(pickup!=null)
 }
 
 Level.prototype.processInput = function(){
@@ -107,11 +117,7 @@ Level.prototype.executeLoss = function(){
   this.player.life = this.player.initialLife;
 
   //repopulate item array with all items in player inventory
-  let pickup = null;
-  do{
-    pickup = this.player.dropItem();
-    if(pickup!=null) this.pickups.push(pickup);
-  }while(pickup!=null)
+  this.emptyPlayerInventory(false);
 }
 
 Level.prototype.load = function(){

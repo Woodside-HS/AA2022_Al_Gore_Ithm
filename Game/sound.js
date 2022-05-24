@@ -1,4 +1,5 @@
 let enableSFX = true;
+let enableMusic = true;
 
 function Sound(src){
   this.music = new Audio(src);
@@ -18,6 +19,7 @@ Sound.prototype.toggleMusic = function(){
   else{
     this.music.play();
     this.music.loop = true;
+
   }
 }
 Sound.prototype.playSFX = function(){

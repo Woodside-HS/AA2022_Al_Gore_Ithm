@@ -269,14 +269,17 @@ Game.prototype.update = function(){
   }
   if(keys["KeyM"]){
     this.music.toggleMusic();
+    enableMusic = !enableMusic
     keys["KeyM"] = false;
   }
   if(keys["KeyN"]){
     enableSFX = !enableSFX
-    //this.music.toggleSFX(); //i use music to toggle the sound effect since I just need something to toggle a universal switch, and music is already defined as a sound, therefore it has access to that class
+
     keys["KeyN"] = false;
   }
-
+  this.ctx.strokeStyle = "white";
+  this.ctx.strokeText("Music: "+enableMusic, cnv.width*9/10, 50);
+  this.ctx.strokeText("Sound: "+enableSFX, cnv.width*9/10, 70)
   switch(this.gameState){
     case gameStates.WorldMap:
       this.levelPath.display();

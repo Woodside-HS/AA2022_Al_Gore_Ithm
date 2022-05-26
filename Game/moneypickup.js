@@ -23,10 +23,10 @@ Moneypickup.prototype.addMoney = function(player){
 }
 
 Moneypickup.dispMoney = function(money, pos, ctx){
-  ctx.font = "25px Times New Roman";
+  ctx.font = "25px serif";
   ctx.textAlign = "left";
   ctx.fillStyle = "white";
-  ctx.fillText("Campaign Funding: $"+ this.interpretMoney(money), pos.x+5, pos.y+34);
+  ctx.strokeText("Campaign Funding: $"+ this.interpretMoney(money), pos.x+5, pos.y+34);
 }
 
 Moneypickup.interpretMoney = function(money){

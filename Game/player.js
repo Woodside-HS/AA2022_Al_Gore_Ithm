@@ -31,7 +31,7 @@ Player.prototype.dropItem = function(powerup_only){
   let item = this.inventory.items[this.inventory.items.length-1];
   if(item.label=="key"||(powerup_only&&!item.isPowerup)) return null;
 
-  this.inventory.removeItem(this.inventory.length-1);
+  this.inventory.removeItem(this.inventory.items.length-1);
   item.drop(this);
   return item;
 }

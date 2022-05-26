@@ -26,12 +26,10 @@ Player.prototype.pickUpItem = function(item){
   return false;
 }
 
-Player.prototype.dropItem = function(powerup_only){
+Player.prototype.dropItem = function(){
   if(this.inventory.items.length==0)  return null;
-  let item = this.inventory.items[this.inventory.items.length-1];
-  if(item.label=="key"||(powerup_only&&!item.isPowerup)) return null;
-
-  this.inventory.removeItem(this.inventory.length-1);
+  let item = this.inventory.items[0];
+  this.inventory.removeItem(0);
   item.drop(this);
   return item;
 }

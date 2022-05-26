@@ -54,7 +54,7 @@ Cell.prototype.addWall = function(x,y,angle,length){
 
   let num_walls =  5; //5 different jpeg walls
   let rand_wall = Math.ceil(Math.random()*num_walls);
-  let wallImgSrc = "Files/Walls/wall"+rand_wall+".png";
+  let wallImgSrc = "Game/Files/Walls/wall"+rand_wall+".png";
   let wall = new Wall(this.ctx,x,y,angle,length,this.wallClr,wallImgSrc,this.wallWidth);
   this.walls.push(wall);
 }

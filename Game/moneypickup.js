@@ -1,7 +1,8 @@
 function Moneypickup(x, y, rad, cnv, ctx, scale, valueScale){
   this.img = new Image();
-  this.img.src = "Files/money.png";
+  this.img.src = "Game/Files/money.png";
   this.value = ((Math.floor(Math.random()*10))+10)*valueScale/10;
+  this.moneySound = new Sound("Game/Files/money_placeholder.mp3");
   Pickups.call(this, x, y, rad, this.img.src, cnv,ctx, scale,true);
 }
 
@@ -12,6 +13,7 @@ Moneypickup.prototype.execute = function(player){
     this.collected = true;
     this.addMoney(player);
   }
+  this.moneySound.playSFX();
 }
 
 Moneypickup.prototype.drop = function(player){

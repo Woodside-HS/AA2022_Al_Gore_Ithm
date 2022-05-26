@@ -8,10 +8,11 @@ function Game(cnv,ctx){
   this.ctx = ctx;
   this.levels = [];
   this.currentLevel = 0;
+  this.audioStarted
   let cellSize = 100;
   let zoomFactor = 2;
 
-  let playerImg = "Files/algore.jpeg";
+  let playerImg = "Game/Files/algore.jpeg";
   let player = new Player(0,0,cellSize/8,3,1000,this.cnv,this.ctx,playerImg,3,2);
   this.generateLevel_1(cellSize,zoomFactor,player);
   this.generateLevel_2(cellSize,zoomFactor,player);
@@ -25,7 +26,7 @@ function Game(cnv,ctx){
 
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
-  this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
+  this.music = new Sound('Game/Files/Al-Gore-ithm_1.mp3');
 
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
 }
@@ -59,10 +60,10 @@ Game.prototype.generateLevel_1 = function(cellSize,zoomFactor,player){
     pickups_1.push(this.generateMoneyPickup(cellSize));
   }
 
-  let sword = this.generateWeaponPickup(cellSize,1.2,3,"Files/sword.png","Sword")
+  let sword = this.generateWeaponPickup(cellSize,1.2,3,"Game/Files/sword.png","Sword")
   pickups_1.push(sword);
 
-  let level1 = new Level(4,4,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Files/cell_level1.jpg",player);
+  let level1 = new Level(4,4,cellSize,enemies_1,pickups_1, null,this.cnv,this.ctx,zoomFactor,"Game/Files/cell_level1.jpg",player);
 
   this.levels.push(level1);
 }
@@ -85,8 +86,8 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor,player){
 
   let pickups_2 = [];
 
-  let num_healthIncrement = 3;
-  let num_moneyIncrement = 3;
+  let num_healthIncrement = 0;
+  let num_moneyIncrement = 0;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_2.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
@@ -95,10 +96,10 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor,player){
     pickups_2.push(this.generateMoneyPickup(cellSize));
   }
 
-  let sword = this.generateWeaponPickup(cellSize,1.2,5,"Files/pirateblade.png","Blade");
+  let sword = this.generateWeaponPickup(cellSize,1.2,5,"Game/Files/pirateblade.png","Blade");
   pickups_2.push(sword);
 
-  let level2 = new Level(5,5,cellSize,enemies_2,pickups_2,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level2.jpg",player);
+  let level2 = new Level(5,5,cellSize,enemies_2,pickups_2,null,this.cnv,this.ctx,zoomFactor,"Game/Files/cell_level2.jpg",player);
 
   this.levels.push(level2);
 }
@@ -131,10 +132,10 @@ Game.prototype.generateLevel_3 = function(cellSize,zoomFactor,player){
     pickups_3.push(this.generateMoneyPickup(cellSize));
   }
 
-  let sword = this.generateWeaponPickup(cellSize,1.3,8,"Files/powderbag.png","Powder Bag");
+  let sword = this.generateWeaponPickup(cellSize,1.3,8,"Game/Files/powderbag.png","Powder Bag");
   pickups_3.push(sword);
 
-  let level3 = new Level(6,6,cellSize,enemies_3,pickups_3,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level3.jpeg",player);
+  let level3 = new Level(6,6,cellSize,enemies_3,pickups_3,null,this.cnv,this.ctx,zoomFactor,"Game/Files/cell_level3.jpeg",player);
 
   this.levels.push(level3);
 }
@@ -167,10 +168,10 @@ Game.prototype.generateLevel_4 = function(cellSize,zoomFactor,player){
     pickups_4.push(this.generateMoneyPickup(cellSize));
   }
 
-  let sword = this.generateWeaponPickup(cellSize,1.4,9,"Files/bowarrows.png","Bow & Arrows");
+  let sword = this.generateWeaponPickup(cellSize,1.4,9,"Game/Files/bowarrows.png","Bow & Arrows");
   pickups_4.push(sword);
 
-  let level4 = new Level(8,8,cellSize,enemies_4,pickups_4,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level4.png",player);
+  let level4 = new Level(8,8,cellSize,enemies_4,pickups_4,null,this.cnv,this.ctx,zoomFactor,"Game/Files/cell_level4.png",player);
 
   this.levels.push(level4);
 }
@@ -203,22 +204,22 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor,player){
     pickups_5.push(this.generateMoneyPickup(cellSize));
   }
 
-  let sword = this.generateWeaponPickup(cellSize,1.5,10,"Files/elixir.png","Elixir");
+  let sword = this.generateWeaponPickup(cellSize,1.5,10,"Game/Files/elixir.png","Elixir");
   pickups_5.push(sword);
 
-  let level5 = new Level(10,10,cellSize,enemies_5,pickups_5,null,this.cnv,this.ctx,zoomFactor,"Files/cell_level5.jpeg",player);
+  let level5 = new Level(10,10,cellSize,enemies_5,pickups_5,null,this.cnv,this.ctx,zoomFactor,"Game/Files/cell_level5.jpeg",player);
 
   this.levels.push(level5);
 }
 
 Game.prototype.enemyPrefab1 = function(){
-  return new Enemy(0,0,10,2,100,this.cnv, this.ctx,"Files/newt.jpg",1,3);
+  return new Enemy(0,0,10,2,100,this.cnv, this.ctx,"Game/Files/newt.jpg",1,3);
 }
 Game.prototype.enemyPrefab2 = function(){
-  return new Enemy(0,0,15,1.5,250,this.cnv, this.ctx,"Files/cheney.jpg",1,2);
+  return new Enemy(0,0,15,1.5,250,this.cnv, this.ctx,"Game/Files/cheney.jpg",1,2);
 }
 Game.prototype.enemyPrefab3 = function(){
-  return new Enemy(0,0,20,2,500,this.cnv, this.ctx,"Files/dubbya.jpeg",2,2);
+  return new Enemy(0,0,20,2,500,this.cnv, this.ctx,"Game/Files/dubbya.jpeg",2,2);
 }
 Game.prototype.generateHealthPickup = function(cellSize, power){
   return new Healthpickup(0, 0, 16, this.cnv, this.ctx, cellSize/8, power);
@@ -230,15 +231,10 @@ Game.prototype.generateWeaponPickup = function(cellSize,firingRateDelta,particle
   return new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,10,imgSrc,cellSize/8);
 }
 
-Game.prototype.checkKeyPress = function(e){
-  if(keys[e.code]){return true;}
-}
-
 Game.prototype.nextLevel = function(){
   if(this.currentLevel<this.levels.length-1){
     this.currentLevel++;
     this.levelPath.nextLevel();
-    //move stage clear sound here
   }
   else{
     alert("You Win!!!");
@@ -257,9 +253,9 @@ Game.prototype.setLevel = function(loss){
 Game.prototype.update = function(){
   this.ctx.fillStyle = "black";
   this.ctx.fillRect(0,0,this.cnv.width,this.cnv.height); //clears canvas
-  if (mouseStatus && !this.audioStarted){ //should be as simple as calling a function declared in main though idk how to do that exactly
+  if (mouseStatus && !this.audioStarted){
       this.audioStarted = true;
-      this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
+      this.music = new Sound('Game/Files/Al-Gore-ithm_1.mp3');
       this.music.loadMusic();
   }
 
@@ -267,19 +263,7 @@ Game.prototype.update = function(){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;
   }
-  if(keys["KeyM"]){
-    this.music.toggleMusic();
-    enableMusic = !enableMusic
-    keys["KeyM"] = false;
-  }
-  if(keys["KeyN"]){
-    enableSFX = !enableSFX
 
-    keys["KeyN"] = false;
-  }
-  this.ctx.strokeStyle = "white";
-  this.ctx.strokeText("Music: "+enableMusic, cnv.width*9/10, 50);
-  this.ctx.strokeText("Sound: "+enableSFX, cnv.width*9/10, 70)
   switch(this.gameState){
     case gameStates.WorldMap:
       this.levelPath.display();

@@ -13,7 +13,7 @@ function Game(cnv,ctx){
   let zoomFactor = 2;
 
   let playerImg = "Files/algore.jpeg";
-  let player = new Player(0,0,cellSize/8,3,1000,this.cnv,this.ctx,playerImg,3,2);
+  let player = new Player(0,0,cellSize/8,3,1000,this.cnv,this.ctx,playerImg,3,2, 0);
   this.generateLevel_1(cellSize,zoomFactor,player);
   this.generateLevel_2(cellSize,zoomFactor,player);
   this.generateLevel_3(cellSize,zoomFactor,player);
@@ -27,7 +27,7 @@ function Game(cnv,ctx){
   this.levelPath = new LevelPath(this.levels,this.levels[0].icon.rad/1.25,new Color(25,180,25,1),ctx);
   this.gameState = gameStates.PlayingLevel;
   this.music = new Sound('Files/Al-Gore-ithm_1.mp3');
-  
+
   this.levels[this.currentLevel].load(); //loads the current level after setting up entire game
 }
 
@@ -52,12 +52,13 @@ Game.prototype.generateLevel_1 = function(cellSize,zoomFactor,player){
 
   let num_healthIncrement = 3;
   let num_moneyIncrement = 3;
+  let moneyValue = 50000;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_1.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
   }
   for(let i=0;i<num_moneyIncrement;i++){
-    pickups_1.push(this.generateMoneyPickup(cellSize));
+    pickups_1.push(this.generateMoneyPickup(cellSize, moneyValue));
   }
 
   let sword = this.generateWeaponPickup(cellSize,1.2,3,"Files/sword.png","Sword")
@@ -88,12 +89,13 @@ Game.prototype.generateLevel_2 = function(cellSize,zoomFactor,player){
 
   let num_healthIncrement = 3;
   let num_moneyIncrement = 3;
+  let moneyValue = 60000;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_2.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
   }
   for(let i=0;i<num_moneyIncrement;i++){
-    pickups_2.push(this.generateMoneyPickup(cellSize));
+    pickups_2.push(this.generateMoneyPickup(cellSize, moneyValue));
   }
 
   let sword = this.generateWeaponPickup(cellSize,1.2,5,"Files/pirateblade.png","Blade");
@@ -124,12 +126,13 @@ Game.prototype.generateLevel_3 = function(cellSize,zoomFactor,player){
 
   let num_healthIncrement = 3;
   let num_moneyIncrement = 3;
+  let moneyValue = 70000;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_3.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
   }
   for(let i=0;i<num_moneyIncrement;i++){
-    pickups_3.push(this.generateMoneyPickup(cellSize));
+    pickups_3.push(this.generateMoneyPickup(cellSize, moneyValue));
   }
 
   let sword = this.generateWeaponPickup(cellSize,1.3,8,"Files/powderbag.png","Powder Bag");
@@ -160,12 +163,13 @@ Game.prototype.generateLevel_4 = function(cellSize,zoomFactor,player){
 
   let num_healthIncrement = 3;
   let num_moneyIncrement = 3;
+  let moneyValue = 80000;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_4.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
   }
   for(let i=0;i<num_moneyIncrement;i++){
-    pickups_4.push(this.generateMoneyPickup(cellSize));
+    pickups_4.push(this.generateMoneyPickup(cellSize, moneyValue));
   }
 
   let sword = this.generateWeaponPickup(cellSize,1.4,9,"Files/bowarrows.png","Bow & Arrows");
@@ -196,12 +200,13 @@ Game.prototype.generateLevel_5 = function(cellSize,zoomFactor,player){
 
   let num_healthIncrement = 6;
   let num_moneyIncrement = 3;
+  let moneyValue = 100000;
 
   for(let i=0;i<num_healthIncrement;i++){
     pickups_5.push(this.generateHealthPickup(cellSize, Math.floor(Math.random()*100+50)));
   }
   for(let i=0;i<num_moneyIncrement;i++){
-    pickups_5.push(this.generateMoneyPickup(cellSize));
+    pickups_5.push(this.generateMoneyPickup(cellSize, moneyValue));
   }
 
   let sword = this.generateWeaponPickup(cellSize,1.5,10,"Files/elixir.png","Elixir");
@@ -224,8 +229,8 @@ Game.prototype.enemyPrefab3 = function(){
 Game.prototype.generateHealthPickup = function(cellSize, power){
   return new Healthpickup(0, 0, 16, this.cnv, this.ctx, cellSize/8, power);
 }
-Game.prototype.generateMoneyPickup = function(cellSize){
-  return new Moneypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8);
+Game.prototype.generateMoneyPickup = function(cellSize, moneyValue){
+  return new Moneypickup(0, 0, 16, this.cnv, this.ctx, cellSize/8, moneyValue);
 }
 Game.prototype.generateWeaponPickup = function(cellSize,firingRateDelta,particleDamageDelta,imgSrc,label){
   return new Weapon(firingRateDelta,particleDamageDelta,0,0,label,this.cnv,this.ctx,10,imgSrc,cellSize/8);
@@ -237,7 +242,22 @@ Game.prototype.nextLevel = function(){
     this.levelPath.nextLevel();
   }
   else{
-    alert("You Win!!!");
+    if(this.levels[this.currentLevel].player.money>1000000){
+      if(this.levels[this.currentLevel].player.life>500){
+        alert("You had enough money and a high enough approval rating to win reelection! You win!")
+      }
+      else{
+        alert("You had enough money, but your approval rating wasn't high enough to win reelection. You lose.");
+      }
+    }
+    else{
+      if(this.levels[this.currentLevel].player.life>500){
+        alert("Although your approval rating was high enough, you didn't have enough campaign funding and had to drop out of the election. You lose.")
+      }
+      else{
+        alert("You had neither enough campaign funding nor a high enough approval rating to win reelection. You lose.");
+      }
+    }
     this.levels[this.currentLevel].load();
   }
 }

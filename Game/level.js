@@ -63,6 +63,8 @@ Level.prototype.update = function(){
   this.ctx.restore();
   this.player.healthbar.run(true);
   this.player.inventory.display(); //runs healthbar with text display enabled set to true
+  let disppos = new JSVector(10, 20);
+  Moneypickup.dispMoney(this.player.money, disppos, this.ctx);
 }
 
 Level.prototype.detectLoss = function(){

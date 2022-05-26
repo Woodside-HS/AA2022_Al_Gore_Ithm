@@ -1,7 +1,7 @@
 window.addEventListener("load", init);
 
 var mousePos,mouseStatus;
-var keys, music;
+var keys, music, gameStarted;
 
 window.addEventListener('keypress',keyDown);
 window.addEventListener('keyup',keyUp);
@@ -33,10 +33,9 @@ function init(){
   keys = [];
   mousePos = new JSVector(0,0);
   mouseStatus = false;
-  //mouseDown.dispatchEvent("mouseDown")
+  gameStarted = false;
   music = new Sound('Game/Files/Al-Gore-ithm_1.mp3');
-  //music.loadMusic();
-
+  title = new Title(cnv,ctx);
   game = new Game(cnv,ctx);
 
   animate();
@@ -49,5 +48,11 @@ function animate(){
 }
 
 function update(){
-  game.update();
+  if(!mouseStatus && !gameStarted){
+    title.update();
+  }
+  else{
+    game.update();
+    gameStarted = true;
+  }
 }

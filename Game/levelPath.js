@@ -8,7 +8,7 @@ function LevelPath(levels,rad,indicatorClr,ctx){
   this.followPath = false;
   this.speedScale = 0.5;//scale 0 to 1 for speed of path following
   this.frame = 0;
-  this.levelUp = new Sound('Files/stage_clear_placeholder.mp3');
+  this.levelUp = new Sound('Game/Files/stage_clear_placeholder.mp3');
   this.generatePath(10/this.levels.length);//generates path where path generator acceleration dependent on amount of levels to ensure consistent curvature
   this.levelIndicator = new LevelIndicator(this.levels[0].icon.pos,rad,indicatorClr,this.ctx); //creates indicator that points to the current level
 }

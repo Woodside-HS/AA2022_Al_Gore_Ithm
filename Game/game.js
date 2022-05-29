@@ -283,7 +283,14 @@ Game.prototype.update = function(){
    this.gameState = this.gameState==gameStates.WorldMap?gameStates.PlayingLevel:gameStates.WorldMap; //Press space to switch between world map view and level view
    keys["Space"] = false;
   }
-
+  if(keys["KeyM"]){
+    this.music.toggleMusic();
+    keys["KeyM"] = false;
+  }
+  if(keys["KeyN"]){
+    enableSFX = !enableSFX
+    keys["KeyN"] = false;
+  }
   switch(this.gameState){
     case gameStates.WorldMap:
       this.levelPath.display();

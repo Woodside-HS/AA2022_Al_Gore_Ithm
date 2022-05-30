@@ -12,7 +12,7 @@ function Game(cnv,ctx){
   let cellSize = 100;
   let zoomFactor = 2;
 
-  let playerImg = "Game/Files/algore.jpeg";
+  let playerImg = "Game/Files/algore.png";
   let player = new Player(0,0,cellSize/8,3,1000,this.cnv,this.ctx,playerImg,3,2, 0);
   this.generateLevel_1(cellSize,zoomFactor,player);
   this.generateLevel_2(cellSize,zoomFactor,player);
@@ -224,7 +224,7 @@ Game.prototype.enemyPrefab2 = function(){
   return new Enemy(0,0,15,1.5,250,this.cnv, this.ctx,"Game/Files/cheney.jpg",1,2);
 }
 Game.prototype.enemyPrefab3 = function(){
-  return new Enemy(0,0,20,2,500,this.cnv, this.ctx,"Game/Files/dubbya.jpeg",2,2);
+  return new Enemy(0,0,20,2,500,this.cnv, this.ctx,"Game/Files/dubbya.png",2,2);
 }
 Game.prototype.generateHealthPickup = function(cellSize, power){
   return new Healthpickup(0, 0, 16, this.cnv, this.ctx, cellSize/8, power);
